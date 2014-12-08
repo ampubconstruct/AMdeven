@@ -8,11 +8,11 @@ class @AtomApp
 		if @reload_ then @auto_reload()
 	auto_reload: ->
 		@fs.watch "contents", (e, filename) =>
-			if @reload_
-				if filename.match /\.coffee$/
-					1
-				else
-					location.reload()
+			if filename.match /\.(html)|(js)|(css)$/
+				location.reload()
+			else
+				1
 $ =>
 	@aa = new @AtomApp
 	aa.start()
+	

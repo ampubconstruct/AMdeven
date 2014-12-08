@@ -20,12 +20,10 @@
     AtomApp.prototype.auto_reload = function() {
       return this.fs.watch("contents", (function(_this) {
         return function(e, filename) {
-          if (_this.reload_) {
-            if (filename.match(/\.coffee$/)) {
-              return 1;
-            } else {
-              return location.reload();
-            }
+          if (filename.match(/\.(html)|(js)|(css)$/)) {
+            return location.reload();
+          } else {
+            return 1;
           }
         };
       })(this));
