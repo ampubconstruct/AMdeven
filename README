@@ -4,7 +4,7 @@ require node.js
 #
 npm install coffee-script@">=1.0.0 <2.0.0" -g
 
-#構成
+構成
 	atom-shell-exeが入ったディレクトリ/this sample
 
 #exe
