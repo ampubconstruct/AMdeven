@@ -1,5 +1,7 @@
 {
-  "name"    : "your-app",
+  "name"    : "atom-sample",
   "version" : "0.1.0",
+  "dependencies": {
+  },
   "main"    : "main.js"
 }

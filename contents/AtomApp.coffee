@@ -7,13 +7,12 @@ class @AtomApp
 	start: ->
 		if @reload_ then @auto_reload()
 	auto_reload: ->
-		flag = (false)
 		@fs.watch "contents", (e, filename) =>
-			if @reload_ and not flag
-				setTimeout =>
-					flag = (true)
+			if @reload_
+				if filename.match /\.coffee$/
+					1
+				else
 					location.reload()
-				, 1000
 $ =>
 	@aa = new @AtomApp
 	aa.start()
