@@ -2,6 +2,7 @@
   "name"    : "atom-sample",
   "version" : "0.1.0",
   "dependencies": {
+	"coffee-script": ">=1.0.0 <2.0.0"
   },
   "main"    : "main.js"
 }
