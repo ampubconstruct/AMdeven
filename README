@@ -2,7 +2,6 @@
 構成
 	atom-shell-exeが入ったディレクトリ/this sample
 #
-npm install
 
 contents内のjs,html,css 保存後、自動更新
 
