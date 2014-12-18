@@ -1,15 +1,24 @@
 (function() {
-  var BrowserWindow, app, mainWindow;
+  var BrowserWindow, app, globalShortcut, ipc, mainWindow;
 
   app = require("app");
 
+  ipc = require("ipc");
+
   BrowserWindow = require("browser-window");
+
+  globalShortcut = require('global-shortcut');
 
   require("crash-reporter").start();
 
   mainWindow = null;
 
-  console.log(this);
+  ipc.on('inspect element', (function(_this) {
+    return function(event, arg) {
+      console.log(arg);
+      return mainWindow.inspectElement(arg.x, arg.y);
+    };
+  })(this));
 
   app.on("window-all-closed", function() {
     if (process.platform !== "darwin") {
@@ -28,6 +37,8 @@
       return mainWindow = null;
     });
   });
+
+  1;
 
 }).call(this);
 
