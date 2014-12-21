@@ -51,5 +51,7 @@ class @CrossRendererApp extends @AtomApp
 	set_browser_event: ->
 		@ipc.on "send_renderer_from_browser", (data) =>
 			console.log data
+		@ipc.on "via_browser", (data) =>
+			console.log data
 	
 		

@@ -88,7 +88,13 @@ class @CrossRenderer extends @Browser
 		@[renderer].webContents.executeJavaScript """
 			if (typeof ___ipc === "undefined" || ___ipc === null) {
 				window.___ipc = require('ipc'); 
-				___ipc.on('via_browser', function(data) {console.log(data);})
+				// receive
+				___ipc.on('via_browser', function(data) {console.log(data);});
+				___ipc.on("send_renderer_from_browser", function(data){
+					console.log(data);
+				});
+				// serve
+				___ipc.send('send_renderer_via_browser', 'data_man', 'mainWindow');
 			}
 		"""
 	set_inspect_mode: (renderer) ->
@@ -108,11 +114,6 @@ class @CrossRenderer extends @Browser
 		ret = @globalShortcut.register 'Ctrl+Shift+D', =>
 			@mainWindow.webContents.send "send_renderer_from_browser", 321
 			@subWindow.webContents.send "send_renderer_from_browser", 321
-		@subWindow.webContents.executeJavaScript """
-			___ipc.on("send_renderer_from_browser", function(data){
-				console.log(data);
-			});
-		"""
 start()
 
 

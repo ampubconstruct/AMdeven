@@ -107,7 +107,12 @@
     };
 
     CrossRendererApp.prototype.set_browser_event = function() {
-      return this.ipc.on("send_renderer_from_browser", (function(_this) {
+      this.ipc.on("send_renderer_from_browser", (function(_this) {
+        return function(data) {
+          return console.log(data);
+        };
+      })(this));
+      return this.ipc.on("via_browser", (function(_this) {
         return function(data) {
           return console.log(data);
         };

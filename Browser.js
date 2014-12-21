@@ -161,7 +161,7 @@
       if (renderer == null) {
         renderer = "subWindow";
       }
-      return this[renderer].webContents.executeJavaScript("if (typeof ___ipc === \"undefined\" || ___ipc === null) {\n	window.___ipc = require('ipc'); \n	___ipc.on('via_browser', function(data) {console.log(data);})\n}");
+      return this[renderer].webContents.executeJavaScript("if (typeof ___ipc === \"undefined\" || ___ipc === null) {\n	window.___ipc = require('ipc'); \n	// receive\n	___ipc.on('via_browser', function(data) {console.log(data);});\n	___ipc.on(\"send_renderer_from_browser\", function(data){\n		console.log(data);\n	});\n	// serve\n	___ipc.send('send_renderer_via_browser', 'data_man', 'mainWindow');\n}");
     };
 
     CrossRenderer.prototype.set_inspect_mode = function(renderer) {
@@ -170,13 +170,12 @@
 
     CrossRenderer.prototype.set_browser_emit_event = function() {
       var ret;
-      ret = this.globalShortcut.register('Ctrl+Shift+D', (function(_this) {
+      return ret = this.globalShortcut.register('Ctrl+Shift+D', (function(_this) {
         return function() {
           _this.mainWindow.webContents.send("send_renderer_from_browser", 321);
           return _this.subWindow.webContents.send("send_renderer_from_browser", 321);
         };
       })(this));
-      return this.subWindow.webContents.executeJavaScript("___ipc.on(\"send_renderer_from_browser\", function(data){\n	console.log(data);\n});");
     };
 
     return CrossRenderer;
