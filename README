@@ -1,4 +1,8 @@
+#
+maybe only windows7
+required autoit
 
+#
 構成
 	atom-shell-exeが入ったディレクトリ/this sample
 #
