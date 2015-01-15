@@ -4,10 +4,10 @@ required autoit
 
 #
 構成
-	atom-shell-exeが入ったディレクトリ/this sample
+	atom-shell-exeが入ったディレクトリ/this_sample
 #
 
-contents内のjs,html,css 保存後、自動更新
+contents内のjs,html,css 自動更新
 
 #exe
 run.batファイルを起動。

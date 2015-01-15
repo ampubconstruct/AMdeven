@@ -21,6 +21,12 @@ $("#what").val(String.fromCharCode(e.which));
 $("#what").trigger(e);
 		
 		
+// ?
+window.triggerKeyDown = function (selector, keyCode) {
+	var e = $.Event("keydown");
+	e.which = keyCode;
+	$(selector).trigger(e);
+};
 	
 //以下エラー
 

@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "",
+  "sourceRoot": "",
+  "sources": [
+    "C:\\atom\\sample-atom-shell\\contents\\webview.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;AAAA,EAAA,IAAG,CAAA,MAAU,CAAC,GAAd;AACC,IAAA,MAAM,CAAC,GAAP,GAAa,OAAA,CAAQ,KAAR,CAAb,CADD;GAAA;AAAA"
+}
