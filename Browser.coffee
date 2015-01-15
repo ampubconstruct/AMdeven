@@ -32,11 +32,15 @@ class @Browser
 		@mainWindow = new @BrowserWindow(
 			width: 800
 			height: 800
+			show: (false)
 		)
 		@mainWindow.loadUrl @url
 		@mainWindow.openDevTools()
 		@mainWindow.on "closed", ->
 			@mainWindow = (null)
+		@move_window()
+	move_window: ->
+		@shell.openItem("set1renderer.exe")
 	global_shortcut: ->
 			ret = @globalShortcut.register 'ctrl+e', =>
 				console.log('ctrl+e is pressed')
@@ -57,9 +61,8 @@ class @CrossRenderer extends @Browser
 		super()
 		@ipc_event_renderer()
 	make_window: ->
-		super()
 		@add_window()
-		@move_window()
+		super()
 		@set___ipcEvent_for_external_site()
 		@set_inspect_mode(@subWindow)
 	#add funcs

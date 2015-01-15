@@ -1,0 +1,1 @@
+atom-shell MainWindow=======>1918,221,800,800

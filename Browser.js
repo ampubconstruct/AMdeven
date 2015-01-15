@@ -61,13 +61,19 @@
     Browser.prototype.make_window = function() {
       this.mainWindow = new this.BrowserWindow({
         width: 800,
-        height: 800
+        height: 800,
+        show: false
       });
       this.mainWindow.loadUrl(this.url);
       this.mainWindow.openDevTools();
-      return this.mainWindow.on("closed", function() {
+      this.mainWindow.on("closed", function() {
         return this.mainWindow = null;
       });
+      return this.move_window();
+    };
+
+    Browser.prototype.move_window = function() {
+      return this.shell.openItem("set1renderer.exe");
     };
 
     Browser.prototype.global_shortcut = function() {
@@ -116,9 +122,8 @@
     };
 
     CrossRenderer.prototype.make_window = function() {
-      CrossRenderer.__super__.make_window.call(this);
       this.add_window();
-      this.move_window();
+      CrossRenderer.__super__.make_window.call(this);
       this.set___ipcEvent_for_external_site();
       return this.set_inspect_mode(this.subWindow);
     };
