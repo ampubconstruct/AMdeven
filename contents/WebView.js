@@ -2,19 +2,26 @@
   var WebView;
 
   WebView = (function() {
+    WebView.prototype.ipc = 0;
+
+    WebView.prototype.fs = 0;
+
+    WebView.prototype.jq = 0;
+
     function WebView() {
       var data;
-      eval('ipc = require("ipc")');
-      eval('fs = require("fs")');
-      data = fs.readFileSync("./contents/jquery-2.0.3.min.js", {
+      this.ipc = require("ipc");
+      this.fs = require("fs");
+      data = this.fs.readFileSync("./contents/jquery-2.0.3.min.js", {
         encoding: "utf-8"
       });
       eval(data);
-      eval('JQ = $;$ = null;jQuery = null;');
+      this.jq = $;
+      eval('$ = null;jQuery = null;');
     }
 
     WebView.prototype.set_event = function() {
-      return ipc.on("keydown", (function(_this) {
+      return this.ipc.on("keydown", (function(_this) {
         return function(selector, keyCode) {
           return _this.set_keydown_event(selector, keyCode);
         };
@@ -23,11 +30,11 @@
 
     WebView.prototype.set_keydown_event = function(selector, keyCode) {
       var e;
-      JQ(selector).focus();
-      e = JQ.Event("keypress");
+      this.jq(selector).focus();
+      e = this.jq.Event("keypress");
       e.which = keyCode;
-      JQ(selector).val(JQ(selector).val() + String.fromCharCode(e.which));
-      return JQ(selector).trigger(e);
+      this.jq(selector).val(this.jq(selector).val() + String.fromCharCode(e.which));
+      return this.jq(selector).trigger(e);
     };
 
     return WebView;

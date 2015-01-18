@@ -1,20 +1,24 @@
 class WebView
+	ipc: 0
+	fs: 0
+	jq: 0
 	constructor: ->
-		eval 'ipc = require("ipc")'
-		eval 'fs = require("fs")'
-		data = fs.readFileSync "./contents/jquery-2.0.3.min.js",
+		@ipc = require("ipc")
+		@fs = require("fs")
+		data = @fs.readFileSync "./contents/jquery-2.0.3.min.js",
 			encoding: "utf-8"
 		eval data
-		eval 'JQ = $;$ = null;jQuery = null;'
+		@jq = $
+		eval '$ = null;jQuery = null;'
 	set_event: ->
-		ipc.on "keydown", (selector, keyCode) => #es.webview.send("keydown", "#gbqfq", 97)
+		@ipc.on "keydown", (selector, keyCode) => #es.webview.send("keydown", "#gbqfq", 97)
 			@set_keydown_event selector, keyCode
 	set_keydown_event: (selector, keyCode) ->
-		JQ(selector).focus()
-		e = JQ.Event("keypress")
+		@jq(selector).focus()
+		e = @jq.Event("keypress")
 		e.which = keyCode
-		JQ(selector).val(JQ(selector).val() + String.fromCharCode(e.which))
-		JQ(selector).trigger(e)
+		@jq(selector).val(@jq(selector).val() + String.fromCharCode(e.which))
+		@jq(selector).trigger(e)
 #
 
 eval "wv = new WebView();"
