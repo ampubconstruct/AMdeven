@@ -40,7 +40,7 @@ class @Browser
 		@move_window()
 	move_window: ->
 		@mainWindow.setTitle "atom-shell MainWindow"
-		@shell.openItem("set1renderer.exe")
+		@shell.openItem("set_renderer.exe")
 	global_shortcut: ->
 			ret = @globalShortcut.register 'ctrl+e', =>
 				console.log('ctrl+e is pressed')

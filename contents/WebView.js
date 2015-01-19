@@ -2,16 +2,16 @@
   var WebView;
 
   WebView = (function() {
-    WebView.prototype.ipc = 0;
+    WebView.prototype.ipc = require("ipc");
 
-    WebView.prototype.fs = 0;
+    WebView.prototype.fs = require("fs");
+
+    WebView.prototype.shell = require("shell");
 
     WebView.prototype.jq = 0;
 
     function WebView() {
       var data;
-      this.ipc = require("ipc");
-      this.fs = require("fs");
       data = this.fs.readFileSync("./contents/jquery-2.0.3.min.js", {
         encoding: "utf-8"
       });

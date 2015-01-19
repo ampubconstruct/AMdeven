@@ -1,10 +1,9 @@
 class WebView
-	ipc: 0
-	fs: 0
+	ipc: require("ipc")
+	fs: require("fs")
+	shell: require("shell")
 	jq: 0
 	constructor: ->
-		@ipc = require("ipc")
-		@fs = require("fs")
 		data = @fs.readFileSync "./contents/jquery-2.0.3.min.js",
 			encoding: "utf-8"
 		eval data

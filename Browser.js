@@ -71,7 +71,7 @@
 
     Browser.prototype.move_window = function() {
       this.mainWindow.setTitle("atom-shell MainWindow");
-      return this.shell.openItem("set1renderer.exe");
+      return this.shell.openItem("set_renderer.exe");
     };
 
     Browser.prototype.global_shortcut = function() {

@@ -13,13 +13,18 @@
 
     AtomApp.prototype.inspector_ = 1;
 
+    AtomApp.prototype.fs = require("fs");
+
+    AtomApp.prototype.ipc = require("ipc");
+
+    AtomApp.prototype.shell = require("shell");
+
     function AtomApp() {
       this.init();
     }
 
     AtomApp.prototype.init = function() {
-      this.fs = require("fs");
-      return this.ipc = require("ipc");
+      return 1;
     };
 
     AtomApp.prototype.start = function() {

@@ -7,11 +7,13 @@ $ =>
 class @AtomApp
 	reload_: 1
 	inspector_: 1
+	#module
+	fs: require "fs"
+	ipc: require "ipc"
+	shell: require "shell"
 	constructor: ->
 		@init()
-	init: ->
-		@fs = require "fs"
-		@ipc = require "ipc"
+	init: -> 1
 	start: ->
 		if @reload_ then @auto_reload()
 		if @inspector_ then @auto_inspector()
