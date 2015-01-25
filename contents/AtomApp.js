@@ -1,5 +1,7 @@
 (function() {
-  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   $((function(_this) {
     return function() {
@@ -8,12 +10,12 @@
     };
   })(this));
 
-  this.AtomApp = (function() {
+  this.AtomApp = (function(_super) {
+    __extends(AtomApp, _super);
+
     AtomApp.prototype.reload_ = 1;
 
     AtomApp.prototype.inspector_ = 1;
-
-    AtomApp.prototype.fs = require("fs");
 
     AtomApp.prototype.ipc = require("ipc");
 
@@ -68,7 +70,7 @@
 
     return AtomApp;
 
-  })();
+  })(this.NodeJsApp);
 
   this.ExternalSite = (function() {
 

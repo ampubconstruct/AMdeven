@@ -4,11 +4,10 @@ $ =>
 	#
 	aa.start()
 
-class @AtomApp
+class @AtomApp extends @NodeJsApp
 	reload_: 1
 	inspector_: 1
 	#module
-	fs: require "fs"
 	ipc: require "ipc"
 	shell: require "shell"
 	constructor: ->
