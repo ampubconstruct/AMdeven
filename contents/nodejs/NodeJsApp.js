@@ -23,6 +23,19 @@
 
   })();
 
+  this.Server = (function() {
+    Server.prototype.http = require("http");
+
+    Server.prototype.mime = require('mime');
+
+    Server.prototype.ws = require('socket.io');
+
+    function Server() {}
+
+    return Server;
+
+  })();
+
   1;
 
 }).call(this);

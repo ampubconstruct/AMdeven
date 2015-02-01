@@ -3,9 +3,10 @@
 
   start = (function(_this) {
     return function() {
-      var b;
+      var b, p;
       b = new _this.Browser();
-      return b.start();
+      b.start();
+      return p = new _this.Pipe();
     };
   })(this);
 
@@ -78,7 +79,7 @@
       var ret;
       ret = this.globalShortcut.register('ctrl+e', (function(_this) {
         return function() {
-          return console.log('ctrl+e is pressed');
+          return console.log("" + (Date.now()) + " , ctrl+e is pressed");
         };
       })(this));
       return 1;
@@ -94,10 +95,22 @@
 
   })();
 
+  this.Pipe = (function() {
+    function Pipe() {
+      process.stdin.setEncoding("utf8");
+      process.stdin.on("readable", function() {
+        var chunk;
+        chunk = process.stdin.read();
+        return console.log(chunk);
+      });
+    }
+
+    return Pipe;
+
+  })();
+
   start();
 
   1;
 
 }).call(this);
-
- //# sourceMappingURL=Browser.js.map

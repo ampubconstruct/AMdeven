@@ -5,8 +5,8 @@
 
   nja = new NodeJsApp;
 
-  nja.downloader("https://www.google.co.jp/", "google.html");
+  console.log = nja;
+
+  1;
 
 }).call(this);
-
- //# sourceMappingURL=test.js.map

@@ -1,9 +1,3 @@
-$ =>
-	@aa = new @AtomApp
-	
-	#
-	aa.start()
-
 class @AtomApp extends @NodeJsApp
 	reload_: 1
 	inspector_: 1

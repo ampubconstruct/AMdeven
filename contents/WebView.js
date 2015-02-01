@@ -48,5 +48,3 @@
   console.log("preload finished, webview");
 
 }).call(this);
-
- //# sourceMappingURL=WebView.js.map

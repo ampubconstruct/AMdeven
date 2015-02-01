@@ -2,6 +2,9 @@
   "name"    : "atom-sample",
   "version" : "0.1.0",
   "dependencies": {
+		"mime": "latest",
+		"socket.io": "1.x"
   },
-  "main"    : "Browser.js"
+  "main"    : "Browser.js",
+	"comment"	: "atom-shell version 0.20.2"
 }

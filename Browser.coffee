@@ -1,7 +1,9 @@
+
 start = =>
 	b = new @Browser()
 	b.start()
-
+	p = new @Pipe()
+	
 class @Browser
 	#url
 	url: "file://" + __dirname + "/contents/index.html"
@@ -43,13 +45,19 @@ class @Browser
 		@shell.openItem("set_renderer.exe")
 	global_shortcut: ->
 			ret = @globalShortcut.register 'ctrl+e', =>
-				console.log('ctrl+e is pressed')
+				console.log("#{Date.now()} , ctrl+e is pressed")
 			1
 	etc: ->
 		@global_shortcut()
 	1
 
-	
+
+class @Pipe
+	constructor: ->
+		process.stdin.setEncoding "utf8"
+		process.stdin.on "readable", ->
+			chunk = process.stdin.read()
+			console.log chunk
 	
 	
 start()

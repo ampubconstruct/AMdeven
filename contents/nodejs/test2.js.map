@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "",
+  "sourceRoot": "",
+  "sources": [
+    "C:\\atom\\sample-atom-shell\\contents\\nodejs\\test2.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;AAAA,MAAA,EAAA;IAAA;mSAAA;;AAAA,EAAM,IAAC,CAAA;mBACN;;AAAA,gBAAA,CAAA,GAAG,CAAH,CAAA;;aAAA;;MADD,CAAA;;AAAA,EAEM,IAAC,CAAA;AACN,yBAAA,CAAA;;;;KAAA;;AAAA,iBAAA,CAAA,GAAG,CAAH,CAAA;;cAAA;;KADiB,IAAC,CAAA,EAFnB,CAAA;;AAAA,EAKA,EAAA,GAAK,GAAA,CAAA,IAAK,CAAA,EALV,CAAA;;AAAA,EAMA,OAAO,CAAC,GAAR,CAAY,EAAE,CAAC,CAAf,CANA,CAAA;;AAAA,EAQA,CARA,CAAA;AAAA"
+}

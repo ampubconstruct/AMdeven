@@ -1,0 +1,1 @@
+class @WebClient extends @CommonJsAroundProtocol

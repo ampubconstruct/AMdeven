@@ -1,3 +1,5 @@
 {NodeJsApp} = require "./NodeJsApp"
 nja = new NodeJsApp
-nja.downloader("https://www.google.co.jp/", "google.html")
+console.log = nja
+#nja.downloader("https://www.google.co.jp/", "google.html")
+1
