@@ -1,7 +1,7 @@
 (function() {
   var Server,
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __hasProp = {}.hasOwnProperty;
 
   Server = (function(_super) {
     __extends(Server, _super);
@@ -60,9 +60,9 @@
 
       /*access log */
       if (url.slice(url.length - 4, +(url.length - 1) + 1 || 9e9) === "html") {
-        ip = req.connection.remoteAddress.replace(/.*(\d+\.\d+\.\d+\.\d+$)/, "$1");
+        ip = req.connection.remoteAddress.replace(/.*[^\d](\d+\.\d+\.\d+\.\d+$)/, "$1");
         date = new Date().toLocaleTimeString();
-        return console.log("" + date + " " + ip + " " + url);
+        return console.log(date + " " + ip + " " + url);
       }
     };
 

@@ -32,9 +32,9 @@ class Server extends @CommonJsAroundProtocol
 			res.end("404 - file not found")
 		###access log###
 		if url[url.length-4..url.length-1] is "html"
-			ip = req.connection.remoteAddress.replace /.*(\d+\.\d+\.\d+\.\d+$)/, "$1"
+			ip = req.connection.remoteAddress.replace /.*[^\d](\d+\.\d+\.\d+\.\d+$)/, "$1"
 			date = new Date().toLocaleTimeString()
-			console.log "#{date} #{ip} #{url}"
+			console.log "#{date} #{ip} #{url}" 
 	ws_start: ->
 		@websocket = @sio(@ws_port)
 		@websocket.on "connection", (socket) =>
