@@ -124,26 +124,29 @@
 
     NodeJsApp.prototype.check_dir_tree = function(dir, callback) {
       if (callback == null) {
-        callback = (function(_this) {
-          return function(filename) {
-            return 1;
-          };
-        })(this);
+        callback = void 0;
+      }
+      if (callback) {
+        this.check_dir_tree_callback = callback;
       }
       return this.check_dir_tree_read_dir(dir);
     };
 
+    NodeJsApp.prototype.check_dir_tree_callback = function() {
+      return 1;
+    };
+
     NodeJsApp.prototype.check_dir_tree_read_dir = function(dir) {
-      var file, files, _i, _len, _results;
+      var file, files, loc, _i, _len, _results;
       files = this.fs.readdirSync(dir);
       _results = [];
       for (_i = 0, _len = files.length; _i < _len; _i++) {
         file = files[_i];
-        if (this.fs.lstatSync("" + dir + file).isDirectory()) {
-          this.check_dir_tree_read_dir("" + dir + file + "/");
-          _results.push(console.log(file));
+        loc = "" + dir + file;
+        if (this.fs.lstatSync(loc).isDirectory()) {
+          _results.push(this.check_dir_tree_read_dir("" + dir + file + "/"));
         } else {
-          _results.push(void 0);
+          _results.push(this.check_dir_tree_callback(loc, file));
         }
       }
       return _results;

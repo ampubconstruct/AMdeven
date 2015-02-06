@@ -54,13 +54,17 @@ class @NodeJsApp
 		file = @fs.createWriteStream(filepath)
 		protocol = if url.match /^https/ then @https else @http
 		request = protocol.get url, (response) => response.pipe(file)
-	check_dir_tree: (dir, callback = (filename) => 1) ->
+	check_dir_tree: (dir, callback = undefined) ->
+		if callback then @check_dir_tree_callback = callback
 		@check_dir_tree_read_dir(dir)
+	check_dir_tree_callback: -> 1
 	check_dir_tree_read_dir: (dir) ->
 		files = @fs.readdirSync(dir)
 		for file in files
-			if @fs.lstatSync("#{dir}#{file}").isDirectory()
+			loc = "#{dir}#{file}"
+			if @fs.lstatSync(loc).isDirectory()
 				@check_dir_tree_read_dir "#{dir}#{file}/"
-				console.log file
+			else
+				@check_dir_tree_callback loc, file
 
 1
