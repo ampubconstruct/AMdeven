@@ -12,5 +12,5 @@ class @AtomAppClient extends @CommonJsAroundProtocol
 		@ws = io @ws_url
 		@ws.on "connect", =>
 			console.log "websocket connected"
-			if @params.g then @ws.emit "g", @params.g
+			if @params.g then @ws.emit "g", (if typeof(@params.g) is "object" then @params.g else [@params.g])
 			@ws.on "reload", => location.reload()

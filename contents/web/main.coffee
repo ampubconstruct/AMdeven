@@ -1,6 +1,7 @@
 $ =>
 	@aac = new @AtomAppClient
-	
+
+###
 @perfectSquares = ->
 	num = 0
 	loop
@@ -10,4 +11,4 @@ $ =>
 	return
 
 window.ps or= perfectSquares()
-
+###

@@ -1,6 +1,6 @@
 (function() {
-  var __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+  var __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __hasProp = {}.hasOwnProperty;
 
   this.AtomAppClient = (function(_super) {
     __extends(AtomAppClient, _super);
@@ -31,7 +31,7 @@
         return function() {
           console.log("websocket connected");
           if (_this.params.g) {
-            _this.ws.emit("g", _this.params.g);
+            _this.ws.emit("g", (typeof _this.params.g === "object" ? _this.params.g : [_this.params.g]));
           }
           return _this.ws.on("reload", function() {
             return location.reload();

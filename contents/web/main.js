@@ -5,17 +5,18 @@
     };
   })(this));
 
-  this.perfectSquares = function*() {
-    var num;
-    num = 0;
-    while (true) {
-      num += 1;
-      console.log(num);
-      (yield num * num);
-    }
-  };
 
-  window.ps || (window.ps = perfectSquares());
+  /*
+  @perfectSquares = ->
+  	num = 0
+  	loop
+  		num += 1
+  		console.log num
+  		yield num * num
+  	return
+  
+  window.ps or= perfectSquares()
+   */
 
 }).call(this);
 

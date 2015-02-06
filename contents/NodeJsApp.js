@@ -122,6 +122,33 @@
       })(this));
     };
 
+    NodeJsApp.prototype.check_dir_tree = function(dir, callback) {
+      if (callback == null) {
+        callback = (function(_this) {
+          return function(filename) {
+            return 1;
+          };
+        })(this);
+      }
+      return this.check_dir_tree_read_dir(dir);
+    };
+
+    NodeJsApp.prototype.check_dir_tree_read_dir = function(dir) {
+      var file, files, _i, _len, _results;
+      files = this.fs.readdirSync(dir);
+      _results = [];
+      for (_i = 0, _len = files.length; _i < _len; _i++) {
+        file = files[_i];
+        if (this.fs.lstatSync("" + dir + file).isDirectory()) {
+          this.check_dir_tree_read_dir("" + dir + file + "/");
+          _results.push(console.log(file));
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
+    };
+
     return NodeJsApp;
 
   })();
