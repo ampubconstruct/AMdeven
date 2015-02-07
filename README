@@ -1,13 +1,14 @@
-#
-maybe only windows7
-required autoit
+#必要環境(environment)
+Windows
 
-#
-構成
-	atom-shell-exeが入ったディレクトリ/this_sample
+
+#構成(formation)
+	/atom-shell-version/
+	/this_sample/
+		run.bat(execute)
 #
 
 contents内のjs,html,css 自動更新
 
-#exe
-run.batファイルを起動。
+#起動(execute)
+	run.batファイルを起動。
