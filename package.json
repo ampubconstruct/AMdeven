@@ -3,6 +3,7 @@
   "version" : "0.1.0",
   "dependencies": {
 		"mime": "latest",
+		"cson": "latest",
 		"socket.io": "1.x"
   },
   "main"    : "Browser.js",

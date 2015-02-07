@@ -11,13 +11,17 @@
   })(this);
 
   this.Browser = (function() {
-    function Browser() {}
-
     Browser.prototype.url = "file://" + __dirname + "/contents/index.html";
+
+    Browser.prototype.cson_path = "./browser.cson";
+
+    Browser.prototype.fs = require("fs");
 
     Browser.prototype.app = require("app");
 
     Browser.prototype.ipc = require("ipc");
+
+    Browser.prototype.cson = require("cson");
 
     Browser.prototype.BrowserWindow = require("browser-window");
 
@@ -26,6 +30,15 @@
     Browser.prototype.shell = require("shell");
 
     Browser.prototype.mainWindow = 0;
+
+    function Browser() {
+      var key, result, val;
+      result = this.cson.load("./browser.cson");
+      for (key in result) {
+        val = result[key];
+        this[key] = val;
+      }
+    }
 
     Browser.prototype.start = function() {
       require("crash-reporter").start();
@@ -59,27 +72,37 @@
 
     Browser.prototype.make_window = function() {
       this.mainWindow = new this.BrowserWindow({
-        width: 800,
-        height: 800
+        x: this.x,
+        y: this.y,
+        width: this.width,
+        height: this.height
       });
       this.mainWindow.loadUrl(this.url);
       this.mainWindow.openDevTools();
-      this.mainWindow.on("closed", function() {
-        return this.mainWindow = null;
-      });
-      return this.move_window();
-    };
-
-    Browser.prototype.move_window = function() {
-      this.mainWindow.setTitle("atom-shell MainWindow");
-      return this.shell.openItem("set_renderer.exe");
+      console.log;
+      return this.mainWindow.on("close", (function(_this) {
+        return function(e) {
+          var cson_string, obj, wh, xy;
+          xy = _this.mainWindow.getPosition();
+          wh = _this.mainWindow.getSize();
+          obj = {
+            x: xy[0],
+            y: xy[1],
+            width: wh[0],
+            height: wh[1]
+          };
+          cson_string = _this.cson.createCSONString(obj);
+          _this.fs.writeFileSync(_this.cson_path, cson_string);
+          return _this.mainWindow = null;
+        };
+      })(this));
     };
 
     Browser.prototype.global_shortcut = function() {
       var ret;
       ret = this.globalShortcut.register('ctrl+e', (function(_this) {
         return function() {
-          return console.log("" + (Date.now()) + " , ctrl+e is pressed");
+          return console.log((Date.now()) + " , ctrl+e is pressed");
         };
       })(this));
       return 1;
@@ -114,3 +137,5 @@
   1;
 
 }).call(this);
+
+ //# sourceMappingURL=Browser.js.map
