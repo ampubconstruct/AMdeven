@@ -1,3 +1,4 @@
+
 start = =>
 	b = new @Browser()
 	b.start()
