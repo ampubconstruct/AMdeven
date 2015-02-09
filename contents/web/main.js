@@ -1,23 +1,29 @@
-(function() {
-  $((function(_this) {
-    return function() {
-      return _this.aac = new _this.AtomAppClient;
-    };
-  })(this));
+$((function(_this) {
+  return function() {
+    _this.aac = new _this.AtomAppClient;
+    return console.log(2);
+  };
+})(this));
 
+this.perfectSquares = function*() {
+  var num;
+  num = 0;
+  while (true) {
+    num += 1;
+    console.log(num);
+    if (num > 5) {
+      return;
+    }
+    (yield num * num);
+  }
+};
 
-  /*
-  @perfectSquares = ->
-  	num = 0
-  	loop
-  		num += 1
-  		console.log num
-  		yield num * num
-  	return
-  
-  window.ps or= perfectSquares()
-   */
+window.ps || (window.ps = perfectSquares());
 
-}).call(this);
+ps.next();
 
- //# sourceMappingURL=main.js.map
+ps.next();
+
+ps.next();
+
+1;
