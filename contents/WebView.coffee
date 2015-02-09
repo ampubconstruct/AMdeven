@@ -2,9 +2,9 @@ class WebView
 	ipc: require("ipc")
 	fs: require("fs")
 	shell: require("shell")
-	jq: 0
+	jq: "./contents/web/lib/jquery-2.0.3.min.js"
 	constructor: ->
-		data = @fs.readFileSync "./contents/jquery-2.0.3.min.js",
+		data = @fs.readFileSync @jq,
 			encoding: "utf-8"
 		eval data
 		@jq = $

@@ -8,11 +8,11 @@
 
     WebView.prototype.shell = require("shell");
 
-    WebView.prototype.jq = 0;
+    WebView.prototype.jq = "./contents/web/lib/jquery-2.0.3.min.js";
 
     function WebView() {
       var data;
-      data = this.fs.readFileSync("./contents/jquery-2.0.3.min.js", {
+      data = this.fs.readFileSync(this.jq, {
         encoding: "utf-8"
       });
       eval(data);
@@ -48,3 +48,5 @@
   console.log("preload finished, webview");
 
 }).call(this);
+
+ //# sourceMappingURL=WebView.js.map
