@@ -1,6 +1,6 @@
 (function() {
-  var __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  var __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __hasProp = {}.hasOwnProperty,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   this.AtomApp = (function(_super) {
@@ -23,27 +23,9 @@
     };
 
     AtomApp.prototype.start = function() {
-      if (this.reload_) {
-        this.auto_reload();
-      }
       if (this.inspector_) {
         return this.auto_inspector();
       }
-    };
-
-    AtomApp.prototype.auto_reload = function() {
-      return this.fs.watch("contents", (function(_this) {
-        return function(e, filename) {
-          if (!filename) {
-            return;
-          }
-          if (filename.match(/\.(html)|(js)|(css)$/)) {
-            return location.reload();
-          } else {
-            return 1;
-          }
-        };
-      })(this));
     };
 
     AtomApp.prototype.auto_inspector = function() {
@@ -78,12 +60,17 @@
 
     ExternalSite.prototype.ready_flag = 0;
 
-    function ExternalSite(selector) {
-      this.selector = selector;
+    function ExternalSite(_at_selector) {
+      this.selector = _at_selector;
       this.finish = __bind(this.finish, this);
       this.webview = document.querySelector(this.selector);
       this.webview_event();
       this.webview.addEventListener("did-finish-load", this.finish);
+      this.webview.addEventListener("new-window", (function(_this) {
+        return function(e) {
+          return _this.exejs("location.href = '" + e.url + "'");
+        };
+      })(this));
     }
 
     ExternalSite.prototype.webview_event = function() {
@@ -101,7 +88,8 @@
     };
 
     ExternalSite.prototype.finish = function() {
-      return ++this.ready_flag;
+      ++this.ready_flag;
+      return console.log("webview ready");
     };
 
     ExternalSite.prototype.exejs = function(code) {

@@ -8,15 +8,7 @@ class @AtomApp extends @NodeJsApp
 		@init()
 	init: -> 1
 	start: ->
-		if @reload_ then @auto_reload()
 		if @inspector_ then @auto_inspector()
-	auto_reload: ->
-		@fs.watch "contents", (e, filename) =>
-			if not filename then return
-			if filename.match /\.(html)|(js)|(css)$/
-				location.reload()
-			else
-				1
 	auto_inspector: ->
 		#
 		$(document).on "mousedown", (e) =>
@@ -25,7 +17,6 @@ class @AtomApp extends @NodeJsApp
 					x: e.clientX
 					y: e.clientY
 				@ipc.send('inspect element', obj, "mainWindow")
-
 
 class @ExternalSite
 	###
@@ -41,6 +32,7 @@ class @ExternalSite
 		@webview = document.querySelector(@selector)
 		@webview_event()
 		@webview.addEventListener("did-finish-load", @finish)
+		@webview.addEventListener("new-window", (e) => @exejs("location.href = '#{e.url}'"))
 	webview_event: ->
 		@webview.addEventListener "console-message", (event) =>
 			console.log "%c#{event.message}", "color: green"
@@ -50,6 +42,7 @@ class @ExternalSite
 	#load終了後
 	finish: =>
 		++@ready_flag
+		console.log "webview ready"
 	exejs: (code) ->
 		@webview.executeJavaScript code
 		#console.log code
@@ -57,18 +50,6 @@ class @ExternalSite
 	test: ->
 		code = 'document.querySelector("#gbqfq").value = "tarou";'
 		@webview.executeJavaScript code
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

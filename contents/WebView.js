@@ -37,15 +37,28 @@
       return this.jq(selector).trigger(e);
     };
 
+    WebView.prototype.start = function() {
+      return this.jq((function(_this) {
+        return function() {
+          console.log("webview load finished");
+          return _this.jq("a").click(function(e) {
+            return _this.shell.openExternal(_this.jq("a").attr("href"));
+          });
+        };
+      })(this));
+    };
+
     return WebView;
 
   })();
 
   eval("wv = new WebView();");
 
+  wv.start();
+
   wv.set_event();
 
-  console.log("preload finished, webview");
+  console.log("webview preload finished");
 
 }).call(this);
 

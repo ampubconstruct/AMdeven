@@ -3,10 +3,9 @@
 
   start = (function(_this) {
     return function() {
-      var b, p;
+      var b;
       b = new _this.Browser();
-      b.start();
-      return p = new _this.Pipe();
+      return b.start();
     };
   })(this);
 
@@ -43,7 +42,8 @@
     Browser.prototype.start = function() {
       require("crash-reporter").start();
       this.ipc_event();
-      return this.app_start();
+      this.app_start();
+      return this.live_reload();
     };
 
     Browser.prototype.ipc_event = function() {
@@ -66,6 +66,19 @@
         return function() {
           _this.make_window();
           return _this.etc();
+        };
+      })(this));
+    };
+
+    Browser.prototype.live_reload = function() {
+      return this.fs.watch("contents", (function(_this) {
+        return function(e, filename) {
+          if (!filename) {
+            return;
+          }
+          if (filename.match(/\.(html)|(js)|(css)$/)) {
+            return _this.mainWindow.reload();
+          }
         };
       })(this));
     };
@@ -115,20 +128,6 @@
     1;
 
     return Browser;
-
-  })();
-
-  this.Pipe = (function() {
-    function Pipe() {
-      process.stdin.setEncoding("utf8");
-      process.stdin.on("readable", function() {
-        var chunk;
-        chunk = process.stdin.read();
-        return console.log(chunk);
-      });
-    }
-
-    return Pipe;
 
   })();
 

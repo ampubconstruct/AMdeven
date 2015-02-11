@@ -1,8 +1,6 @@
-
 start = =>
 	b = new @Browser()
 	b.start()
-	p = new @Pipe()
 
 class @Browser
 	#configuration
@@ -25,6 +23,7 @@ class @Browser
 		require("crash-reporter").start()
 		@ipc_event()
 		@app_start()
+		@live_reload()
 	ipc_event: ->
 		@ipc.on 'inspect element', (event, arg, renderer) =>
 			#event.sender.send 'asynchronous-reply', 'pong')
@@ -35,6 +34,11 @@ class @Browser
 		@app.on "ready", =>
 			@make_window()
 			@etc()
+	live_reload: ->
+		@fs.watch "contents", (e, filename) =>
+			if not filename then return
+			if filename.match /\.(html)|(js)|(css)$/
+				@mainWindow.reload()
 	make_window: ->
 		@mainWindow = new @BrowserWindow(
 			x: @x
@@ -64,15 +68,6 @@ class @Browser
 	etc: ->
 		@global_shortcut()
 	1
-
-
-class @Pipe
-	constructor: ->
-		process.stdin.setEncoding "utf8"
-		process.stdin.on "readable", ->
-			chunk = process.stdin.read()
-			console.log chunk
-
 
 start()
 

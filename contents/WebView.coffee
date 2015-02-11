@@ -18,8 +18,14 @@ class WebView
 		e.which = keyCode
 		@jq(selector).val(@jq(selector).val() + String.fromCharCode(e.which))
 		@jq(selector).trigger(e)
+	start: ->
+		@jq =>
+			console.log "webview load finished"
+			@jq("a").click (e) =>
+				@shell.openExternal @jq("a").attr("href")
 #
 
 eval "wv = new WebView();"
+wv.start()
 wv.set_event()
-console.log "preload finished, webview"
+console.log "webview preload finished"
