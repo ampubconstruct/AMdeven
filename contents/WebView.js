@@ -1,5 +1,12 @@
+
+/*
+2015/02/11: goBackを使うと、wvが使えなくなる模様
+ */
+
 (function() {
-  var WebView;
+  var Crawler, WebView,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __hasProp = {}.hasOwnProperty;
 
   WebView = (function() {
     WebView.prototype.ipc = require("ipc");
@@ -21,9 +28,31 @@
     }
 
     WebView.prototype.set_event = function() {
-      return this.ipc.on("keydown", (function(_this) {
+      this.ipc.on("keydown", (function(_this) {
         return function(selector, keyCode) {
           return _this.set_keydown_event(selector, keyCode);
+        };
+      })(this));
+      this.ipc.on("mousedown", (function(_this) {
+        return function(ratio, selector) {
+          if (ratio == null) {
+            ratio = 0.5;
+          }
+          if (selector == null) {
+            selector = "body";
+          }
+          return _this.jq(selector).css("transform", "scale(" + ratio + ", " + ratio + ")");
+        };
+      })(this));
+      return this.ipc.on("set scale", (function(_this) {
+        return function(ratio, selector) {
+          if (ratio == null) {
+            ratio = 0.5;
+          }
+          if (selector == null) {
+            selector = "body";
+          }
+          return _this.jq(selector).css("transform", "scale(" + ratio + ", " + ratio + ")");
         };
       })(this));
     };
@@ -38,23 +67,32 @@
     };
 
     WebView.prototype.start = function() {
-      return this.jq((function(_this) {
-        return function() {
-          console.log("webview load finished");
-          return _this.jq("a").click(function(e) {
-            return _this.shell.openExternal(_this.jq("a").attr("href"));
-          });
-        };
-      })(this));
+      return 1;
     };
 
     return WebView;
 
   })();
 
-  eval("wv = new WebView();");
+  Crawler = (function(_super) {
+    __extends(Crawler, _super);
 
-  wv.start();
+    function Crawler() {
+      return Crawler.__super__.constructor.apply(this, arguments);
+    }
+
+    Crawler.prototype.set_event = function() {
+      Crawler.__super__.set_event.call(this);
+      return this.crawler_event();
+    };
+
+    Crawler.prototype.crawler_event = function() {};
+
+    return Crawler;
+
+  })(WebView);
+
+  eval("wv = new Crawler();");
 
   wv.set_event();
 

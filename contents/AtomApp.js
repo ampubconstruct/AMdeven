@@ -75,14 +75,13 @@
 
     ExternalSite.prototype.webview_event = function() {
       this.webview.addEventListener("console-message", (function(_this) {
-        return function(event) {
-          return console.log("%c" + event.message, "color: green");
+        return function(e) {
+          return console.log("%c" + e.message, "color: green");
         };
       })(this));
       return this.webview.addEventListener("ipc-message", (function(_this) {
-        return function(event) {
-          console.log("%c" + event.channel, "color: purple");
-          return console.log("%c" + event.args, "color: purple");
+        return function(e) {
+          return console.log("%c" + e.channel + " " + e.args, "color: purple");
         };
       })(this));
     };

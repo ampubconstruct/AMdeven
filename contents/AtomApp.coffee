@@ -34,11 +34,8 @@ class @ExternalSite
 		@webview.addEventListener("did-finish-load", @finish)
 		@webview.addEventListener("new-window", (e) => @exejs("location.href = '#{e.url}'"))
 	webview_event: ->
-		@webview.addEventListener "console-message", (event) =>
-			console.log "%c#{event.message}", "color: green"
-		@webview.addEventListener "ipc-message", (event) =>
-			console.log "%c#{event.channel}", "color: purple"
-			console.log "%c#{event.args}", "color: purple"
+		@webview.addEventListener("console-message", (e) => console.log "%c#{e.message}", "color: green")
+		@webview.addEventListener("ipc-message", (e) => console.log "%c#{e.channel} #{e.args}", "color: purple")
 	#load終了後
 	finish: =>
 		++@ready_flag

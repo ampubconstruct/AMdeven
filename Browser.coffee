@@ -47,6 +47,7 @@ class @Browser
 			height: @height
 			#show: (false)
 		)
+		@mainWindow.webContents.on "did-finish-load", => console.log "load finished."
 		@mainWindow.loadUrl @url
 		@mainWindow.openDevTools()
 		console.log

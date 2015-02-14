@@ -90,6 +90,11 @@
         width: this.width,
         height: this.height
       });
+      this.mainWindow.webContents.on("did-finish-load", (function(_this) {
+        return function() {
+          return console.log("load finished.");
+        };
+      })(this));
       this.mainWindow.loadUrl(this.url);
       this.mainWindow.openDevTools();
       console.log;

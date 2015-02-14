@@ -1,3 +1,7 @@
+###
+2015/02/11: goBackを使うと、wvが使えなくなる模様
+###
+
 class WebView
 	ipc: require("ipc")
 	fs: require("fs")
@@ -9,9 +13,10 @@ class WebView
 		eval data
 		@jq = $
 		eval '$ = null;jQuery = null;'
-	set_event: ->
-		@ipc.on "keydown", (selector, keyCode) => #es.webview.send("keydown", "#gbqfq", 97)
-			@set_keydown_event selector, keyCode
+	set_event: -> #es.webview.send("keydown", "#gbqfq", 97)
+		@ipc.on "keydown", (selector, keyCode) => @set_keydown_event(selector, keyCode)
+		@ipc.on "mousedown", (ratio = 0.5, selector = "body") => @jq(selector).css("transform", "scale(#{ratio}, #{ratio})")
+		@ipc.on "set scale", (ratio = 0.5, selector = "body") => @jq(selector).css("transform", "scale(#{ratio}, #{ratio})")
 	set_keydown_event: (selector, keyCode) ->
 		@jq(selector).focus()
 		e = @jq.Event("keypress")
@@ -19,13 +24,18 @@ class WebView
 		@jq(selector).val(@jq(selector).val() + String.fromCharCode(e.which))
 		@jq(selector).trigger(e)
 	start: ->
-		@jq =>
-			console.log "webview load finished"
-			@jq("a").click (e) =>
-				@shell.openExternal @jq("a").attr("href")
+		1
+
+
 #
 
-eval "wv = new WebView();"
-wv.start()
+class Crawler extends WebView
+	set_event: ->
+		super()
+		@crawler_event()
+	crawler_event: ->
+		#
+
+eval "wv = new Crawler();"
 wv.set_event()
 console.log "webview preload finished"
