@@ -2,7 +2,7 @@ start = =>
 	b = new @Browser()
 	b.start()
 
-class @Browser
+class @Browser# extends @NodeJsApp
 	#configuration
 	url: "file://" + __dirname + "/contents/index.html"
 	cson_path: "./browser.cson"
@@ -50,15 +50,14 @@ class @Browser
 		@mainWindow.webContents.on "did-finish-load", => console.log "load finished."
 		@mainWindow.loadUrl @url
 		@mainWindow.openDevTools()
-		console.log
 		@mainWindow.on "close", (e) =>
 			xy = @mainWindow.getPosition()
 			wh = @mainWindow.getSize()
-			obj =
-				x: xy[0]
-				y: xy[1]
-				width: wh[0]
-				height: wh[1]
+			obj = @cson.load @cson_path
+			obj.x = xy[0]
+			obj.y = xy[1]
+			obj.width = wh[0]
+			obj.height = wh[1]
 			cson_string = @cson.createCSONString obj
 			@fs.writeFileSync @cson_path, cson_string
 			@mainWindow = (null)

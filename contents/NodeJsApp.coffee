@@ -34,7 +34,7 @@ class Server extends @CommonJsAroundProtocol
 		if url[url.length-4..url.length-1] is "html"
 			ip = req.connection.remoteAddress.replace /.*[^\d](\d+\.\d+\.\d+\.\d+$)/, "$1"
 			date = new Date().toLocaleTimeString()
-			console.log "#{date} #{ip} #{url}" 
+			console.log "#{date} #{ip} #{url}"
 	ws_start: ->
 		@websocket = @sio(@ws_port)
 		@websocket.on "connection", (socket) =>
@@ -46,9 +46,10 @@ class Server extends @CommonJsAroundProtocol
 
 
 class @NodeJsApp
-	http: require "http"
-	https: require "https"
-	fs: require "fs"
+	http: require("http")
+	https: require("https")
+	fs: require("fs")
+	cson: require("cson")
 	server: new Server
 	downloader: (url, filepath) -> #http, httpsに対応
 		file = @fs.createWriteStream(filepath)

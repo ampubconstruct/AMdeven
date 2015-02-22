@@ -109,6 +109,8 @@
 
     NodeJsApp.prototype.fs = require("fs");
 
+    NodeJsApp.prototype.cson = require("cson");
+
     NodeJsApp.prototype.server = new Server;
 
     NodeJsApp.prototype.downloader = function(url, filepath) {

@@ -97,18 +97,16 @@
       })(this));
       this.mainWindow.loadUrl(this.url);
       this.mainWindow.openDevTools();
-      console.log;
       return this.mainWindow.on("close", (function(_this) {
         return function(e) {
           var cson_string, obj, wh, xy;
           xy = _this.mainWindow.getPosition();
           wh = _this.mainWindow.getSize();
-          obj = {
-            x: xy[0],
-            y: xy[1],
-            width: wh[0],
-            height: wh[1]
-          };
+          obj = _this.cson.load(_this.cson_path);
+          obj.x = xy[0];
+          obj.y = xy[1];
+          obj.width = wh[0];
+          obj.height = wh[1];
           cson_string = _this.cson.createCSONString(obj);
           _this.fs.writeFileSync(_this.cson_path, cson_string);
           return _this.mainWindow = null;
