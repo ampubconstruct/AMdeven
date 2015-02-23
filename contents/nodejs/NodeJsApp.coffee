@@ -17,8 +17,8 @@ class @Server
 	mime: require('mime')
 	sio: require('socket.io')
 	ws_start: ->
-		@websocket = @sio.(@ws_port)
+		@websocket = @sio(@ws_port)
 		@websocket.on "connection", (socket) =>
 			socket.emit "first", {hello: "world"}
-			
+
 1

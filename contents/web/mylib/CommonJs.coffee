@@ -4,7 +4,7 @@ class @CommonJsAroundProtocol
 		params = {}
 		query = url.replace(/.*\?(.*)$/, "$1")
 		if url is query then return params
-		else 
+		else
 			for val in query.split("&")
 				param = val.split("=")
 				val = param[1]
