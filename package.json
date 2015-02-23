@@ -7,5 +7,5 @@
 		"socket.io": "1.x"
   },
   "main"    : "Browser.js",
-	"comment"	: "atom-shell version 0.20.2"
+	"comment"	: "atom-shell version 0.21.2"
 }

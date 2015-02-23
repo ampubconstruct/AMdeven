@@ -6,18 +6,22 @@
 
       /*required */
       _this.aa = new _this.AtomApp;
-      _this.aa.start();
-
-      /*add function */
-      _this.aa.server.start();
-      return _this.es = new _this.ExternalSite("#foo");
+      return _this.aa.start();
     };
   })(this));
 
   test = (function(_this) {
     return function() {
-      return _this.aa.check_dir_tree("./", function(loc, file) {
-        return console.log(file);
+
+      /*add function */
+      _this.aa.server.start();
+
+      /*external site */
+      _this.es = new _this.ExternalSite("#foo");
+
+      /*check directory tree */
+      return _this.aa.check_dir_tree("./", /coffee$/, function(loc_file, file) {
+        return console.log(loc_file);
       });
     };
   })(this);

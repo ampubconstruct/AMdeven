@@ -8,7 +8,7 @@ Windows
 		run.bat(execute)
 #
 
-contents内のjs,html,css 自動更新
+contents内のjs,html,css編集後、自動更新
 
 #起動(execute)
 	run.batファイルを起動。

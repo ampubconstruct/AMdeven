@@ -124,7 +124,8 @@
       })(this));
     };
 
-    NodeJsApp.prototype.check_dir_tree = function(dir, callback) {
+    NodeJsApp.prototype.check_dir_tree = function(dir, _at_check_dir_tree_file_pattern, callback) {
+      this.check_dir_tree_file_pattern = _at_check_dir_tree_file_pattern;
       if (callback == null) {
         callback = void 0;
       }
@@ -148,7 +149,11 @@
         if (this.fs.lstatSync(loc).isDirectory()) {
           _results.push(this.check_dir_tree_read_dir("" + dir + file + "/"));
         } else {
-          _results.push(this.check_dir_tree_callback(loc, file));
+          if (file.match(this.check_dir_tree_file_pattern)) {
+            _results.push(this.check_dir_tree_callback(loc, file));
+          } else {
+            _results.push(void 0);
+          }
         }
       }
       return _results;
