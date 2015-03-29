@@ -3,6 +3,7 @@
   "version" : "0.1.0",
   "description": "test",
   "dependencies": {
+    "coffee-script": "1.9.*"
 		"mime": "latest",
 		"cson": "latest",
 		"socket.io": "1.x"

@@ -10,7 +10,7 @@ Windows
 
 contents内のjs,html,css編集後、自動更新
 
-#起動(execute)
+#起動(execution)
 	run.batファイルを起動。
 
 
@@ -22,9 +22,10 @@ coffeescript compiler
 
 ---
 ####node.js application
-以下をコピー
+以下をプロジェクトにコピー
 
 	package.json
 	contents/
 		node.js/
 		web/
+		main.coffee
