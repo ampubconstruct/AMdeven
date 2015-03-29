@@ -1,5 +1,6 @@
 class @CommonJs
-	ws_port: 50000
+	http_port: 8080
+	ws_port: 8080 #50000
 	get_params: (url) ->
 		params = {}
 		query = url.replace(/.*\?(.*)$/, "$1")

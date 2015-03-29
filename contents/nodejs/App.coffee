@@ -3,7 +3,6 @@ CommonJs = require("../web/mylib/CommonJs.js")
 
 class Server extends CommonJs
 	#config
-	http_port: 8080
 	base_path: "contents/web/"
 	#module
 	http: require("http")
@@ -11,8 +10,8 @@ class Server extends CommonJs
 	sio: require('socket.io')
 	fs: require("fs")
 	start: (security = false) ->
+		@app = @http.createServer((req, res) => @http_server_action(req, res))
 		@ws_start()
-		@http.createServer((req, res) => @http_server_action(req, res)).listen(@http_port)
 	http_server_action: (req, res) ->
 		#initial
 		url = req.url.replace /\/{2,}/, "/"
@@ -37,7 +36,11 @@ class Server extends CommonJs
 			date = new Date().toLocaleTimeString()
 			console.log "#{date} #{ip} #{url}"
 	ws_start: ->
-		@websocket = @sio(@ws_port)
+		if @ws_port is @http_port
+			@websocket = @sio(@app)
+		else
+			@websocket = @sio(@ws_port)
+		@app.listen(@http_port)
 		@websocket.on "connection", (socket) =>
 			socket.on "g", (files, path) => @ws_reload(socket, files)
 	ws_reload: (socket, files, path) ->
