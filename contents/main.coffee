@@ -4,12 +4,12 @@ $ =>
 	###required###
 	@aa = new @AtomApp
 	@aa.start()
+	@aa.server.start() #http server, and websocket reload server
 
 
 
 test = =>
 	###add function###
-	@aa.server.start() #http server, and websocket reload server
 	###external site###
 	@es = new @aa.es("#foo") #inner webview
 	###check directory tree###

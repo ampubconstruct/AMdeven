@@ -15,4 +15,4 @@ class @CommonJs
 				params[param[0]] = val
 			params
 
-module.exports = @CommonJs
+module?.exports = @CommonJs

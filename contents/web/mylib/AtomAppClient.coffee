@@ -1,4 +1,4 @@
-class @AtomAppClient extends @CommonJsAroundProtocol
+class @AtomAppClient extends @CommonJs
 	###modules###
 	ws: 1
 	###websocket required variables###
