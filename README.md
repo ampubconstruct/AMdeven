@@ -17,3 +17,14 @@ contents内のjs,html,css編集後、自動更新
 ##開発環境
 npm install
 coffeescript compiler
+
+
+---
+####node.js application
+以下をコピー
+
+	package.json
+	contents/
+		node.js/
+		web/
+		
