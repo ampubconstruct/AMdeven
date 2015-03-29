@@ -1,4 +1,4 @@
-NodeJsApp = require("./NodeJsApp.js")
+NodeJsApp = require("./nodejs/App.js")
 
 class ExternalSite
 	###

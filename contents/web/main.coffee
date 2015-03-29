@@ -1,5 +1,5 @@
 $ =>
-	@aac = new @AtomAppClient
+	@nc = new @NodeClient
 
 ###
 @perfectSquares = ->
