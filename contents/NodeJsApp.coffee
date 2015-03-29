@@ -1,6 +1,7 @@
-#required @CommonJs
+#required CommonJs
+CommonJs = require("./web/mylib/CommonJs.js")
 
-class Server extends @CommonJsAroundProtocol
+class Server extends CommonJs
 	#config
 	http_port: 8080
 	base_path: "contents/web/"
@@ -69,4 +70,5 @@ class @NodeJsApp
 				if file.match(@check_dir_tree_file_pattern)
 					@check_dir_tree_callback loc, file
 
-1
+
+module.exports = @NodeJsApp

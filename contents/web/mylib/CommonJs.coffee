@@ -1,4 +1,4 @@
-class @CommonJsAroundProtocol
+class @CommonJs
 	ws_port: 50000
 	get_params: (url) ->
 		params = {}
@@ -14,3 +14,5 @@ class @CommonJsAroundProtocol
 					val = 1
 				params[param[0]] = val
 			params
+
+module.exports = @CommonJs

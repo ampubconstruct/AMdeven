@@ -11,4 +11,4 @@ $ =>
 	return
 
 window.ps or= perfectSquares()
-###
+####

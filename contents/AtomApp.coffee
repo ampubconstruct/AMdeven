@@ -1,24 +1,6 @@
-class @AtomApp extends @NodeJsApp
-	reload_: 1
-	inspector_: 1
-	#module
-	ipc: require "ipc"
-	shell: require "shell"
-	constructor: ->
-		@init()
-	init: -> 1
-	start: ->
-		if @inspector_ then @auto_inspector()
-	auto_inspector: ->
-		#
-		$(document).on "mousedown", (e) =>
-			if e.button is 2
-				obj =
-					x: e.clientX
-					y: e.clientY
-				@ipc.send('inspect element', obj, "mainWindow")
+NodeJsApp = require("./NodeJsApp.js")
 
-class @ExternalSite
+class ExternalSite
 	###
 		document: https://github.com/atom/atom-shell/blob/master/docs/api/web-view-tag.md
 		how to use:
@@ -49,5 +31,26 @@ class @ExternalSite
 		@webview.executeJavaScript code
 
 
+class @AtomApp extends NodeJsApp
+	reload_: 1
+	inspector_: 1
+	es: ExternalSite
+	#module
+	ipc: require "ipc"
+	shell: require "shell"
+	constructor: ->
+		@init()
+	init: -> 1
+	start: ->
+		if @inspector_ then @auto_inspector()
+	auto_inspector: ->
+		#
+		$(document).on "mousedown", (e) =>
+			if e.button is 2
+				obj =
+					x: e.clientX
+					y: e.clientY
+				@ipc.send('inspect element', obj, "mainWindow")
 
-1
+
+module.exports = @AtomApp
