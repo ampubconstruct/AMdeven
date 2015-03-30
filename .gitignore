@@ -20,7 +20,6 @@ build/Release
 node_modules
 min
 # myconfig
-app
 *.min.*
 *.js
 *.map
