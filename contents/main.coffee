@@ -1,4 +1,3 @@
-
 code = =>
 	###nodejs app start###
 	@App = require("./nodejs/App.js")
