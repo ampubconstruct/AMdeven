@@ -1,8 +1,4 @@
 code = =>
-	###nodejs app start###
-	@App = require("./nodejs/App.js")
-	@a = new @App()
-	@a.server.start()
 	###atom app start###
 	@AtomApp = require("./AtomApp.js")
 	@aa = new @AtomApp
