@@ -1,3 +1,8 @@
+@AtomApp = require("./AtomApp.js")
+@aa = new @AtomApp
+@aa.start()
+@aa.server.start() #http server, and websocket reload server
+
 code = =>
 	###atom app start###
 	@AtomApp = require("./AtomApp.js")
