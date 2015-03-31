@@ -10,14 +10,20 @@ class ExternalSite
 	###
 	webview: 0
 	ready_flag: 0
-	constructor: (@selector) ->
-		@webview = document.querySelector(@selector)
+	constructor: (@selector, @dom, @src, which = "append", @width = "100%", @height = "640px") ->
+		webview = """
+			<webview id="#{@selector}" preload="./webview.js" src="#{@src}"
+				style="width:#{@width}; height:#{@height}; display: block; overflow: hidden;" nodeintegration>
+			</webview>
+		"""
+		@webview = $(webview)
+		$(@dom)[which](@webview)
 		@webview_event()
-		@webview.addEventListener("did-finish-load", @finish)
-		@webview.addEventListener("new-window", (e) => @exejs("location.href = '#{e.url}'"))
+		@webview.on("did-finish-load", @finish)
+		@webview.on("new-window", (e) => @exejs("location.href = '#{e.url}'"))
 	webview_event: ->
-		@webview.addEventListener("console-message", (e) => console.log "%c#{e.message}", "color: green")
-		@webview.addEventListener("ipc-message", (e) => console.log "%c#{e.channel} #{e.args}", "color: purple")
+		@webview.on("console-message", (e) => console.log "%c#{e.message}", "color: green")
+		@webview.on("ipc-message", (e) => console.log "%c#{e.channel} #{e.args}", "color: purple")
 	#load終了後
 	finish: =>
 		++@ready_flag
