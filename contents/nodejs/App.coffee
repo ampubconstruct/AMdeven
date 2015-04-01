@@ -100,5 +100,4 @@ class @App
 				if file.match(@check_dir_tree_file_pattern)
 					@check_dir_tree_callback loc, file
 
-
 module.exports = @App
