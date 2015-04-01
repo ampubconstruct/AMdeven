@@ -25,10 +25,10 @@ class Server extends CommonJs
 		if exists_flag
 			data = @fs.readFileSync(path)
 			type = @mime.lookup path
-			res.writeHead 200, "Content-Type": type
+			res.writeHead(200, "Content-Type": type)
 			res.end(data)
 		else
-			res.writeHead 404
+			res.writeHead(404)
 			res.end("404 - file not found")
 		###access log###
 		if url[url.length-4..url.length-1] is "html"
@@ -54,16 +54,43 @@ class @App
 	https: require("https")
 	fs: require("fs")
 	cson: require("cson")
+	Client: require('ftp')
 	server: new Server
-	downloader: (url, filepath) -> #http, httpsに対応
+	ftp_downloader: (user, pass, file, host, filepath) =>
+		c = new @Client()
+		c.on "ready", =>
+			c.get "#{file}", (err, stream) =>
+				throw err if err
+				stream.once "close", =>
+					c.end()
+				stream.pipe @fs.createWriteStream(filepath)
+		c.connect
+			host: host
+			user: user
+			password: pass
+	readline: (path) =>
+		readline = require("readline")
+		rs = @fs.ReadStream(path)
+		rl = readline.createInterface({'input': rs, 'output': {}})
+		rl.on("line", (line) =>
+			console.log line
+		)
+		rl.resume()
+	ftp_downloader_fullpath: (url, filepath) =>
+		name = url.replace(/.*\/\/([^:]+).*/, "$1")
+		pass = url.replace(/.*\/\/[^:]+:([^@]+).*/, "$1")
+		file = url.replace(/.*\/([^/]+$)/, "$1")
+		host = url.replace(/.*@([^/]+).*/, "$1")
+		@ftp_downloader(name, pass, file, host, filepath)
+	downloader: (url, filepath) => #http, httpsに対応
 		file = @fs.createWriteStream(filepath)
 		protocol = if url.match /^https/ then @https else @http
 		request = protocol.get url, (response) => response.pipe(file)
-	check_dir_tree: (dir, @check_dir_tree_file_pattern, callback = undefined) ->
+	check_dir_tree: (dir, @check_dir_tree_file_pattern, callback = undefined) =>
 		if callback then @check_dir_tree_callback = callback
 		@check_dir_tree_read_dir(dir)
-	check_dir_tree_callback: -> 1
-	check_dir_tree_read_dir: (dir) ->
+	check_dir_tree_callback: => 1
+	check_dir_tree_read_dir: (dir) =>
 		files = @fs.readdirSync(dir)
 		for file in files
 			loc = "#{dir}#{file}"

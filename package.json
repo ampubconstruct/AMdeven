@@ -6,7 +6,9 @@
     "coffee-script": "1.9.0",
 		"mime": "latest",
 		"cson": "latest",
-		"socket.io": "1.x"
+		"socket.io": "1.x",
+    "ftp": "latest",
+    "readline": "latest"
   },
   "main"    : "Browser.js",
 	"comment"	: "atom-shell version 0.21.2"
