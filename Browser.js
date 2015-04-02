@@ -126,19 +126,16 @@
 
     Browser.prototype.global_shortcut = function() {
       var ret;
-      ret = this.globalShortcut.register('ctrl+e', (function(_this) {
+      return ret = this.globalShortcut.register('ctrl+e', (function(_this) {
         return function() {
           return console.log((Date.now()) + " , ctrl+e is pressed");
         };
       })(this));
-      return 1;
     };
 
     Browser.prototype.etc = function() {
       return this.global_shortcut();
     };
-
-    1;
 
     return Browser;
 

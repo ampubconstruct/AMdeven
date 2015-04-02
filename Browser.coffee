@@ -17,7 +17,7 @@ class @Browser# extends @NodeJsApp
 	#member
 	mainWindow: 0
 	constructor: ->
-		result = @cson.load "./browser.cson"
+		result = @cson.load("./browser.cson")
 		@[key] = val for key, val of result
 	start: ->
 		require("crash-reporter").start()
@@ -30,7 +30,7 @@ class @Browser# extends @NodeJsApp
 			@[renderer].inspectElement(arg.x, arg.y)
 	app_start: ->
 		@app.on "window-all-closed", =>
-			@app.quit()  unless process.platform is "darwin"
+			@app.quit() unless process.platform is "darwin"
 		@app.on "ready", =>
 			@make_window()
 			@etc()
@@ -51,10 +51,10 @@ class @Browser# extends @NodeJsApp
 			height: @height
 			#show: (false)
 		)
-		@mainWindow.webContents.on "did-finish-load", => console.log "load finished."
-		@mainWindow.loadUrl @url
+		@mainWindow.webContents.on("did-finish-load", => console.log "load finished.")
+		@mainWindow.loadUrl(@url)
 		@mainWindow.openDevTools()
-		@mainWindow.on "close", (e) =>
+		@mainWindow.on("close", (e) =>
 			xy = @mainWindow.getPosition()
 			wh = @mainWindow.getSize()
 			obj = @cson.load @cson_path
@@ -65,13 +65,13 @@ class @Browser# extends @NodeJsApp
 			cson_string = @cson.createCSONString obj
 			@fs.writeFileSync @cson_path, cson_string
 			@mainWindow = (null)
+		)
 	global_shortcut: ->
-			ret = @globalShortcut.register 'ctrl+e', =>
+			ret = @globalShortcut.register('ctrl+e', =>
 				console.log("#{Date.now()} , ctrl+e is pressed")
-			1
+			)
 	etc: ->
 		@global_shortcut()
-	1
 
 start()
 
