@@ -19,7 +19,10 @@
       _this.aa.start();
       _this.aa.server.start();
 
-      /*add function */
+      /* add function */
+
+      /*jsdom */
+      _this.aa.jsdom_check("./contents/index.html", "title");
 
       /*external site */
       _this.es = new _this.aa.es("#foo", "body", "http://google.com", "prepend", "80%", "500px");

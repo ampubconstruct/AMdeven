@@ -115,6 +115,7 @@
       this.ftp_downloader_fullpath = __bind(this.ftp_downloader_fullpath, this);
       this.readline = __bind(this.readline, this);
       this.ftp_downloader = __bind(this.ftp_downloader, this);
+      this.jsdom_check = __bind(this.jsdom_check, this);
     }
 
     App.prototype.http = require("http");
@@ -127,7 +128,31 @@
 
     App.prototype.Client = require('ftp');
 
+    App.prototype.jsdom = require("jsdom");
+
+    App.prototype.jsdom_jquery_source = "./contents/web/lib/jquery-2.1.3.min.js";
+
     App.prototype.server = new Server;
+
+    App.prototype.jsdom_check = function(file, selector) {
+      var jquery;
+      jquery = this.fs.readFileSync(this.jsdom_jquery_source, {
+        encoding: "utf-8"
+      });
+      return this.jsdom.env({
+        file: file,
+        src: [jquery],
+        done: (function(_this) {
+          return function(errors, window_temp) {
+            var dom;
+            dom = window_temp.$(selector);
+            return dom.each(function() {
+              return console.log($(this).text());
+            });
+          };
+        })(this)
+      });
+    };
 
     App.prototype.ftp_downloader = function(user, pass, file, host, filepath) {
       var c;

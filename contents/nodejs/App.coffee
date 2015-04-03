@@ -55,7 +55,20 @@ class @App
 	fs: require("fs")
 	cson: require("cson")
 	Client: require('ftp')
+	jsdom: require("jsdom")
+	jsdom_jquery_source: "./contents/web/lib/jquery-2.1.3.min.js"
 	server: new Server
+	jsdom_check: (file, selector) =>
+		jquery = @fs.readFileSync(@jsdom_jquery_source, {encoding: "utf-8"})
+		@jsdom.env(
+			file: file
+			src: [jquery]
+			done: (errors, window_temp) =>
+				dom = window_temp.$(selector)
+				dom.each( ->
+					console.log $(@).text()
+				)
+		)
 	ftp_downloader: (user, pass, file, host, filepath) =>
 		c = new @Client()
 		c.on "ready", =>

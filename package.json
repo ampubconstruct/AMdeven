@@ -8,7 +8,8 @@
 		"cson": "latest",
 		"socket.io": "1.x",
     "ftp": "latest",
-    "readline": "latest"
+    "readline": "latest",
+    "jsdom": "latest"
   },
   "main"    : "Browser.js",
 	"comment"	: "atom-shell version 0.21.2"
