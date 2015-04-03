@@ -30,3 +30,5 @@ coffeescript compiler
 	contents/
 		node.js/
 		web/
+
+そのままコピーし、nodeapp起動でも動きます。
