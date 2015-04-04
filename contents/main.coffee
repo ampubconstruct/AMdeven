@@ -3,17 +3,13 @@ $ =>
 	@aa = new @AtomApp()
 	@aa.start()
 	@aa.server.start() #http server, and websocket reload server
-
+	@es = new @aa.es("#foo", "body", "http://google.com", "prepend", "80%", "500px")
+	
 code = =>
-	###atom app start###
-	@AtomApp = require("./AtomApp.js")
-	@aa = new @AtomApp()
-	@aa.start()
-	@aa.server.start() #http server, and websocket reload server
 	### add function ###
-	###jsdom###
+	#jsdom
 	@aa.jsdom_check("./contents/index.html", "title")
-	###external site###
+	#external site
 	@es = new @aa.es("#foo", "body", "http://google.com", "prepend", "80%", "500px") #inner webview
-	###check directory tree###
+	#check directory tree
 	@aa.check_dir_tree("./", /coffee$/, (loc_file, file) => console.log loc_file)

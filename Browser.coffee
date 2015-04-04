@@ -29,11 +29,13 @@ class @Browser# extends @NodeJsApp
 			#event.sender.send 'asynchronous-reply', 'pong')
 			@[renderer].inspectElement(arg.x, arg.y)
 	app_start: ->
-		@app.on "window-all-closed", =>
+		@app.on("window-all-closed", =>
 			@app.quit() unless process.platform is "darwin"
-		@app.on "ready", =>
+		)
+		@app.on("ready", =>
 			@make_window()
 			@etc()
+		)
 	live_reload: ->
 		@fs.watch "contents", (e, filename) =>
 			if not filename then return

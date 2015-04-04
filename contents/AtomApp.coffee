@@ -22,7 +22,7 @@ class ExternalSite
 		@webview.on("did-finish-load", @finish)
 		@webview.on("new-window", (e) => @exejs("location.href = '#{e.url}'"))
 	webview_event: ->
-		@webview.on("console-message", (e) => console.log "%c#{e.message}", "color: green")
+		@webview.on("console-message", (e) => console.log "%c#{e.originalEvent.message}", "color: green")
 		@webview.on("ipc-message", (e) => console.log "%c#{e.channel} #{e.args}", "color: purple")
 	#load終了後
 	finish: =>

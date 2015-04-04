@@ -45,7 +45,7 @@
     ExternalSite.prototype.webview_event = function() {
       this.webview.on("console-message", (function(_this) {
         return function(e) {
-          return console.log("%c" + e.message, "color: green");
+          return console.log("%c" + e.originalEvent.message, "color: green");
         };
       })(this));
       return this.webview.on("ipc-message", (function(_this) {
