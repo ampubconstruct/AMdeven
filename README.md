@@ -1,8 +1,8 @@
-#必要環境(environment)
+##必要環境(environment)
 Windows
 
 
-#構成(formation)
+##構成(formation)
 	/atom-shell-version/
 	/this_sample/
 		run.bat(execute)
@@ -10,15 +10,14 @@ Windows
 
 contents内のjs,html,css編集後、自動更新
 
-#初期起動(execution)
+##初期起動(execution)
 	bat_npm.bat
 	compiler.bat
 	run.bat
 
 
 ##開発環境
-npm install
-coffeescript compiler
+??
 
 
 ---
@@ -31,4 +30,4 @@ coffeescript compiler
 		node.js/
 		web/
 
-そのままコピーし、nodeapp起動でも動きます。
+そのままcloneし、`node nodeapp`起動でも動きます。
