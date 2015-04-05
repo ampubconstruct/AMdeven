@@ -177,7 +177,7 @@
       });
     };
 
-    App.prototype.readline = function(path) {
+    App.prototype.readline = function(path, callback) {
       var readline, rl, rs;
       readline = require("readline");
       rs = this.fs.ReadStream(path);
@@ -185,11 +185,7 @@
         'input': rs,
         'output': {}
       });
-      rl.on("line", (function(_this) {
-        return function(line) {
-          return console.log(line);
-        };
-      })(this));
+      rl.on("line", callback);
       return rl.resume();
     };
 

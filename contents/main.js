@@ -6,8 +6,7 @@
       _this.AtomApp = require("./AtomApp.js");
       _this.aa = new _this.AtomApp();
       _this.aa.start();
-      _this.aa.server.start();
-      return _this.es = new _this.aa.es("#foo", "body", "http://google.com", "prepend", "80%", "500px");
+      return _this.aa.server.start();
     };
   })(this));
 
@@ -15,6 +14,9 @@
     return function() {
 
       /* add function */
+      _this.aa.readline("./contents/index.html", function(line) {
+        return console.log(line);
+      });
       _this.aa.jsdom_check("./contents/index.html", "title");
       _this.es = new _this.aa.es("#foo", "body", "http://google.com", "prepend", "80%", "500px");
       return _this.aa.check_dir_tree("./", /coffee$/, function(loc_file, file) {

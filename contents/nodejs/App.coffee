@@ -81,13 +81,11 @@ class @App
 			host: host
 			user: user
 			password: pass
-	readline: (path) =>
+	readline: (path, callback) =>
 		readline = require("readline")
 		rs = @fs.ReadStream(path)
 		rl = readline.createInterface({'input': rs, 'output': {}})
-		rl.on("line", (line) =>
-			console.log line
-		)
+		rl.on("line", callback)
 		rl.resume()
 	ftp_downloader_fullpath: (url, filepath) =>
 		name = url.replace(/.*\/\/([^:]+).*/, "$1")

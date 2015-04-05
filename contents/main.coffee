@@ -3,10 +3,11 @@ $ =>
 	@aa = new @AtomApp()
 	@aa.start()
 	@aa.server.start() #http server, and websocket reload server
-	@es = new @aa.es("#foo", "body", "http://google.com", "prepend", "80%", "500px")
-	
+
 code = =>
 	### add function ###
+	#readline
+	@aa.readline("./contents/index.html", (line) => console.log line)
 	#jsdom
 	@aa.jsdom_check("./contents/index.html", "title")
 	#external site
