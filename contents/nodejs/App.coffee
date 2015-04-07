@@ -109,6 +109,6 @@ class @App
 				@check_dir_tree_read_dir "#{dir}#{file}/",
 			else
 				if file.match(@check_dir_tree_file_pattern)
-					@check_dir_tree_callback loc, file
+					@check_dir_tree_callback(loc, file)
 
 module.exports = @App

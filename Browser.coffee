@@ -25,9 +25,10 @@ class @Browser# extends @NodeJsApp
 		@app_start()
 		@live_reload()
 	ipc_event: ->
-		@ipc.on 'inspect element', (event, arg, renderer) =>
+		@ipc.on('inspect element', (event, arg, renderer) =>
 			#event.sender.send 'asynchronous-reply', 'pong')
 			@[renderer].inspectElement(arg.x, arg.y)
+		)
 	app_start: ->
 		@app.on("window-all-closed", =>
 			@app.quit() unless process.platform is "darwin"
