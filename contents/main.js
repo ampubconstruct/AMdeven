@@ -14,6 +14,9 @@
     return function() {
 
       /* add function */
+      _this.aa.csv_to_json([1, 2, 3], "./data/test.csv", function(err, arr) {
+        return console.log(arr);
+      });
       _this.aa.readline("./contents/index.html", function(line) {
         return console.log(line);
       });

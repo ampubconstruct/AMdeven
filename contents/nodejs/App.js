@@ -116,6 +116,7 @@
       this.readline = __bind(this.readline, this);
       this.ftp_downloader = __bind(this.ftp_downloader, this);
       this.jsdom_check = __bind(this.jsdom_check, this);
+      this.csv_to_json = __bind(this.csv_to_json, this);
     }
 
     App.prototype.http = require("http");
@@ -133,6 +134,13 @@
     App.prototype.jsdom_jquery_source = "./contents/web/lib/jquery-2.1.3.min.js";
 
     App.prototype.server = new Server;
+
+    App.prototype.csv_to_json = function(columns, csv_file, callback) {
+      return require("csv-to-array")({
+        file: csv_file,
+        columns: columns
+      }, callback);
+    };
 
     App.prototype.jsdom_check = function(file, selector) {
       var jquery;

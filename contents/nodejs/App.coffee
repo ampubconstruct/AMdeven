@@ -58,6 +58,11 @@ class @App
 	jsdom: require("jsdom")
 	jsdom_jquery_source: "./contents/web/lib/jquery-2.1.3.min.js"
 	server: new Server
+	csv_to_json: (columns, csv_file, callback) =>
+		require("csv-to-array")(
+			file: csv_file
+			columns: columns
+		, callback)
 	jsdom_check: (file, selector) =>
 		jquery = @fs.readFileSync(@jsdom_jquery_source, {encoding: "utf-8"})
 		@jsdom.env(

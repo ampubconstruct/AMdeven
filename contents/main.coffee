@@ -6,6 +6,8 @@ $ =>
 
 code = =>
 	### add function ###
+	#csv to json
+	@aa.csv_to_json([1,2,3], "./data/test.csv", (err, arr) => console.log arr)
 	#readline
 	@aa.readline("./contents/index.html", (line) => console.log line)
 	#jsdom
