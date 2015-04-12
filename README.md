@@ -1,8 +1,11 @@
-##必要環境(environment)
+##(development environment)
 Windows
+npm
+atom-shell
+coffee-script compiler
 
 
-##構成(formation)
+##(formation)
 	/atom-shell-version/
 	/this_sample/
 		run.bat(execute)
@@ -10,14 +13,10 @@ Windows
 
 contents内のjs,html,css編集後、自動更新
 
-##初期起動(execution)
+##(first execution)
 	bat_npm.bat
 	compiler.bat
 	run.bat
-
-
-##開発環境
-??
 
 
 ---
