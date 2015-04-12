@@ -13,9 +13,9 @@ class WebView
 		eval data
 		@jq = $
 		eval '$ = null;jQuery = null;'
-	set_event: -> #es.webview.send("keydown", "#gbqfq", 97)
-		@ipc.on "keydown", (selector, keyCode) => @set_keydown_event(selector, keyCode)
-		@ipc.on "mousedown", (ratio = 0.5, selector = "body") => @jq(selector).css("transform", "scale(#{ratio}, #{ratio})")
+	set_event: ->
+		@ipc.on "keydown", (selector, keyCode) => @set_keydown_event(selector, keyCode) #es.webview.send("keydown", "input[aria-label=検索]", 97)
+		@ipc.on "mouseclick", (selector = "button") => @jq(selector).click() #es.webview.send("mouseclick", "button[aria-label='Google 検索']")
 		@ipc.on "set scale", (ratio = 0.5, selector = "body") => @jq(selector).css("transform", "scale(#{ratio}, #{ratio})")
 	set_keydown_event: (selector, keyCode) ->
 		@jq(selector).focus()
@@ -36,6 +36,6 @@ class Crawler extends WebView
 	crawler_event: ->
 		#
 
-eval "wv = new Crawler();"
-wv.set_event()
+@wv = new Crawler()
+@wv.set_event()
 console.log "webview preload finished"

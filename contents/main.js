@@ -28,6 +28,8 @@
     };
   })(this);
 
+  1;
+
 }).call(this);
 
  //# sourceMappingURL=main.js.map

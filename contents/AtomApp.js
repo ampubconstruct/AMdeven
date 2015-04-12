@@ -31,11 +31,12 @@
       this.height = _at_height != null ? _at_height : "640px";
       this.finish = __bind(this.finish, this);
       webview = "<webview id=\"" + this.selector + "\" preload=\"./webview.js\" src=\"" + this.src + "\"\n	style=\"width:" + this.width + "; height:" + this.height + "; display: block; overflow: hidden;\" nodeintegration>\n</webview>";
-      this.webview = $(webview);
+      this.$webview = $(webview);
+      this.webview = this.$webview[0];
       $(this.dom)[which](this.webview);
       this.webview_event();
-      this.webview.on("did-finish-load", this.finish);
-      this.webview.on("new-window", (function(_this) {
+      this.$webview.on("did-finish-load", this.finish);
+      this.$webview.on("new-window", (function(_this) {
         return function(e) {
           return _this.exejs("location.href = '" + e.url + "'");
         };
@@ -43,12 +44,12 @@
     }
 
     ExternalSite.prototype.webview_event = function() {
-      this.webview.on("console-message", (function(_this) {
+      this.$webview.on("console-message", (function(_this) {
         return function(e) {
           return console.log("%c" + e.originalEvent.message, "color: green");
         };
       })(this));
-      return this.webview.on("ipc-message", (function(_this) {
+      return this.$webview.on("ipc-message", (function(_this) {
         return function(e) {
           return console.log("%c" + e.channel + " " + e.args, "color: purple");
         };

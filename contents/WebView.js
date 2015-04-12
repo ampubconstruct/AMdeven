@@ -33,15 +33,12 @@
           return _this.set_keydown_event(selector, keyCode);
         };
       })(this));
-      this.ipc.on("mousedown", (function(_this) {
-        return function(ratio, selector) {
-          if (ratio == null) {
-            ratio = 0.5;
-          }
+      this.ipc.on("mouseclick", (function(_this) {
+        return function(selector) {
           if (selector == null) {
-            selector = "body";
+            selector = "button";
           }
-          return _this.jq(selector).css("transform", "scale(" + ratio + ", " + ratio + ")");
+          return _this.jq(selector).click();
         };
       })(this));
       return this.ipc.on("set scale", (function(_this) {
@@ -92,9 +89,9 @@
 
   })(WebView);
 
-  eval("wv = new Crawler();");
+  this.wv = new Crawler();
 
-  wv.set_event();
+  this.wv.set_event();
 
   console.log("webview preload finished");
 

@@ -16,14 +16,15 @@ class ExternalSite
 				style="width:#{@width}; height:#{@height}; display: block; overflow: hidden;" nodeintegration>
 			</webview>
 		"""
-		@webview = $(webview)
+		@$webview = $(webview)
+		@webview = @$webview[0]
 		$(@dom)[which](@webview)
 		@webview_event()
-		@webview.on("did-finish-load", @finish)
-		@webview.on("new-window", (e) => @exejs("location.href = '#{e.url}'"))
+		@$webview.on("did-finish-load", @finish)
+		@$webview.on("new-window", (e) => @exejs("location.href = '#{e.url}'"))
 	webview_event: ->
-		@webview.on("console-message", (e) => console.log "%c#{e.originalEvent.message}", "color: green")
-		@webview.on("ipc-message", (e) => console.log "%c#{e.channel} #{e.args}", "color: purple")
+		@$webview.on("console-message", (e) => console.log "%c#{e.originalEvent.message}", "color: green")
+		@$webview.on("ipc-message", (e) => console.log "%c#{e.channel} #{e.args}", "color: purple")
 	#load終了後
 	finish: =>
 		++@ready_flag
