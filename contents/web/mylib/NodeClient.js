@@ -26,8 +26,13 @@
 
     NodeClient.prototype.connect_websocket = function() {
       var protocol;
-      if (this.ws_port === 8080 && !location.host.match(/[0-9].+[0-9]+.[0-9].+[0-9]+/)) {
-        this.ws_port = 80;
+      if (this.ws_port === 8080) {
+        if (!location.host.match(/[0-9].+[0-9]+.[0-9].+[0-9]+/)) {
+          this.ws_port = 80;
+        }
+        if (!location.host.match(/^192/)) {
+          this.ws_port = 80;
+        }
       }
       protocol = location.href.match(/^https/) ? "wss" : "ws";
       if (this.ws_port === 80) {

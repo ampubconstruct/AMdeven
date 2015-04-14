@@ -8,7 +8,9 @@ class @NodeClient extends @CommonJs
 		@params = @get_params location.href
 		if @params.ws then @connect_websocket()
 	connect_websocket: ->
-		if @ws_port is 8080 and not location.host.match(/[0-9].+[0-9]+.[0-9].+[0-9]+/) then @ws_port = 80
+		if @ws_port is 8080
+			if not location.host.match(/[0-9].+[0-9]+.[0-9].+[0-9]+/) then @ws_port = 80
+			unless location.host.match(/^192/) then @ws_port = 80
 		protocol = if location.href.match(/^https/) then "wss" else "ws"
 		if @ws_port is 80
 			@ws_url = "#{protocol}://#{@domain}"
