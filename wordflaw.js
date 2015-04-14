@@ -7,6 +7,9 @@ http://phi-jp.github.io/runstant/release/alpha/#UEsDBAoAAAAAAH1qjkYSChLqlwgAAJcI
 /* memo
     必須機能：
         他オブジェクトの内容をたどれる
+        インデントでの折り返しが出来る
+        テキストをそのまま編集したものがオブジェクトになる。
+        軽量を意識する（不被強なDOMは使わない）
  */
 
 (function() {
