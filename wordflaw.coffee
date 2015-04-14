@@ -5,7 +5,7 @@ http://phi-jp.github.io/runstant/release/alpha/#UEsDBAoAAAAAAH1qjkYSChLqlwgAAJcI
     必須機能：
         他オブジェクトの内容をたどれる
         
-####
+#### 
 
 flaw_arr = [
     "login"
