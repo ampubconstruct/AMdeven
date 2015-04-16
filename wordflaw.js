@@ -22,8 +22,8 @@
     "login", "enter lobby", {
       "enter room(type)": [
         {
-          "if type is player": ["対局をする心の準備があるか確認", server.enter_room("player")],
-          "if type is spectator": ["対局を見る心の準備があるか確認", server.enter_room("spectator")]
+          "if type is player": ["対局をする", server.enter_room("player")],
+          "if type is spectator": ["対局を見る", server.enter_room("spectator")]
         }, "サーバーにtypeを送信"
       ]
     }, "logout #login後どこでも出来るのはどうする？", "disconnect"

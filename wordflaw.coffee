@@ -17,11 +17,11 @@ flaw_arr = [
     "enter lobby"
     "enter room(type)": [
         "if type is player": [
-            "対局をする心の準備があるか確認"
+            "対局をする"
             server.enter_room("player")
         ]
         "if type is spectator": [
-            "対局を見る心の準備があるか確認"
+            "対局を見る"
             server.enter_room("spectator")
         ]
         "サーバーにtypeを送信"
