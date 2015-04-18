@@ -49,7 +49,7 @@ class Server extends CommonJs
 			if @fs.existsSync(filepath) then @fs.watch filepath, => socket.emit "reload"
 
 
-class @App
+class @NodeApp
 	http: require("http")
 	https: require("https")
 	fs: require("fs")
@@ -58,21 +58,19 @@ class @App
 	jsdom: require("jsdom")
 	jsdom_jquery_source: "./contents/web/lib/jquery-2.1.3.min.js"
 	server: new Server
+	constructor: ->
+		super()
 	csv_to_json: (columns, csv_file, callback) =>
 		require("csv-to-array")(
 			file: csv_file
 			columns: columns
 		, callback)
-	jsdom_check: (file, selector) =>
-		jquery = @fs.readFileSync(@jsdom_jquery_source, {encoding: "utf-8"})
+	jsdom_check: (file, callback) =>
+		if not @jquery then @jquery = @fs.readFileSync(@jsdom_jquery_source, {encoding: "utf-8"})
 		@jsdom.env(
 			file: file
-			src: [jquery]
-			done: (errors, window_temp) =>
-				dom = window_temp.$(selector)
-				dom.each( ->
-					console.log $(@).text()
-				)
+			src: [@jquery]
+			done: callback
 		)
 	ftp_downloader: (user, pass, file, host, filepath) =>
 		c = new @Client()
@@ -116,4 +114,4 @@ class @App
 				if file.match(@check_dir_tree_file_pattern)
 					@check_dir_tree_callback(loc, file)
 
-module.exports = @App
+module.exports = @NodeApp

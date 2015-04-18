@@ -1,10 +1,10 @@
 (function() {
-  var ExternalSite, NodeJsApp,
+  var ExternalSite, ProjApp,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     __hasProp = {}.hasOwnProperty;
 
-  NodeJsApp = require("./nodejs/App.js");
+  ProjApp = require("./proj/ProjApp.js");
 
   ExternalSite = (function() {
 
@@ -120,7 +120,7 @@
 
     return AtomApp;
 
-  })(NodeJsApp);
+  })(ProjApp);
 
   module.exports = this.AtomApp;
 

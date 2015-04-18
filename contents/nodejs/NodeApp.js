@@ -106,8 +106,24 @@
 
   })(CommonJs);
 
-  this.App = (function() {
-    function App() {
+  this.NodeApp = (function() {
+    NodeApp.prototype.http = require("http");
+
+    NodeApp.prototype.https = require("https");
+
+    NodeApp.prototype.fs = require("fs");
+
+    NodeApp.prototype.cson = require("cson");
+
+    NodeApp.prototype.Client = require('ftp');
+
+    NodeApp.prototype.jsdom = require("jsdom");
+
+    NodeApp.prototype.jsdom_jquery_source = "./contents/web/lib/jquery-2.1.3.min.js";
+
+    NodeApp.prototype.server = new Server;
+
+    function NodeApp() {
       this.check_dir_tree_read_dir = __bind(this.check_dir_tree_read_dir, this);
       this.check_dir_tree_callback = __bind(this.check_dir_tree_callback, this);
       this.check_dir_tree = __bind(this.check_dir_tree, this);
@@ -117,52 +133,30 @@
       this.ftp_downloader = __bind(this.ftp_downloader, this);
       this.jsdom_check = __bind(this.jsdom_check, this);
       this.csv_to_json = __bind(this.csv_to_json, this);
+      NodeApp.__super__.constructor.call(this);
     }
 
-    App.prototype.http = require("http");
-
-    App.prototype.https = require("https");
-
-    App.prototype.fs = require("fs");
-
-    App.prototype.cson = require("cson");
-
-    App.prototype.Client = require('ftp');
-
-    App.prototype.jsdom = require("jsdom");
-
-    App.prototype.jsdom_jquery_source = "./contents/web/lib/jquery-2.1.3.min.js";
-
-    App.prototype.server = new Server;
-
-    App.prototype.csv_to_json = function(columns, csv_file, callback) {
+    NodeApp.prototype.csv_to_json = function(columns, csv_file, callback) {
       return require("csv-to-array")({
         file: csv_file,
         columns: columns
       }, callback);
     };
 
-    App.prototype.jsdom_check = function(file, selector) {
-      var jquery;
-      jquery = this.fs.readFileSync(this.jsdom_jquery_source, {
-        encoding: "utf-8"
-      });
+    NodeApp.prototype.jsdom_check = function(file, callback) {
+      if (!this.jquery) {
+        this.jquery = this.fs.readFileSync(this.jsdom_jquery_source, {
+          encoding: "utf-8"
+        });
+      }
       return this.jsdom.env({
         file: file,
-        src: [jquery],
-        done: (function(_this) {
-          return function(errors, window_temp) {
-            var dom;
-            dom = window_temp.$(selector);
-            return dom.each(function() {
-              return console.log($(this).text());
-            });
-          };
-        })(this)
+        src: [this.jquery],
+        done: callback
       });
     };
 
-    App.prototype.ftp_downloader = function(user, pass, file, host, filepath) {
+    NodeApp.prototype.ftp_downloader = function(user, pass, file, host, filepath) {
       var c;
       c = new this.Client();
       c.on("ready", (function(_this) {
@@ -185,7 +179,7 @@
       });
     };
 
-    App.prototype.readline = function(path, callback) {
+    NodeApp.prototype.readline = function(path, callback) {
       var readline, rl, rs;
       readline = require("readline");
       rs = this.fs.ReadStream(path);
@@ -197,7 +191,7 @@
       return rl.resume();
     };
 
-    App.prototype.ftp_downloader_fullpath = function(url, filepath) {
+    NodeApp.prototype.ftp_downloader_fullpath = function(url, filepath) {
       var file, host, name, pass;
       name = url.replace(/.*\/\/([^:]+).*/, "$1");
       pass = url.replace(/.*\/\/[^:]+:([^@]+).*/, "$1");
@@ -206,7 +200,7 @@
       return this.ftp_downloader(name, pass, file, host, filepath);
     };
 
-    App.prototype.downloader = function(url, filepath) {
+    NodeApp.prototype.downloader = function(url, filepath) {
       var file, protocol, request;
       file = this.fs.createWriteStream(filepath);
       protocol = url.match(/^https/) ? this.https : this.http;
@@ -217,7 +211,7 @@
       })(this));
     };
 
-    App.prototype.check_dir_tree = function(dir, _at_check_dir_tree_file_pattern, callback) {
+    NodeApp.prototype.check_dir_tree = function(dir, _at_check_dir_tree_file_pattern, callback) {
       this.check_dir_tree_file_pattern = _at_check_dir_tree_file_pattern;
       if (callback == null) {
         callback = void 0;
@@ -228,11 +222,11 @@
       return this.check_dir_tree_read_dir(dir);
     };
 
-    App.prototype.check_dir_tree_callback = function() {
+    NodeApp.prototype.check_dir_tree_callback = function() {
       return 1;
     };
 
-    App.prototype.check_dir_tree_read_dir = function(dir) {
+    NodeApp.prototype.check_dir_tree_read_dir = function(dir) {
       var file, files, loc, _i, _len, _results;
       files = this.fs.readdirSync(dir);
       _results = [];
@@ -252,12 +246,12 @@
       return _results;
     };
 
-    return App;
+    return NodeApp;
 
   })();
 
-  module.exports = this.App;
+  module.exports = this.NodeApp;
 
 }).call(this);
 
- //# sourceMappingURL=App.js.map
+ //# sourceMappingURL=NodeApp.js.map

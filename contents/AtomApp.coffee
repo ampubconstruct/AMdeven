@@ -1,4 +1,4 @@
-NodeJsApp = require("./nodejs/App.js")
+ProjApp = require("./proj/ProjApp.js")
 
 class ExternalSite
 	###
@@ -38,7 +38,7 @@ class ExternalSite
 		@webview.executeJavaScript code
 
 
-class @AtomApp extends NodeJsApp
+class @AtomApp extends ProjApp
 	reload_: 1
 	inspector_: 1
 	es: ExternalSite
