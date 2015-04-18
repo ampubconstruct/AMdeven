@@ -3,14 +3,16 @@
   <head>
     <meta charset="UTF-8">
     <title>Server Top</title>
-	<!-- <link rel="stylesheet" href="default.css" type="text/css" /> -->
-	<script src="lib/jquery-2.0.3.min.js"></script>
-	<script src="lib/socket.io.js"></script>
-	<script src="mylib/CommonJs.js"></script>
-	<script src="mylib/NodeClient.js"></script>
-	<script src="proj/ClientApp.js"></script>
+  <link rel="stylesheet" href="/default.css" type="text/css" />
+  <script src="/lib/jquery-2.0.3.min.js"></script>
+  <script src="/lib/socket.io.js"></script>
+  <script src="/mylib/CommonJs.js"></script>
+  <script src="/mylib/NodeClient.js"></script>
   </head>
   <body>
-    <script>$.get("/proj/app.html",function(data){$("body").append(data);ca=new ClientApp();})</script>
+    top page
+    <script charset="utf-8">
+      ca = new NodeClient()
+    </script>
   </body>
 </html>
