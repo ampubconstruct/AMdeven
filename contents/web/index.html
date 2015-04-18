@@ -8,12 +8,9 @@
 	<script src="lib/socket.io.js"></script>
 	<script src="mylib/CommonJs.js"></script>
 	<script src="mylib/NodeClient.js"></script>
-	<script src="main.js"></script>
+	<script src="proj/ClientApp.js"></script>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    <p>
-      test 1
-    </p>
+    <script>$.get("/proj/app.html",function(data){$("body").append(data);ca=new ClientApp();})</script>
   </body>
 </html>
