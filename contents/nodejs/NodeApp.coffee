@@ -49,6 +49,7 @@ class Server extends CommonJs
 			if @fs.existsSync(filepath) then @fs.watch filepath, => socket.emit "reload"
 
 
+
 class @NodeApp
 	http: require("http")
 	https: require("https")

@@ -1,3 +1,8 @@
+#19
+http://memo.yomukaku.net/entries/uuptBYV
+child_process.execを使い、連携する。
+javaや多言語との繋がりでもこれは多用すると思われる。
+
 #2015/04/11
 coffeeのみを渡していく方針 →　再却下
 パッケージ化をなるべくやっていくが、開発環境を更新する。
