@@ -49,6 +49,34 @@ class Server extends CommonJs
 			if @fs.existsSync(filepath) then @fs.watch filepath, => socket.emit "reload"
 
 
+class Compiler
+	fs: require("fs")
+	gaze: require("gaze")
+	exec: require('child_process').exec
+	sass: require("node-sass")
+	constructor: (@parent) ->
+		@check_dir_tree()
+	check_dir_tree: =>
+		me = @
+		@gaze("**/*.coffee", (err, watcher) ->
+			@on("changed", (filepath) =>
+				me.exec("node ./node_modules/coffee-script/bin/coffee -m #{filepath}", (error, stdout, stderr) =>
+					if error then console.log(stderr.replace(/.*:([0-9]+:[0-9]+.*)/, "$1"))
+					else console.log(stdout)
+				)
+			)
+		)
+		@gaze("**/*.sass", (err, watcher) ->
+			@on("changed", (filepath) =>
+				console.log filepath, "sass"
+				me.sass.render(
+					file: filepath
+				, (err, result) =>
+					console.log err
+					console.log result
+				)
+			)
+		)
 
 class @NodeApp
 	http: require("http")
@@ -58,9 +86,10 @@ class @NodeApp
 	Client: require('ftp')
 	jsdom: require("jsdom")
 	jsdom_jquery_source: "./contents/web/lib/jquery-2.1.3.min.js"
-	server: new Server
+	ignore_regexp: /(\/node_modules\/)|(\/\.git\/)/
 	constructor: ->
-		super()
+		@server = new Server()
+		@compiler = new Compiler(@)
 	csv_to_json: (columns, csv_file, callback) =>
 		require("csv-to-array")(
 			file: csv_file
@@ -101,18 +130,15 @@ class @NodeApp
 		file = @fs.createWriteStream(filepath)
 		protocol = if url.match /^https/ then @https else @http
 		request = protocol.get url, (response) => response.pipe(file)
-	check_dir_tree: (dir, @check_dir_tree_file_pattern, callback = undefined) =>
-		if callback then @check_dir_tree_callback = callback
-		@check_dir_tree_read_dir(dir)
-	check_dir_tree_callback: => 1
-	check_dir_tree_read_dir: (dir) =>
+	check_dir_tree: (dir, pattern, callback) =>
 		files = @fs.readdirSync(dir)
 		for file in files
 			loc = "#{dir}#{file}"
+			if loc.match(@ignore_regexp) then continue
 			if @fs.lstatSync(loc).isDirectory()
-				@check_dir_tree_read_dir "#{dir}#{file}/",
+				@check_dir_tree("#{dir}#{file}/", pattern, callback)
 			else
-				if file.match(@check_dir_tree_file_pattern)
-					@check_dir_tree_callback(loc, file)
+				unless file.match(pattern) then continue
+				callback(loc, file)
 
 module.exports = @NodeApp

@@ -46,6 +46,7 @@ class @AtomApp extends ProjApp
 	ipc: require "ipc"
 	shell: require "shell"
 	constructor: ->
+		super()
 		@init()
 	init: -> 1
 	start: ->

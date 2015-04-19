@@ -38,14 +38,16 @@ class @Browser# extends @NodeJsApp
 			@etc()
 		)
 	live_reload: ->
-		@fs.watch "contents", (e, filename) =>
+		@fs.watch("contents", (e, filename) =>
 			if not filename then return
 			if filename.match /\.(html)|(js)|(css)$/
-				@mainWindow.reload()
-		@fs.watch "contents/nodejs", (e, filename) =>
+				@mainWindow.reload?()
+		)
+		@fs.watch("contents/nodejs", (e, filename) =>
 			if not filename then return
 			if filename.match /\.(html)|(js)|(css)$/
-				@mainWindow.reload()
+				@mainWindow.reload?()
+		)
 	make_window: ->
 		@mainWindow = new @BrowserWindow(
 			x: @x

@@ -4,13 +4,15 @@
   "description": "test",
   "dependencies": {
     "coffee-script": "latest",
+    "node-sass": "latest",
 		"mime": "latest",
 		"cson": "latest",
 		"socket.io": "1.x",
     "ftp": "latest",
     "readline": "latest",
     "jsdom": "latest",
-    "csv-to-array": "latest"
+    "csv-to-array": "latest",
+    "gaze": "latest"
   },
   "main"    : "Browser.js",
 	"comment"	: "atom-shell version 0.21.2"
