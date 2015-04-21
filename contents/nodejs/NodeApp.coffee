@@ -60,6 +60,7 @@ class Compiler
 		me = @
 		@gaze("**/*.coffee", (err, watcher) ->
 			@on("changed", (filepath) =>
+				if filepath.match("/node_modules/") then return
 				me.exec("node ./node_modules/coffee-script/bin/coffee -m #{filepath}", (error, stdout, stderr) =>
 					if error then console.log(stderr.replace(/.*:([0-9]+:[0-9]+.*)/, "$1"))
 					else console.log(stdout)
@@ -68,6 +69,7 @@ class Compiler
 		)
 		@gaze("**/*.sass", (err, watcher) ->
 			@on("changed", (filepath) =>
+				if filepath.match("/node_modules/") then return
 				console.log filepath, "sass"
 				me.sass.render(
 					file: filepath

@@ -1,24 +1,24 @@
-##(development environment)
+###(動作確認)
+windows7
+
+###(開発環境)
 Windows
 npm
 electron
 coffee-script compiler
 
 
-##(formation)
+###(配置)
 	/electron-version/
 	/this_sample/
 		run.bat(execute)
 #
 
-contents内のjs,html,css編集後、自動更新
-
-##(first execution)
+###(初回実行)
 	bat_npm.bat
 	compiler.bat
 	run.bat
 
-
 ---
 ####node.js application
-そのままcloneし、`node server`起動。
+そのままcloneし、`node server`で起動。
