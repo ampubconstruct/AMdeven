@@ -53,29 +53,33 @@ class Compiler
 	fs: require("fs")
 	gaze: require("gaze")
 	exec: require('child_process').exec
-	sass: require("node-sass")
+	#sass: require("node-sass")
 	constructor: (@parent) ->
 		@check_dir_tree()
 	check_dir_tree: =>
 		me = @
-		@gaze("**/*.coffee", (err, watcher) ->
+		@gaze(["*.coffee", "contents/**/*.coffee"], (err, watcher) ->
 			@on("changed", (filepath) =>
 				if filepath.match("/node_modules/") then return
-				me.exec("node ./node_modules/coffee-script/bin/coffee -m #{filepath}", (error, stdout, stderr) =>
+				command = "node ./node_modules/coffee-script/bin/coffee -mc #{filepath}"
+				me.exec(command, (error, stdout, stderr) =>
 					if error then console.log(stderr.replace(/.*:([0-9]+:[0-9]+.*)/, "$1"))
 					else console.log(stdout)
 				)
 			)
 		)
-		@gaze("**/*.sass", (err, watcher) ->
+		@gaze(["*.sass", "contents/**/*.sass"], (err, watcher) ->
 			@on("changed", (filepath) =>
 				if filepath.match("/node_modules/") then return
-				console.log filepath, "sass"
-				me.sass.render(
-					file: filepath
-				, (err, result) =>
-					console.log err
-					console.log result
+				command = "sass #{filepath}"# #{filepath.replace(/sass$/, 'css')}"
+				console.log command
+				me.exec(command, (error, stdout, stderr) =>
+					if error
+						console.log(stderr)
+						return
+					else
+						command = "sass #{filepath} #{filepath.replace(/sass$/, 'css')}"
+						me.exec(command)
 				)
 			)
 		)
@@ -92,6 +96,9 @@ class @NodeApp
 	constructor: ->
 		@server = new Server()
 		@compiler = new Compiler(@)
+		setTimeout( =>
+			console.log("nodejs app stanby ok")
+		, 10)
 	csv_to_json: (columns, csv_file, callback) =>
 		require("csv-to-array")(
 			file: csv_file

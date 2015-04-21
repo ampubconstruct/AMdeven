@@ -25,4 +25,4 @@ code = =>
 	#check directory tree
 	@aa.check_dir_tree("./", /coffee$/, (loc, file) => console.log loc)
 
-1
+13
