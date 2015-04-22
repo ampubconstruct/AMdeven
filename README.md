@@ -35,3 +35,8 @@ coffeescript, sass
 ---
 ####node.js application
 そのままcloneし、`node server`で起動。
+
+
+---
+###package
+electronと同じディレクトリに入れ、run.batを起動する
