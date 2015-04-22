@@ -48,6 +48,11 @@ class @Browser# extends @NodeJsApp
 			if filename.match /\.(html)|(js)|(css)$/
 				@mainWindow.reload?()
 		)
+		@fs.watch("contents/proj", (e, filename) =>
+			if not filename then return
+			if filename.match /\.(html)|(js)|(css)$/
+				@mainWindow.reload?()
+		)
 	make_window: ->
 		@mainWindow = new @BrowserWindow(
 			x: @x

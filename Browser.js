@@ -83,7 +83,18 @@
           }
         };
       })(this));
-      return this.fs.watch("contents/nodejs", (function(_this) {
+      this.fs.watch("contents/nodejs", (function(_this) {
+        return function(e, filename) {
+          var base;
+          if (!filename) {
+            return;
+          }
+          if (filename.match(/\.(html)|(js)|(css)$/)) {
+            return typeof (base = _this.mainWindow).reload === "function" ? base.reload() : void 0;
+          }
+        };
+      })(this));
+      return this.fs.watch("contents/proj", (function(_this) {
         return function(e, filename) {
           var base;
           if (!filename) {
