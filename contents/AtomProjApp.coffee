@@ -5,6 +5,7 @@ class @AtomProjApp extends AtomApp
 		@start()
 	start: ->
 		console.log "atom proj start"
+		@server.start() #http server, and websocket reload server
 
 sample_code = ->
 	### nodejs function ###
