@@ -93,13 +93,43 @@
     function AtomApp() {
       AtomApp.__super__.constructor.call(this);
       this.init();
+      this.live_reload();
     }
 
-    AtomApp.prototype.init = function() {
-      return 1;
+    AtomApp.prototype.live_reload = function() {
+      this.fs.watch("contents", (function(_this) {
+        return function(e, filename) {
+          if (!filename) {
+            return;
+          }
+          if (filename.match(/\.(html)|(js)|(css)$/)) {
+            return location.reload();
+          }
+        };
+      })(this));
+      this.fs.watch("contents/nodejs", (function(_this) {
+        return function(e, filename) {
+          if (!filename) {
+            return;
+          }
+          if (filename.match(/\.(html)|(js)|(css)$/)) {
+            return location.reload();
+          }
+        };
+      })(this));
+      return this.fs.watch("contents/proj", (function(_this) {
+        return function(e, filename) {
+          if (!filename) {
+            return;
+          }
+          if (filename.match(/\.(html)|(js)|(css)$/)) {
+            return location.reload();
+          }
+        };
+      })(this));
     };
 
-    AtomApp.prototype.start = function() {
+    AtomApp.prototype.init = function() {
       if (this.inspector_) {
         return this.auto_inspector();
       }

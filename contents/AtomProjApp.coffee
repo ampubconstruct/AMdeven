@@ -23,6 +23,7 @@ sample_code = ->
 			word += $(@).text() + "\n"
 		)
 		console.log word
+		_window.close()
 	)
 	#check directory tree
 	@check_dir_tree("./", /coffee$/, (loc, file) => console.log loc)
@@ -30,5 +31,11 @@ sample_code = ->
 	### atom app function ###
 	#external site
 	new @es("#foo", "body", "http://google.com", "prepend", "80%", "500px") #WebView.coffee
+	#extends es
+	@es.$webview.on("new-message", (e) => console.log "%c#{e.originalEvent.message}", "color: red")
+	@es.finish = =>
+		@es.finish()
+		# new code
+	#???
 
 module.exports = @AtomProjApp

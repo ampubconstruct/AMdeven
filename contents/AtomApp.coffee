@@ -48,8 +48,24 @@ class @AtomApp extends ProjApp
 	constructor: ->
 		super()
 		@init()
-	init: -> 1
-	start: ->
+		@live_reload()
+	live_reload: ->
+		@fs.watch("contents", (e, filename) =>
+			if not filename then return
+			if filename.match /\.(html)|(js)|(css)$/
+				location.reload()
+		)
+		@fs.watch("contents/nodejs", (e, filename) =>
+			if not filename then return
+			if filename.match /\.(html)|(js)|(css)$/
+				location.reload()
+		)
+		@fs.watch("contents/proj", (e, filename) =>
+			if not filename then return
+			if filename.match /\.(html)|(js)|(css)$/
+				location.reload()
+		)
+	init: ->
 		if @inspector_ then @auto_inspector()
 	auto_inspector: ->
 		#

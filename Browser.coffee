@@ -23,7 +23,6 @@ class @Browser# extends @NodeJsApp
 		require("crash-reporter").start()
 		@ipc_event()
 		@app_start()
-		@live_reload()
 	ipc_event: ->
 		@ipc.on('inspect element', (event, arg, renderer) =>
 			#event.sender.send 'asynchronous-reply', 'pong')
@@ -36,22 +35,6 @@ class @Browser# extends @NodeJsApp
 		@app.on("ready", =>
 			@make_window()
 			@etc()
-		)
-	live_reload: ->
-		@fs.watch("contents", (e, filename) =>
-			if not filename then return
-			if filename.match /\.(html)|(js)|(css)$/
-				@mainWindow.reload?()
-		)
-		@fs.watch("contents/nodejs", (e, filename) =>
-			if not filename then return
-			if filename.match /\.(html)|(js)|(css)$/
-				@mainWindow.reload?()
-		)
-		@fs.watch("contents/proj", (e, filename) =>
-			if not filename then return
-			if filename.match /\.(html)|(js)|(css)$/
-				@mainWindow.reload?()
 		)
 	make_window: ->
 		@mainWindow = new @BrowserWindow(
