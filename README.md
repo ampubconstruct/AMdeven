@@ -10,6 +10,7 @@ coffeescript, sass
 		npm
 		ruby
 		rubygems
+			gem source -a http://rubygems.org/
 			gem install sass
 		### my choco ###
 		choco install githubforwindows cmder atom notepadplusplus ruby rubygems
