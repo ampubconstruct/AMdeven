@@ -16,6 +16,9 @@ coffeescript, sass
 		choco install githubforwindows cmder atom notepadplusplus ruby rubygems
 		choco install googlechrome clover dexpot autoit.commandline
 		choco install firefox-dev -pre
+	cloud9
+		clone
+		nvm install v1.*
 
 ###(配置)
 	/electron-version/
@@ -39,7 +42,7 @@ coffeescript, sass
 
 
 ---
-####node.js application
+####as node.js application
 そのままcloneし、`node server`で起動。
 
 
