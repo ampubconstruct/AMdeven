@@ -21,11 +21,10 @@ class Server extends CommonJs
 		url = url.replace /\?.*$/, ""
 		if url[url.length-1] is "/" then url += "index.html"
 		###get file###
-		if url.match(/^\/web\//)
-			path = "#{@proj_path}#{url}"
-		else
-			path = "#{@base_path}#{url}"
-		console.log path
+		# set path
+		if url.match(/^\/web\//) then path = "#{@proj_path}#{url}"
+		else path = "#{@base_path}#{url}"
+		# send data
 		exists_flag = @fs.existsSync path
 		if exists_flag
 			data = @fs.readFileSync(path)
@@ -39,7 +38,7 @@ class Server extends CommonJs
 		if url[url.length-4..url.length-1] is "html"
 			ip = req.connection.remoteAddress.replace /.*[^\d](\d+\.\d+\.\d+\.\d+$)/, "$1"
 			date = new Date().toLocaleTimeString()
-			console.log "#{date} #{ip} #{url}"
+			console.log "#{date} #{ip} #{path}"
 	ws_start: ->
 		if @ws_port is @http_port
 			@websocket = @sio(@app)
@@ -50,7 +49,10 @@ class Server extends CommonJs
 			socket.on "g", (files, path) => @ws_reload(socket, files)
 	ws_reload: (socket, files, path) ->
 		for file in files
-			filepath = "#{@base_path}#{file}"
+			#modify
+			if file.match(/^web\//) then filepath = "#{@proj_path}/#{file}"
+			else filepath = "#{@base_path}/#{file}"
+			console.log filepath
 			if @fs.existsSync(filepath) then @fs.watch filepath, => socket.emit "reload"
 
 

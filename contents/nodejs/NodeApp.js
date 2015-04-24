@@ -53,7 +53,6 @@
       } else {
         path = "" + this.base_path + url;
       }
-      console.log(path);
       exists_flag = this.fs.existsSync(path);
       if (exists_flag) {
         data = this.fs.readFileSync(path);
@@ -71,7 +70,7 @@
       if (url.slice(url.length - 4, +(url.length - 1) + 1 || 9e9) === "html") {
         ip = req.connection.remoteAddress.replace(/.*[^\d](\d+\.\d+\.\d+\.\d+$)/, "$1");
         date = new Date().toLocaleTimeString();
-        return console.log(date + " " + ip + " " + url);
+        return console.log(date + " " + ip + " " + path);
       }
     };
 
@@ -96,7 +95,12 @@
       results = [];
       for (i = 0, len = files.length; i < len; i++) {
         file = files[i];
-        filepath = "" + this.base_path + file;
+        if (file.match(/^web\//)) {
+          filepath = this.proj_path + "/" + file;
+        } else {
+          filepath = this.base_path + "/" + file;
+        }
+        console.log(filepath);
         if (this.fs.existsSync(filepath)) {
           results.push(this.fs.watch(filepath, (function(_this) {
             return function() {
