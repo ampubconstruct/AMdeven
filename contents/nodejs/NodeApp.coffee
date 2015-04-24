@@ -52,7 +52,6 @@ class Server extends CommonJs
 			#modify
 			if file.match(/^web\//) then filepath = "#{@proj_path}/#{file}"
 			else filepath = "#{@base_path}/#{file}"
-			console.log filepath
 			if @fs.existsSync(filepath) then @fs.watch filepath, => socket.emit "reload"
 
 

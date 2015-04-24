@@ -100,7 +100,6 @@
         } else {
           filepath = this.base_path + "/" + file;
         }
-        console.log(filepath);
         if (this.fs.existsSync(filepath)) {
           results.push(this.fs.watch(filepath, (function(_this) {
             return function() {

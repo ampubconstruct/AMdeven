@@ -24,14 +24,19 @@ coffeescript, sass
 		/contents/
 			/nodejs/
 				NodeApp.coffee
-			/web/
+			/web/ # share, access to DOMAIN/
 				index.html
+			/proj/ # new project git
+				/atom/ # atom project
+				/node/ # node
+				/web/ # access to DOMAIN/web/
 #
 
 ###(初回実行)
 	bat_npm.bat
 	compiler.bat
 	run.bat
+
 
 ---
 ####node.js application
