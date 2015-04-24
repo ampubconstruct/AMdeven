@@ -16,6 +16,8 @@
 
     Server.prototype.base_path = "contents/web/";
 
+    Server.prototype.proj_path = "contents/proj/";
+
     Server.prototype.http = require("http");
 
     Server.prototype.mime = require('mime');
@@ -46,7 +48,12 @@
       }
 
       /*get file */
-      path = "" + this.base_path + url;
+      if (url.match(/^\/web\//)) {
+        path = "" + this.proj_path + url;
+      } else {
+        path = "" + this.base_path + url;
+      }
+      console.log(path);
       exists_flag = this.fs.existsSync(path);
       if (exists_flag) {
         data = this.fs.readFileSync(path);
@@ -127,9 +134,6 @@
         return this.on("changed", (function(_this) {
           return function(filepath) {
             var command;
-            if (filepath.match("/node_modules/")) {
-              return;
-            }
             command = "node ./node_modules/coffee-script/bin/coffee -mc " + filepath;
             return me.exec(command, function(error, stdout, stderr) {
               if (error) {
@@ -145,9 +149,6 @@
         return this.on("changed", (function(_this) {
           return function(filepath) {
             var command;
-            if (filepath.match("/node_modules/")) {
-              return;
-            }
             command = "sass " + filepath;
             console.log(command);
             return me.exec(command, function(error, stdout, stderr) {

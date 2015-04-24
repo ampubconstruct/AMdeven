@@ -5,7 +5,7 @@
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
-  ProjApp = require("./proj/ProjApp.js");
+  ProjApp = require("./proj/node/NodeProjApp.js");
 
   ExternalSite = (function() {
 
@@ -90,6 +90,8 @@
 
     AtomApp.prototype.shell = require("shell");
 
+    AtomApp.prototype.gaze = require("gaze");
+
     function AtomApp() {
       AtomApp.__super__.constructor.call(this);
       this.init();
@@ -97,36 +99,15 @@
     }
 
     AtomApp.prototype.live_reload = function() {
-      this.fs.watch("contents", (function(_this) {
-        return function(e, filename) {
-          if (!filename) {
-            return;
-          }
-          if (filename.match(/\.(html)|(js)|(css)$/)) {
+      var dir;
+      dir = ["contents/*.js", "contents/*.html", "contents/*.css", "contents/nodejs/**/*.js", "contents/proj/node/**/*.js", "contents/proj/atom/**/*.js", "contents/proj/atom/**/*.html", "contents/proj/atom/**/*.css"];
+      return this.gaze(dir, function(err, watcher) {
+        return this.on("changed", (function(_this) {
+          return function(filepath) {
             return location.reload();
-          }
-        };
-      })(this));
-      this.fs.watch("contents/nodejs", (function(_this) {
-        return function(e, filename) {
-          if (!filename) {
-            return;
-          }
-          if (filename.match(/\.(html)|(js)|(css)$/)) {
-            return location.reload();
-          }
-        };
-      })(this));
-      return this.fs.watch("contents/proj", (function(_this) {
-        return function(e, filename) {
-          if (!filename) {
-            return;
-          }
-          if (filename.match(/\.(html)|(js)|(css)$/)) {
-            return location.reload();
-          }
-        };
-      })(this));
+          };
+        })(this));
+      });
     };
 
     AtomApp.prototype.init = function() {

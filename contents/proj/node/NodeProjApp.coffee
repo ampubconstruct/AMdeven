@@ -1,4 +1,4 @@
-NodeApp = require("../nodejs/NodeApp.js")
+NodeApp = require("../../nodejs/NodeApp.js")
 class @ProjApp extends NodeApp
   constructor: ->
     super()

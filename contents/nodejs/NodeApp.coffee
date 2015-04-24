@@ -4,6 +4,7 @@ CommonJs = require("../web/mylib/CommonJs.js")
 class Server extends CommonJs
 	#config
 	base_path: "contents/web/"
+	proj_path: "contents/proj/"
 	#module
 	http: require("http")
 	mime: require('mime')
@@ -20,7 +21,11 @@ class Server extends CommonJs
 		url = url.replace /\?.*$/, ""
 		if url[url.length-1] is "/" then url += "index.html"
 		###get file###
-		path = "#{@base_path}#{url}"
+		if url.match(/^\/web\//)
+			path = "#{@proj_path}#{url}"
+		else
+			path = "#{@base_path}#{url}"
+		console.log path
 		exists_flag = @fs.existsSync path
 		if exists_flag
 			data = @fs.readFileSync(path)
@@ -60,7 +65,6 @@ class Compiler
 		me = @
 		@gaze(["*.coffee", "contents/**/*.coffee"], (err, watcher) ->
 			@on("changed", (filepath) =>
-				if filepath.match("/node_modules/") then return
 				command = "node ./node_modules/coffee-script/bin/coffee -mc #{filepath}"
 				me.exec(command, (error, stdout, stderr) =>
 					if error then console.log(stderr.replace(/.*:([0-9]+:[0-9]+.*)/, "$1"))
@@ -70,7 +74,6 @@ class Compiler
 		)
 		@gaze(["*.sass", "contents/**/*.sass"], (err, watcher) ->
 			@on("changed", (filepath) =>
-				if filepath.match("/node_modules/") then return
 				command = "sass #{filepath}"# #{filepath.replace(/sass$/, 'css')}"
 				console.log command
 				me.exec(command, (error, stdout, stderr) =>

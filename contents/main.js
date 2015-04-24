@@ -2,12 +2,10 @@
 (function() {
   $((function(_this) {
     return function() {
-      _this.AtomProjApp = require("./AtomProjApp.js");
+      _this.AtomProjApp = require("./proj/atom/AtomProjApp.js");
       return _this.aa = new _this.AtomProjApp();
     };
   })(this));
-
-  1;
 
 }).call(this);
 

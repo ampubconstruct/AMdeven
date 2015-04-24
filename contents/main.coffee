@@ -1,5 +1,3 @@
 $ =>
-	@AtomProjApp = require("./AtomProjApp.js")
+	@AtomProjApp = require("./proj/atom/AtomProjApp.js")
 	@aa = new @AtomProjApp()
-
-1

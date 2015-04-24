@@ -1,4 +1,4 @@
-ProjApp = require("./proj/ProjApp.js")
+ProjApp = require("./proj/node/NodeProjApp.js")
 
 class ExternalSite
 	###
@@ -43,27 +43,28 @@ class @AtomApp extends ProjApp
 	inspector_: 1
 	es: ExternalSite
 	#module
-	ipc: require "ipc"
-	shell: require "shell"
+	ipc: require("ipc")
+	shell: require("shell")
+	gaze: require("gaze")
 	constructor: ->
 		super()
 		@init()
 		@live_reload()
 	live_reload: ->
-		@fs.watch("contents", (e, filename) =>
-			if not filename then return
-			if filename.match /\.(html)|(js)|(css)$/
+		dir = [
+			"contents/*.js"
+			"contents/*.html"
+			"contents/*.css"
+			"contents/nodejs/**/*.js"
+			"contents/proj/node/**/*.js"
+			"contents/proj/atom/**/*.js"
+			"contents/proj/atom/**/*.html"
+			"contents/proj/atom/**/*.css"
+		]
+		@gaze(dir, (err, watcher) ->
+			@on("changed", (filepath) =>
 				location.reload()
-		)
-		@fs.watch("contents/nodejs", (e, filename) =>
-			if not filename then return
-			if filename.match /\.(html)|(js)|(css)$/
-				location.reload()
-		)
-		@fs.watch("contents/proj", (e, filename) =>
-			if not filename then return
-			if filename.match /\.(html)|(js)|(css)$/
-				location.reload()
+			)
 		)
 	init: ->
 		if @inspector_ then @auto_inspector()
