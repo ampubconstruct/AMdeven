@@ -46,13 +46,17 @@ class Server extends CommonJs
 			@websocket = @sio(@ws_port)
 		@app.listen(@http_port)
 		@websocket.on "connection", (socket) =>
-			socket.on "g", (files, path) => @ws_reload(socket, files)
-	ws_reload: (socket, files, path) ->
-		for file in files
+			socket.on "g", (paths) => @ws_reload(socket, paths)
+	ws_reload: (socket, paths) ->
+		for path in paths
 			#modify
-			if file.match(/^web\//) then filepath = "#{@proj_path}/#{file}"
-			else filepath = "#{@base_path}/#{file}"
-			if @fs.existsSync(filepath) then @fs.watch filepath, => socket.emit "reload"
+			if path.match(/^web\//) then path = "#{@proj_path}/#{path}"
+			else path = "#{@base_path}/#{path}"
+			if @fs.existsSync(path)
+				@fs.watch(path, (error, filename) =>
+					if filename.match(/\.coffee$|\.sass$/) then return
+					socket.emit "reload"
+				)
 
 class Compiler
 	fs: require("fs")

@@ -6,6 +6,7 @@ class @AtomProjApp extends AtomApp
 	start: ->
 		console.log "atom proj start"
 		@server.start() #http server, and websocket reload server
+		### external site ###
 
 sample_code = ->
 	### nodejs function ###
@@ -29,13 +30,15 @@ sample_code = ->
 	@check_dir_tree("./", /coffee$/, (loc, file) => console.log loc)
 
 	### atom app function ###
-	### external site ###
+	#external site
 	@renderer = new @es("#foo", "body", "http://google.com", "prepend", "80%", "200px") #WebView.coffee
+	@renderer.$webview.off("console-message")
 	@renderer.$webview.on("console-message", (e) => console.log "%c#{e.originalEvent.message}", "color: red")
 	@renderer.$webview.on("did-finish-load", =>
 		@renderer.webview.send("keydown", "input[aria-label=検索]", 97)
 		@renderer.webview.send("mouseclick", "button[aria-label='Google 検索']")
 		@renderer.webview.send("set scale", ratio = 0.5, selector = "body")
 	)
+
 
 module.exports = @AtomProjApp
