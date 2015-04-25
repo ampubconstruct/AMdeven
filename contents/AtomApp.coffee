@@ -37,7 +37,6 @@ class ExternalSite
 		code = 'document.querySelector("#gbqfq").value = "tarou";'
 		@webview.executeJavaScript code
 
-
 class @AtomApp extends ProjApp
 	reload_: 1
 	inspector_: 1
@@ -76,6 +75,5 @@ class @AtomApp extends ProjApp
 					x: e.clientX
 					y: e.clientY
 				@ipc.send('inspect element', obj, "mainWindow")
-
 
 module.exports = @AtomApp

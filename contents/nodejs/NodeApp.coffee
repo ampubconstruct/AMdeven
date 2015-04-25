@@ -1,72 +1,6 @@
 #required CommonJs
 CommonJs = require("../web/mylib/CommonJs.js")
 
-class @NodeApp
-	http: require("http")
-	https: require("https")
-	fs: require("fs")
-	cson: require("cson")
-	Client: require('ftp')
-	jsdom: require("jsdom")
-	jsdom_jquery_source: "./contents/web/lib/jquery-2.1.3.min.js"
-	ignore_regexp: /(\/node_modules\/)|(\/\.git\/)/
-	constructor: ->
-		@server = new Server()
-		@compiler = new Compiler(@)
-		setTimeout( =>
-			console.log("nodejs app stanby ok")
-		, 10)
-	csv_to_json: (columns, csv_file, callback) =>
-		require("csv-to-array")(
-			file: csv_file
-			columns: columns
-		, callback)
-	jsdom_check: (file, callback) =>
-		if not @jquery then @jquery = @fs.readFileSync(@jsdom_jquery_source, {encoding: "utf-8"})
-		@jsdom.env(
-			file: file
-			src: [@jquery]
-			done: callback
-		)
-	ftp_downloader: (user, pass, file, host, filepath) =>
-		c = new @Client()
-		c.on "ready", =>
-			c.get "#{file}", (err, stream) =>
-				throw err if err
-				stream.once "close", =>
-					c.end()
-				stream.pipe @fs.createWriteStream(filepath)
-		c.connect
-			host: host
-			user: user
-			password: pass
-	readline: (path, callback) =>
-		readline = require("readline")
-		rs = @fs.ReadStream(path)
-		rl = readline.createInterface({'input': rs, 'output': {}})
-		rl.on("line", callback)
-		rl.resume()
-	ftp_downloader_fullpath: (url, filepath) =>
-		name = url.replace(/.*\/\/([^:]+).*/, "$1")
-		pass = url.replace(/.*\/\/[^:]+:([^@]+).*/, "$1")
-		file = url.replace(/.*\/([^/]+$)/, "$1")
-		host = url.replace(/.*@([^/]+).*/, "$1")
-		@ftp_downloader(name, pass, file, host, filepath)
-	downloader: (url, filepath) => #http, httpsに対応
-		file = @fs.createWriteStream(filepath)
-		protocol = if url.match /^https/ then @https else @http
-		request = protocol.get url, (response) => response.pipe(file)
-	check_dir_tree: (dir, pattern, callback) =>
-		files = @fs.readdirSync(dir)
-		for file in files
-			loc = "#{dir}#{file}"
-			if loc.match(@ignore_regexp) then continue
-			if @fs.lstatSync(loc).isDirectory()
-				@check_dir_tree("#{dir}#{file}/", pattern, callback)
-			else
-				unless file.match(pattern) then continue
-				callback(loc, file)
-
 class Server extends CommonJs
 	#config
 	base_path: "contents/web/"
@@ -152,5 +86,72 @@ class Compiler
 				)
 			)
 		)
+
+class @NodeApp
+	http: require("http")
+	https: require("https")
+	fs: require("fs")
+	cson: require("cson")
+	Client: require('ftp')
+	jsdom: require("jsdom")
+	jsdom_jquery_source: "./contents/web/lib/jquery-2.1.3.min.js"
+	ignore_regexp: /(\/node_modules\/)|(\/\.git\/)/
+	constructor: ->
+		@server = new Server()
+		@compiler = new Compiler(@)
+		setTimeout( =>
+			console.log("nodejs app stanby ok")
+		, 10)
+	csv_to_json: (columns, csv_file, callback) =>
+		require("csv-to-array")(
+			file: csv_file
+			columns: columns
+		, callback)
+	jsdom_check: (file, callback) =>
+		if not @jquery then @jquery = @fs.readFileSync(@jsdom_jquery_source, {encoding: "utf-8"})
+		@jsdom.env(
+			file: file
+			src: [@jquery]
+			done: callback
+		)
+	ftp_downloader: (user, pass, file, host, filepath) =>
+		c = new @Client()
+		c.on "ready", =>
+			c.get "#{file}", (err, stream) =>
+				throw err if err
+				stream.once "close", =>
+					c.end()
+				stream.pipe @fs.createWriteStream(filepath)
+		c.connect
+			host: host
+			user: user
+			password: pass
+	readline: (path, callback) =>
+		readline = require("readline")
+		rs = @fs.ReadStream(path)
+		rl = readline.createInterface({'input': rs, 'output': {}})
+		rl.on("line", callback)
+		rl.resume()
+	ftp_downloader_fullpath: (url, filepath) =>
+		name = url.replace(/.*\/\/([^:]+).*/, "$1")
+		pass = url.replace(/.*\/\/[^:]+:([^@]+).*/, "$1")
+		file = url.replace(/.*\/([^/]+$)/, "$1")
+		host = url.replace(/.*@([^/]+).*/, "$1")
+		@ftp_downloader(name, pass, file, host, filepath)
+	downloader: (url, filepath) => #http, httpsに対応
+		file = @fs.createWriteStream(filepath)
+		protocol = if url.match /^https/ then @https else @http
+		request = protocol.get url, (response) => response.pipe(file)
+	check_dir_tree: (dir, pattern, callback) =>
+		files = @fs.readdirSync(dir)
+		for file in files
+			loc = "#{dir}#{file}"
+			if loc.match(@ignore_regexp) then continue
+			if @fs.lstatSync(loc).isDirectory()
+				@check_dir_tree("#{dir}#{file}/", pattern, callback)
+			else
+				unless file.match(pattern) then continue
+				callback(loc, file)
+
 
 module.exports = @NodeApp
