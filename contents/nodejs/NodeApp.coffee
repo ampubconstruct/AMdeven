@@ -1,93 +1,6 @@
 #required CommonJs
 CommonJs = require("../web/mylib/CommonJs.js")
 
-class Server extends CommonJs
-	#config
-	base_path: "contents/web/"
-	proj_path: "contents/proj/"
-	#module
-	http: require("http")
-	mime: require('mime')
-	sio: require('socket.io')
-	fs: require("fs")
-	start: (security = false) ->
-		@app = @http.createServer((req, res) => @http_server_action(req, res))
-		@ws_start()
-	http_server_action: (req, res) ->
-		#initial
-		url = req.url.replace /\/{2,}/, "/"
-		params = @get_params url
-		#modify
-		url = url.replace /\?.*$/, ""
-		if url[url.length-1] is "/" then url += "index.html"
-		###get file###
-		# set path
-		if url.match(/^\/web\//) then path = "#{@proj_path}#{url}"
-		else path = "#{@base_path}#{url}"
-		# send data
-		exists_flag = @fs.existsSync path
-		if exists_flag
-			data = @fs.readFileSync(path)
-			type = @mime.lookup path
-			res.writeHead(200, "Content-Type": type)
-			res.end(data)
-		else
-			res.writeHead(404)
-			res.end("404 - file not found")
-		###access log###
-		if url[url.length-4..url.length-1] is "html"
-			ip = req.connection.remoteAddress.replace /.*[^\d](\d+\.\d+\.\d+\.\d+$)/, "$1"
-			date = new Date().toLocaleTimeString()
-			console.log "#{date} #{ip} #{path}"
-	ws_start: ->
-		if @ws_port is @http_port
-			@websocket = @sio(@app)
-		else
-			@websocket = @sio(@ws_port)
-		@app.listen(@http_port)
-		@websocket.on "connection", (socket) =>
-			socket.on "g", (files, path) => @ws_reload(socket, files)
-	ws_reload: (socket, files, path) ->
-		for file in files
-			#modify
-			if file.match(/^web\//) then filepath = "#{@proj_path}/#{file}"
-			else filepath = "#{@base_path}/#{file}"
-			if @fs.existsSync(filepath) then @fs.watch filepath, => socket.emit "reload"
-
-
-class Compiler
-	fs: require("fs")
-	gaze: require("gaze")
-	exec: require('child_process').exec
-	#sass: require("node-sass")
-	constructor: (@parent) ->
-		@check_dir_tree()
-	check_dir_tree: =>
-		me = @
-		@gaze(["*.coffee", "contents/**/*.coffee"], (err, watcher) ->
-			@on("changed", (filepath) =>
-				command = "node ./node_modules/coffee-script/bin/coffee -mc #{filepath}"
-				me.exec(command, (error, stdout, stderr) =>
-					if error then console.log(stderr.replace(/.*:([0-9]+:[0-9]+.*)/, "$1"))
-					else console.log(stdout)
-				)
-			)
-		)
-		@gaze(["*.sass", "contents/**/*.sass"], (err, watcher) ->
-			@on("changed", (filepath) =>
-				command = "sass #{filepath}"# #{filepath.replace(/sass$/, 'css')}"
-				console.log command
-				me.exec(command, (error, stdout, stderr) =>
-					if error
-						console.log(stderr)
-						return
-					else
-						command = "sass #{filepath} #{filepath.replace(/sass$/, 'css')}"
-						me.exec(command)
-				)
-			)
-		)
-
 class @NodeApp
 	http: require("http")
 	https: require("https")
@@ -153,5 +66,91 @@ class @NodeApp
 			else
 				unless file.match(pattern) then continue
 				callback(loc, file)
+
+class Server extends CommonJs
+	#config
+	base_path: "contents/web/"
+	proj_path: "contents/proj/"
+	#module
+	http: require("http")
+	mime: require('mime')
+	sio: require('socket.io')
+	fs: require("fs")
+	start: (@http_port = @http_port, @ws_port = @ws_port)->
+		@app = @http.createServer((req, res) => @http_server_action(req, res))
+		@ws_start()
+	http_server_action: (req, res) ->
+		#initial
+		url = req.url.replace /\/{2,}/, "/"
+		params = @get_params url
+		#modify
+		url = url.replace /\?.*$/, ""
+		if url[url.length-1] is "/" then url += "index.html"
+		###get file###
+		# set path
+		if url.match(/^\/web\//) then path = "#{@proj_path}#{url}"
+		else path = "#{@base_path}#{url}"
+		# send data
+		exists_flag = @fs.existsSync path
+		if exists_flag
+			data = @fs.readFileSync(path)
+			type = @mime.lookup path
+			res.writeHead(200, "Content-Type": type)
+			res.end(data)
+		else
+			res.writeHead(404)
+			res.end("404 - file not found")
+		###access log###
+		if url[url.length-4..url.length-1] is "html"
+			ip = req.connection.remoteAddress.replace /.*[^\d](\d+\.\d+\.\d+\.\d+$)/, "$1"
+			date = new Date().toLocaleTimeString()
+			console.log "#{date} #{ip} #{path}"
+	ws_start: ->
+		if @ws_port is @http_port
+			@websocket = @sio(@app)
+		else
+			@websocket = @sio(@ws_port)
+		@app.listen(@http_port)
+		@websocket.on "connection", (socket) =>
+			socket.on "g", (files, path) => @ws_reload(socket, files)
+	ws_reload: (socket, files, path) ->
+		for file in files
+			#modify
+			if file.match(/^web\//) then filepath = "#{@proj_path}/#{file}"
+			else filepath = "#{@base_path}/#{file}"
+			if @fs.existsSync(filepath) then @fs.watch filepath, => socket.emit "reload"
+
+class Compiler
+	fs: require("fs")
+	gaze: require("gaze")
+	exec: require('child_process').exec
+	#sass: require("node-sass")
+	constructor: (@parent) ->
+		@check_dir_tree()
+	check_dir_tree: =>
+		me = @
+		@gaze(["*.coffee", "contents/**/*.coffee"], (err, watcher) ->
+			@on("changed", (filepath) =>
+				command = "node ./node_modules/coffee-script/bin/coffee -mc #{filepath}"
+				me.exec(command, (error, stdout, stderr) =>
+					if error then console.log(stderr.replace(/.*:([0-9]+:[0-9]+.*)/, "$1"))
+					else console.log(stdout)
+				)
+			)
+		)
+		@gaze(["*.sass", "contents/**/*.sass"], (err, watcher) ->
+			@on("changed", (filepath) =>
+				command = "sass #{filepath}"# #{filepath.replace(/sass$/, 'css')}"
+				console.log command
+				me.exec(command, (error, stdout, stderr) =>
+					if error
+						console.log(stderr)
+						return
+					else
+						command = "sass #{filepath} #{filepath.replace(/sass$/, 'css')}"
+						me.exec(command)
+				)
+			)
+		)
 
 module.exports = @NodeApp
