@@ -29,6 +29,8 @@ coffeescript, sass
 				NodeApp.coffee
 			/web/ # share, access to DOMAIN/
 				index.html
+				/mylib/CommonJs.coffee # クライアント、サーバー共通ポート設定
+
 			/proj/ # new project git
 				/atom/ # atom project
 				/node/ # node
@@ -39,7 +41,6 @@ coffeescript, sass
 	bat_npm.bat
 	compiler.bat
 	run.bat
-
 
 ###reload server
 http://localhost:8081/?ws&all # all file
