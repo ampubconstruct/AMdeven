@@ -41,7 +41,9 @@ coffeescript, sass
 	run.bat
 
 
-###port
+###reload server
+http://localhost:8081/?ws&all # all file
+http://localhost:8081/?ws&g=index.html,main.js # specified file
 
 ---
 ####as node.js application

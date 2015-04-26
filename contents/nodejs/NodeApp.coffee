@@ -10,6 +10,7 @@ class Server extends CommonJs
 	mime: require('mime')
 	sio: require('socket.io')
 	fs: require("fs")
+	gaze: require("gaze")
 	start: (@http_port = @http_port, @ws_port = @ws_port)->
 		@app = @http.createServer((req, res) => @http_server_action(req, res))
 		@ws_start()
@@ -45,18 +46,34 @@ class Server extends CommonJs
 		else
 			@websocket = @sio(@ws_port)
 		@app.listen(@http_port)
-		@websocket.on "connection", (socket) =>
-			socket.on "g", (paths) => @ws_reload(socket, paths)
+		@websocket.on("connection", (socket) =>
+			socket.on("g", (paths) => @ws_reload(socket, paths))
+			socket.on("all",(paths)=>@ws_all_reload(socket))
+		)
 	ws_reload: (socket, paths) ->
 		for path in paths
 			#modify
-			if path.match(/^web\//) then path = "#{@proj_path}/#{path}"
-			else path = "#{@base_path}/#{path}"
+			if path.match(/^web\//) then path = "#{@proj_path}#{path}"
+			else path = "#{@base_path}#{path}"
 			if @fs.existsSync(path)
 				@fs.watch(path, (error, filename) =>
 					if filename.match(/\.coffee$|\.sass$/) then return
-					socket.emit "reload"
+					socket.emit("reload")
 				)
+	ws_all_reload:(socket)->
+		dir = [
+			"#{@base_path}**/*.js"
+			"#{@base_path}**/*.html"
+			"#{@base_path}**/*.css"
+			"#{@proj_path}**/*.js"
+			"#{@proj_path}**/*.html"
+			"#{@proj_path}**/*.css"
+		]
+		@gaze(dir, (err, watcher) ->
+			@on("changed", (filepath) =>
+				socket.emit("reload")
+			)
+		)
 
 class Compiler
 	fs: require("fs")
@@ -98,7 +115,7 @@ class @NodeApp
 	cson: require("cson")
 	Client: require('ftp')
 	jsdom: require("jsdom")
-	jsdom_jquery_source: "./contents/web/lib/jquery-2.1.3.min.js"
+	jsdom_jquery_source: "./contents/web/lib/jquery-2.1.3.min.js" #sprintf検討
 	ignore_regexp: /(\/node_modules\/)|(\/\.git\/)/
 	constructor: ->
 		@server = new Server()
