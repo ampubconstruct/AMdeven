@@ -1,18 +1,12 @@
 ###
 2015/02/11: goBackを使うと、wvが使えなくなる模様
 ###
-$ = undefined
+$ = require("./web/lib/jquery-2.1.3.min.js")
 class WebView
 	ipc: require("ipc")
 	fs: require("fs")
 	shell: require("shell")
-	jquery: "./contents/web/lib/jquery-2.0.3.min.js"
-	constructor: ->
-		data = @fs.readFileSync @jquery,
-			encoding: "utf-8"
-		eval data
-		$ = jQuery
-		eval 'jQuery = null;'
+	constructor: -> 1
 	set_event: ->
 		@ipc.on "keydown", (selector, keyCode) => @set_keydown_event(selector, keyCode)
 		@ipc.on "mouseclick", (selector = "button") => $(selector).click()
