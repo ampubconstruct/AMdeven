@@ -1,9 +1,9 @@
 class @NodeClient extends @CommonJs
 	###modules###
-	ws: 1
+	ws: null
 	###websocket required variables###
 	domain: location.host.replace /:.*/, ""
-	params: 0
+	params: null
 	constructor: ->
 		@params = @get_params location.href
 		if @params.ws then @connect_websocket()
