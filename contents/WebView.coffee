@@ -6,11 +6,13 @@ class WebView
 	ipc: require("ipc")
 	fs: require("fs")
 	shell: require("shell")
-	constructor: -> 1
+	constructor: ->
+		1
 	set_event: ->
-		@ipc.on "keydown", (selector, keyCode) => @set_keydown_event(selector, keyCode)
-		@ipc.on "mouseclick", (selector = "button") => $(selector).click()
-		@ipc.on "set scale", (ratio = 0.5, selector = "body") => $(selector).css("transform", "scale(#{ratio}, #{ratio})")
+		@ipc.on("keydown", (selector, keyCode) => @set_keydown_event(selector, keyCode))
+		@ipc.on("mouseclick", (selector) => $(selector).click())
+		@ipc.on("css", (selector, prop, val) => $(selector).css(prop, val))
+		@ipc.on("set val", (selector, val) => $(selector).val(val))
 	set_keydown_event: (selector, keyCode) ->
 		$(selector).focus()
 		e = $.Event("keypress")

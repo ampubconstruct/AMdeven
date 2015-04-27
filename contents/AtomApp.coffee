@@ -1,14 +1,13 @@
 ProjApp = require("./proj/node/NodeProjApp.js")
+AutoEvent = require("./web/mylib/am/AutoEvent.js")
 
 class ExternalSite
 	###
 		document: https://github.com/atom/atom-shell/blob/master/docs/api/web-view-tag.md
 		how to use:
 			@es = new @ExternalSite "#foo"
-		console:
-			es.exejs("ipc.sendToHost('test',[1,2,3])")
 	###
-	webview: 0
+	webview: null
 	ready_flag: 0
 	constructor: (@selector, @dom, @src, which = "append", @width = "100%", @height = "640px") ->
 		webview = """
@@ -31,20 +30,17 @@ class ExternalSite
 		console.log "webview ready"
 	exejs: (code) ->
 		@webview.executeJavaScript code
-		#console.log code
-		1
-	test: ->
-		code = 'document.querySelector("#gbqfq").value = "tarou";'
-		@webview.executeJavaScript code
 
 class @AtomApp extends ProjApp
 	reload_: 1
 	inspector_: 1
-	es: ExternalSite
 	#module
 	ipc: require("ipc")
 	shell: require("shell")
 	gaze: require("gaze")
+	#class
+	ExternalSite: ExternalSite
+	AutoEvent: AutoEvent
 	constructor: ->
 		super()
 		@init()
