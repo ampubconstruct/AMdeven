@@ -1,9 +1,9 @@
 class @NodeClient extends @CommonJs
 	###modules###
-	ws: null
+	ws: 0
 	###websocket required variables###
 	domain: location.host.replace /:.*/, ""
-	params: null
+	params: 0
 	constructor: ->
 		@params = @get_params location.href
 		if @params.ws then @connect_websocket()
@@ -22,3 +22,4 @@ class @NodeClient extends @CommonJs
 			if @params.g then @ws.emit("g", (if typeof(@params.g) is "object" then @params.g else [@params.g]))
 			if @params.all then @ws.emit("all")
 			@ws.on "reload", => location.reload()
+			@ws.on "css reload", (css) => $("body").append("<style type=\"text/css\">#{css}</style>")

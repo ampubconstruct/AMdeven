@@ -43,8 +43,8 @@ coffeescript, sass
 	run.bat
 
 ###reload server
-http://localhost:8081/?ws&all # all file
-http://localhost:8081/?ws&g=index.html,main.js # specified file
+* http://localhost:8081/?ws&all # all file
+* http://localhost:8081/?ws&g=index.html,main.js # specified file
 
 ---
 ####as node.js application
@@ -53,4 +53,4 @@ http://localhost:8081/?ws&g=index.html,main.js # specified file
 
 ---
 ###package
-electronと同じディレクトリに入れ、run.batを起動する
+配置を参考に、elecronがあるフォルダと同じフォルダに入れrun.batを起動する

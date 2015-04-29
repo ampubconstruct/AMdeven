@@ -50,6 +50,8 @@ class Server extends CommonJs
 			socket.on("g", (paths) => @ws_reload(socket, paths))
 			socket.on("all",(paths)=>@ws_all_reload(socket))
 		)
+	send_reload_event: (socket) => socket.emit("reload")
+	send_css_reload_event: (socket,filepath) => socket.emit("css reload", @fs.readFileSync(filepath, {encoding:"utf-8"}))
 	ws_reload: (socket, paths) ->
 		for path in paths
 			#modify
@@ -58,20 +60,29 @@ class Server extends CommonJs
 			if @fs.existsSync(path)
 				@fs.watch(path, (error, filename) =>
 					if filename.match(/\.coffee$|\.sass$/) then return
-					socket.emit("reload")
+					if filename.match(/\.css$/) then return @send_css_reload_event(socket, filename)
+					@send_reload_event(socket)
 				)
 	ws_all_reload:(socket)->
+		me = @
 		dir = [
 			"#{@base_path}**/*.js"
 			"#{@base_path}**/*.html"
-			"#{@base_path}**/*.css"
 			"#{@proj_path}**/*.js"
 			"#{@proj_path}**/*.html"
-			"#{@proj_path}**/*.css"
 		]
 		@gaze(dir, (err, watcher) ->
 			@on("changed", (filepath) =>
-				socket.emit("reload")
+				me.send_reload_event(socket)
+			)
+		)
+		css_dir = [
+			"#{@base_path}**/*.css"
+			"#{@proj_path}**/*.css"
+		]
+		@gaze(css_dir, (err, watcher) ->
+			@on("changed", (filepath) =>
+				me.send_css_reload_event(socket, filepath)
 			)
 		)
 
