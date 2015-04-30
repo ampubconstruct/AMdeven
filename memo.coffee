@@ -1,3 +1,11 @@
+#30
+sassを使わずcss+CoffeeUIクラスを作ることを考慮
+次回プロジェクトより
+
+それとは別にwatcherの統合が必要
+watchは基本的に、起動時に１回のみ#（メモリリークが解消されるまで）
+reloadイベントも同様に絡める
+
 #19
 http://memo.yomukaku.net/entries/uuptBYV
 child_process.execを使い、連携する。
