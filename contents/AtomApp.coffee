@@ -38,6 +38,7 @@ class @AtomApp extends ProjApp
 	ipc: require("ipc")
 	shell: require("shell")
 	gaze: require("gaze")
+	fs: require("fs")
 	#class
 	ExternalSite: ExternalSite
 	AutoEvent: AutoEvent
@@ -46,19 +47,27 @@ class @AtomApp extends ProjApp
 		@init()
 		@live_reload()
 	live_reload: ->
+		me = @
 		dir = [
 			"contents/*.js"
 			"contents/*.html"
-			"contents/*.css"
 			"contents/nodejs/**/*.js"
 			"contents/proj/node/**/*.js"
 			"contents/proj/atom/**/*.js"
 			"contents/proj/atom/**/*.html"
-			"contents/proj/atom/**/*.css"
 		]
 		@gaze(dir, (err, watcher) ->
 			@on("changed", (filepath) =>
 				location.reload()
+			)
+		)
+		dir = [
+			"contents/*.css"
+			"contents/proj/atom/**/*.css"
+		]
+		@gaze(dir, (err, watcher) ->
+			@on("changed", (filepath) =>
+				$("body").append("<style type=\"text/css\">#{me.fs.readFileSync(filepath, {encoding:"utf-8"})}</style>")
 			)
 		)
 	init: ->
