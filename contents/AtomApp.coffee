@@ -46,6 +46,17 @@ class @AtomApp extends ProjApp
 		super()
 		@init()
 		@live_reload()
+	### 信頼しているメソッドなるべくフロー順 ###
+	init: ->
+		if @inspector_ then @auto_inspector()
+	auto_inspector: ->
+		#
+		$(document).on "mousedown", (e) =>
+			if e.button is 2
+				obj =
+					x: e.clientX
+					y: e.clientY
+				@ipc.send('inspect element', obj, "mainWindow")
 	live_reload: ->
 		me = @
 		dir = [
@@ -70,15 +81,5 @@ class @AtomApp extends ProjApp
 				$("body").append("<style type=\"text/css\">#{me.fs.readFileSync(filepath, {encoding:"utf-8"})}</style>")
 			)
 		)
-	init: ->
-		if @inspector_ then @auto_inspector()
-	auto_inspector: ->
-		#
-		$(document).on "mousedown", (e) =>
-			if e.button is 2
-				obj =
-					x: e.clientX
-					y: e.clientY
-				@ipc.send('inspect element', obj, "mainWindow")
 
 module.exports = @AtomApp
