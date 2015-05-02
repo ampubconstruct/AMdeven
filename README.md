@@ -7,18 +7,19 @@ coffeescript, sass
 
 	Windows7
 		electron(https://github.com/atom/electron)
+		nodejs
 		npm
 		ruby
 		rubygems
 			gem source -a http://rubygems.org/
 			gem install sass
 		### my choco ###
-		choco install githubforwindows cmder atom notepadplusplus ruby rubygems
+		choco install nodejs githubforwindows cmder atom notepadplusplus ruby rubygems
 		choco install googlechrome clover dexpot autoit.commandline
 		choco install firefox-dev -pre
 	cloud9
 		clone
-		nvm install v1.*
+		nvm install v1.* #iojs
 
 ###(配置)
 	/electron-version/
