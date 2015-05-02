@@ -11,22 +11,24 @@ class Server extends CommonJs
 	sio: require('socket.io')
 	fs: require("fs")
 	gaze: require("gaze")
+	#info
+	reload_list: []
 	start: (@http_port = @http_port, @ws_port = @ws_port)->
 		@app = @http.createServer((req, res) => @http_server_action(req, res))
 		@ws_start()
 	http_server_action: (req, res) ->
 		#initial
-		url = req.url.replace /\/{2,}/, "/"
+		url = req.url.replace(/\/{2,}/, "/")
 		params = @get_params url
 		#modify
-		url = url.replace /\?.*$/, ""
+		url = url.replace(/\?.*$/, "")
 		if url[url.length-1] is "/" then url += "index.html"
 		###get file###
 		# set path
 		if url.match(/^\/web\//) then path = "#{@proj_path}#{url}"
 		else path = "#{@base_path}#{url}"
 		# send data
-		exists_flag = @fs.existsSync path
+		exists_flag = @fs.existsSync(path)
 		if exists_flag
 			data = @fs.readFileSync(path)
 			type = @mime.lookup path
@@ -37,7 +39,7 @@ class Server extends CommonJs
 			res.end("404 - file not found")
 		###access log###
 		if url[url.length-4..url.length-1] is "html"
-			ip = req.connection.remoteAddress.replace /.*[^\d](\d+\.\d+\.\d+\.\d+$)/, "$1"
+			ip = req.connection.remoteAddress.replace(/.*[^\d](\d+\.\d+\.\d+\.\d+$)/, "$1")
 			date = new Date().toLocaleTimeString()
 			console.log "#{date} #{ip} #{path}"
 	ws_start: ->
@@ -47,23 +49,10 @@ class Server extends CommonJs
 			@websocket = @sio(@ws_port)
 		@app.listen(@http_port)
 		@websocket.on("connection", (socket) =>
-			socket.on("g", (paths) => @ws_reload(socket, paths))
-			socket.on("all",(paths)=>@ws_all_reload(socket))
+			socket.on("all",=>@reload_list.push(socket))
 		)
-	send_reload_event: (socket) => socket.emit("reload")
-	send_css_reload_event: (socket,filepath) => socket.emit("css reload", @fs.readFileSync(filepath, {encoding:"utf-8"}))
-	ws_reload: (socket, paths) ->
-		for path in paths
-			#modify
-			if path.match(/^web\//) then path = "#{@proj_path}#{path}"
-			else path = "#{@base_path}#{path}"
-			if @fs.existsSync(path)
-				@fs.watch(path, (error, filename) =>
-					if filename.match(/\.coffee$|\.sass$/) then return
-					if filename.match(/\.css$/) then return @send_css_reload_event(socket, filename)
-					@send_reload_event(socket)
-				)
-	ws_all_reload:(socket)->
+		@ws_event_reload()
+	ws_event_reload: ->
 		me = @
 		dir = [
 			"#{@base_path}**/*.js"
@@ -73,7 +62,8 @@ class Server extends CommonJs
 		]
 		@gaze(dir, (err, watcher) ->
 			@on("changed", (filepath) =>
-				me.send_reload_event(socket)
+				me.check_reload_list()
+				me.send_reload_event(socket) for socket in me.reload_list
 			)
 		)
 		css_dir = [
@@ -82,9 +72,18 @@ class Server extends CommonJs
 		]
 		@gaze(css_dir, (err, watcher) ->
 			@on("changed", (filepath) =>
-				me.send_css_reload_event(socket, filepath)
+				me.check_reload_list()
+				me.send_css_reload_event(socket, filepath) for socket in me.reload_list
 			)
 		)
+	send_reload_event: (socket) => socket.emit("reload")
+	send_css_reload_event: (socket,filepath) => socket.emit("css reload", @fs.readFileSync(filepath, {encoding:"utf-8"}))
+	check_reload_list: =>
+		arr = []
+		for socket, i in @reload_list
+			if socket.disconnected then arr.unshift(i)
+		for num in arr
+			@reload_list.splice(num, 1)
 
 class @NodeApp
 	### modules ###
