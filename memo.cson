@@ -1,10 +1,23 @@
 未着手リスト
 	1. instant.coffee 更新無し、即時実行js
 	2. sassを使わずcss+CoffeeUIクラスを作ることを考慮
+	3.electron-sampleのgitに、独自projectを容易に追加出来るようにする設計(互換性は強くは意識しない)
+		projさえ分離出来るようになれば良い。
+		現状
+		./contents/proj/ にサンプルプロジェクトを投入しているが、gitに登録されている
+		変更すると、分離出来ないため、
+		1. proj_igonore_shogi/のようなdirectoryを作る。
+			directory構成が変わるため、全体のmodule import に影響が出る
+		2. contents/projをignoreしてしまう。 →　良さそう。
+			projの管理さえしっかり行えれば、sample,productの切り替えが容易になる。
+			projを入れることを必須とする。readmeに記入
+
+
 
 ### 過去ログ ###
 #05/02
 instant.coffee 更新無し、即時実行js
+全体を大きく変更し進化するのも重要だが、今動いているということも重要。
 
 #30
 sassを使わずcss+CoffeeUIクラスを作ることを考慮
