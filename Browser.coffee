@@ -2,6 +2,50 @@ start = =>
 	b = new @Browser()
 	b.start()
 
+class Compiler
+	app: require("app")
+	fs: require("fs")
+	gaze: require("gaze")
+	exec: require('child_process').exec
+	#sass: require("node-sass")
+	constructor: (@parent) ->
+		@reload_browser()
+	watch: =>
+		me = @
+		send_msg = @parent.send_msg
+		@gaze(["*.coffee", "contents/**/*.coffee"], (err, watcher) ->
+			@on("changed", (filepath) =>
+				command = "node ./node_modules/coffee-script/bin/coffee -mc #{filepath}"
+				me.exec(command, (error, stdout, stderr) =>
+					if error then send_msg(stderr.replace(/.*:([0-9]+:[0-9]+.*)/, "$1"))
+					else send_msg(stdout)
+				)
+			)
+		)
+		@gaze(["*.sass", "contents/**/*.sass"], (err, watcher) ->
+			@on("changed", (filepath) =>
+				command = "sass #{filepath}"
+				me.exec(command, (error, stdout, stderr) =>
+					if error
+						send_msg(stderr)
+						return
+					else
+						command = "sass #{filepath} #{filepath.replace(/sass$/, 'css')}"
+						me.exec(command)
+				)
+			)
+		)
+	reload_browser: ->
+		me = @
+		@gaze(["Browser.js"], (err, watcher) ->
+			@on("changed", (filepath) =>
+				me.exec("run.bat")
+				setTimeout( =>
+					me.app.terminate()
+				, 0)
+			)
+		)
+
 class @Browser# extends @NodeJsApp
 	#configuration
 	url: "file://" + __dirname + "/contents/index.html"
@@ -18,6 +62,7 @@ class @Browser# extends @NodeJsApp
 	#member
 	mainWindow: 0
 	constructor: ->
+		@compiler = new Compiler(@)
 		try
 			result = @cson.load(@cson_path)
 		catch e
@@ -68,6 +113,9 @@ class @Browser# extends @NodeJsApp
 			@fs.writeFileSync(@cson_path, cson_string)
 			@mainWindow = (null)
 		)
+		@compiler.watch()
+	send_msg: (msg) =>
+		@mainWindow?.webContents.send("browser send msg", msg)
 	global_shortcut: ->
 			ret = @globalShortcut.register('ctrl+e', =>
 				console.log("#{Date.now()} , ctrl+e is pressed")

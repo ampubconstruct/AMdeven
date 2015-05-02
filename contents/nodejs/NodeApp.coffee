@@ -86,51 +86,20 @@ class Server extends CommonJs
 			)
 		)
 
-class Compiler
-	fs: require("fs")
-	gaze: require("gaze")
-	exec: require('child_process').exec
-	#sass: require("node-sass")
-	constructor: (@parent) ->
-		@check_dir_tree()
-	check_dir_tree: =>
-		me = @
-		@gaze(["*.coffee", "contents/**/*.coffee"], (err, watcher) ->
-			@on("changed", (filepath) =>
-				command = "node ./node_modules/coffee-script/bin/coffee -mc #{filepath}"
-				me.exec(command, (error, stdout, stderr) =>
-					if error then console.log(stderr.replace(/.*:([0-9]+:[0-9]+.*)/, "$1"))
-					else console.log(stdout)
-				)
-			)
-		)
-		@gaze(["*.sass", "contents/**/*.sass"], (err, watcher) ->
-			@on("changed", (filepath) =>
-				command = "sass #{filepath}"# #{filepath.replace(/sass$/, 'css')}"
-				console.log command
-				me.exec(command, (error, stdout, stderr) =>
-					if error
-						console.log(stderr)
-						return
-					else
-						command = "sass #{filepath} #{filepath.replace(/sass$/, 'css')}"
-						me.exec(command)
-				)
-			)
-		)
-
 class @NodeApp
+	### modules ###
 	http: require("http")
 	https: require("https")
 	fs: require("fs")
 	cson: require("cson")
 	Client: require('ftp')
+	readline: require("readline")
 	jsdom: require("jsdom")
+	### confing ###
 	jsdom_jquery_source: "./contents/web/lib/jquery-2.1.3.min.js" #sprintf検討
 	ignore_regexp: /(\/node_modules\/)|(\/\.git\/)/
 	constructor: ->
 		@server = new Server()
-		@compiler = new Compiler(@)
 		setTimeout( =>
 			console.log("nodejs app stanby ok")
 		, 10)
@@ -158,10 +127,9 @@ class @NodeApp
 			host: host
 			user: user
 			password: pass
-	readline: (path, callback) =>
-		readline = require("readline")
+	readline_func: (path, callback) =>
 		rs = @fs.ReadStream(path)
-		rl = readline.createInterface({'input': rs, 'output': {}})
+		rl = @readline.createInterface({'input': rs, 'output': {}})
 		rl.on("line", callback)
 		rl.resume()
 	ftp_downloader_fullpath: (url, filepath) =>

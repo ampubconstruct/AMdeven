@@ -49,6 +49,7 @@ class @AtomApp extends ProjApp
 	### 信頼しているメソッドなるべくフロー順 ###
 	init: ->
 		if @inspector_ then @auto_inspector()
+		@ipc.on("browser send msg",(msg) => console.log(msg))
 	auto_inspector: ->
 		#
 		$(document).on "mousedown", (e) =>
