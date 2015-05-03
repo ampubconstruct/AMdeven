@@ -24,3 +24,4 @@ ignore_data
 *.map
 *.js
 *.min.*
+contents/new_proj

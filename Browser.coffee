@@ -66,12 +66,12 @@ class @Browser# extends @NodeJsApp
 		try
 			result = @cson.load(@cson_path)
 		catch e
-			@fs.mkdir(@ignore_data_dir,=>@fs.writeFile(@cson_path))
 			result =
 				x: 0
 				y: 240
 				width: 700
 				height: 800
+			@fs.mkdir(@ignore_data_dir,=>@fs.writeFile(@cson_path, @cson.createCSONString(result)))
 		@[key] = val for key, val of result
 	start: ->
 		require("crash-reporter").start()
