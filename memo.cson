@@ -11,6 +11,8 @@
 		2. contents/projをignoreしてしまう。 →　良さそう。
 			projの管理さえしっかり行えれば、sample,productの切り替えが容易になる。
 			projを入れることを必須とする。readmeに記入
+	4. (要考慮) callbackの閉じカッコは最終行にすることでfoldしたときに１行として扱われる
+		→　段をずらして、同一インデントにすることでも解決した。(atom editor)
 
 
 
