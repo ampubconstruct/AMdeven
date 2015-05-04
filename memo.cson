@@ -1,25 +1,40 @@
 未着手リスト
 	1. instant.coffee 更新無し、即時実行js
-	3.electron-sampleのgitに、独自projectを容易に追加出来るようにする設計(互換性は強くは意識しない)
-		projさえ分離出来るようになれば良い。
-		現状
-		./contents/proj/ にサンプルプロジェクトを投入しているが、gitに登録されている
-		変更すると、分離出来ないため、
-		1. proj_igonore_shogi/のようなdirectoryを作る。
-			directory構成が変わるため、全体のmodule import に影響が出る
-		2. contents/projをignoreしてしまう。 →　良さそう。
-			projの管理さえしっかり行えれば、sample,productの切り替えが容易になる。
-			projを入れることを必須とする。readmeに記入
-			→ ローカルで、同一のelectron-sampleが出来たため、githubforwindowsで同一のものとして扱われた。(区別していない)
-		3. contents/new_proj/として分離する。
-			初期ポート設定、projectのディレクトリ設定をignore_dataで、browser.csonと同様に設定出来るようにする。（無ければ作成)
-			new_projをignoreしておく。
-			→　new_projにgitを追加していく
-			→　完全分離予定？　
+
+
 
 
 
 ### 過去ログ ###
+#05
+3.electron-sampleのgitに、独自projectを容易に追加出来るようにする設計(互換性は強くは意識しない)
+	projさえ分離出来るようになれば良い。
+	現状
+	./contents/proj/ にサンプルプロジェクトを投入しているが、gitに登録されている
+	変更すると、分離出来ないため、
+	1. proj_igonore_shogi/のようなdirectoryを作る。
+		directory構成が変わるため、全体のmodule import に影響が出る
+	2. contents/projをignoreしてしまう。 →　良さそう。
+		projの管理さえしっかり行えれば、sample,productの切り替えが容易になる。
+		projを入れることを必須とする。readmeに記入
+		→ ローカルで、同一のelectron-sampleが出来たため、githubforwindowsで同一のものとして扱われた。(区別していない)
+	3. contents/new_proj/として分離する。
+		初期ポート設定、projectのディレクトリ設定をignore_dataで、browser.csonと同様に設定出来るようにする。（無ければ作成)
+		new_projをignoreしておく。
+		→　new_projにgitを追加していく
+		→　完全分離予定？　→　思った以上に面倒で難しい。。。
+		portの設定について
+			portはsampleに影響しないところで設定できたほうが良い。
+			クライアントに飛ばすときに、そのデータを渡す必要がある。
+			ignore_dataをアクセス可能にするか？
+				→cson形式で管理する予定。
+				危険性は？
+		→projを単に無視するだけでは？　挑戦
+
+#04
+vanillajs早っっ
+vanilla考慮するが、書き方はjQueryが優秀。jQueryやSprintに期待を寄せるか、もしくは生jsから寄せていくか考慮
+
 #03
 気が向いたらやる
 	4. (要考慮) callbackの閉じカッコは最終行にすることでfoldしたときに１行として扱われる
