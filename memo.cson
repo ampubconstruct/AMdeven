@@ -1,13 +1,18 @@
 未着手リスト
 	1. instant.coffee 更新無し、即時実行js
-	2. port設定の独立化について
-		ignore_dataに格納する・・？
-		node_projにて設定出来ないの？→extendsは基本１個
-			1.
 
 
 ### 過去ログ ###
 #05
+2. port設定の独立化について
+	ignore_dataに格納する・・？
+	node_projにて設定出来ないの？→extendsは基本１個
+		CommonJsを書き換えできないの？
+			→ projectに依存する？　web側問題なし。
+			→ node側は？requireの前に一つ挟む必要が出る。sampleもsample_projに依存しても良いと判断した。
+			一旦採用
+
+
 3.electron-sampleのgitに、独自projectを容易に追加出来るようにする設計(互換性は強くは意識しない)
 	projさえ分離出来るようになれば良い。
 	現状

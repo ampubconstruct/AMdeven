@@ -1,5 +1,5 @@
 #required CommonJs
-CommonJs = require("../web/mylib/CommonJs.js")
+CommonJs = require("../proj/web/CommonJs.js")
 
 class Server extends CommonJs
 	#config

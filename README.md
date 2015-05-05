@@ -32,16 +32,22 @@ coffeescript, sass
 				index.html
 				/mylib/CommonJs.coffee # クライアント、サーバー共通ポート設定
 
-			/proj/ # new project git
+			/sample_proj/ # new project, copy and rename to proj
 				/atom/ # atom project
 				/node/ # node
 				/web/ # access to DOMAIN/web/
 #
 
 ###(初回実行)
+	contents内、sample_projをコピーしprojとする。
 	bat_npm.bat
 	compiler.bat
 	run.bat
+
+###(設定)
+port設定
+	/contents/proj/CommonJs.coffee
+
 
 ###reload server
 * http://localhost:8081/?ws&all # all file
