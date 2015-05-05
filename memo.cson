@@ -1,8 +1,9 @@
 未着手リスト
 	1. instant.coffee 更新無し、即時実行js
-
-
-
+	2. port設定の独立化について
+		ignore_dataに格納する・・？
+		node_projにて設定出来ないの？→extendsは基本１個
+			1.
 
 
 ### 過去ログ ###

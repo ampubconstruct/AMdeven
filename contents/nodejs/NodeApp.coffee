@@ -94,11 +94,13 @@ class @NodeApp
 	Client: require('ftp')
 	readline: require("readline")
 	jsdom: require("jsdom")
+	### class ###
+	Server: Server
 	### confing ###
 	jsdom_jquery_source: "./contents/web/lib/jquery-2.1.3.min.js" #sprintf検討
 	ignore_regexp: /(\/node_modules\/)|(\/\.git\/)/
 	constructor: ->
-		@server = new Server()
+		@server = new @Server()
 		setTimeout( =>
 			console.log("nodejs app stanby ok")
 		, 10)
