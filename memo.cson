@@ -1,12 +1,23 @@
 未着手リスト
-	1. instant.coffee 更新無し、即時実行js
-	2. 名前を考える - 午前の開発環境
-		AMDevEn
-		AmDeven
-		AmDevEn
+	優先度
+		高
+			1. AutoEvent generatorからpromiseへ移行考慮
+				http://qiita.com/kidach1/items/d997df84a0ede39d76ad
+		中
+
+		低
+			1. instant.coffee 更新無し、即時実行js
+			2. 名前を考える - 午前の開発環境
+				AMDevEn
+				AmDeven
+				AmDevEn
+
 
 
 ### 過去ログ ###
+#06
+AutoEventはpromiseを考える。
+
 #05
 2. port設定の独立化について
 	ignore_dataに格納する・・？
