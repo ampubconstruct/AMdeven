@@ -18,11 +18,9 @@ class @AutoEvent
 ### sample ###
 code = =>
   @aae = new @AutoEvent()
+  callback = => console.log(Date.now())
   for i in [1..10]
-    @aae.set_event( =>
-      console.log(Date.now())
-    ,300)
+    @aae.set_event(callback,300)
   @aae.start()
-
 
 module?.exports = @AutoEvent
