@@ -11,9 +11,9 @@ coffeescript, sass
 		npm
 		ruby
 		rubygems
-			gem source -a http://rubygems.org/
+			gem source -a http://rubygems.org/ # if error
 			gem install sass
-		### my choco ###
+		### my choco for dev ###
 		choco install nodejs githubforwindows cmder atom notepadplusplus ruby rubygems
 		choco install googlechrome clover dexpot autoit.commandline
 		choco install firefox-dev -pre
