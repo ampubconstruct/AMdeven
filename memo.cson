@@ -1,8 +1,7 @@
 未着手リスト
 	優先度
 		高
-			1. AutoEvent generatorからpromiseへ移行考慮
-				http://qiita.com/kidach1/items/d997df84a0ede39d76ad
+
 		中
 
 		低
@@ -15,6 +14,11 @@
 
 
 ### 過去ログ ###
+#07
+様子見
+	1. AutoEvent generatorからpromiseへ移行考慮
+		http://qiita.com/kidach1/items/d997df84a0ede39d76ad
+
 #06
 AutoEventはpromiseを考える。
 
