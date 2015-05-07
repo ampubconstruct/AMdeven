@@ -4,7 +4,6 @@
   "description": "test",
   "dependencies": {
     "coffee-script": "latest",
-    "node-sass": "latest",
 		"mime": "latest",
 		"cson": "latest",
 		"socket.io": "1.x",
