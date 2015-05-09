@@ -1,3 +1,1 @@
-@App = require("./contents/proj/node/NodeProjApp.js")
-@a = new @App()
-@a.server.start()
+require("./contents/app.js")
