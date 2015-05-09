@@ -1,4 +1,4 @@
-SET version=electron-v0.24.0-win32-x64
+SET version=electron-v0.25.3-win32-x64
 SET project_path=%~dp0
 cd ../
 SET atom_shell_path=%cd%\%version%
