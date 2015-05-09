@@ -1,10 +1,9 @@
 #required CommonJs
-CommonJs = require("../proj/web/CommonJs.js")
+CommonJs = require("../proj/web/mylib/CommonJs.js")
 
 class Server extends CommonJs
 	#config
-	base_path: "contents/web/"
-	proj_path: "contents/proj/"
+	proj_path: "contents/proj/web/"
 	#module
 	http: require("http")
 	mime: require('mime')
@@ -25,8 +24,7 @@ class Server extends CommonJs
 		if url[url.length-1] is "/" then url += "index.html"
 		###get file###
 		# set path
-		if url.match(/^\/web\//) then path = "#{@proj_path}#{url}"
-		else path = "#{@base_path}#{url}"
+		path = "#{@proj_path}#{url}"
 		# send data
 		exists_flag = @fs.existsSync(path)
 		if exists_flag
@@ -55,8 +53,6 @@ class Server extends CommonJs
 	ws_event_reload: ->
 		me = @
 		dir = [
-			"#{@base_path}**/*.js"
-			"#{@base_path}**/*.html"
 			"#{@proj_path}**/*.js"
 			"#{@proj_path}**/*.html"
 		]
@@ -67,7 +63,6 @@ class Server extends CommonJs
 			)
 		)
 		css_dir = [
-			"#{@base_path}**/*.css"
 			"#{@proj_path}**/*.css"
 		]
 		@gaze(css_dir, (err, watcher) ->
@@ -97,7 +92,7 @@ class @NodeApp
 	### class ###
 	Server: Server
 	### confing ###
-	jsdom_jquery_source: "./contents/web/lib/jquery-2.1.3.min.js" #sprintf検討
+	jsdom_jquery_source: "./contents/proj/web/lib/jquery-2.1.3.min.js" #sprintf検討
 	ignore_regexp: /(\/node_modules\/)|(\/\.git\/)/
 	constructor: ->
 		@server = new @Server()

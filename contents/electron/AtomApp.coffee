@@ -1,4 +1,4 @@
-AutoEvent = require("../web/mylib/am/AutoEvent.js")
+AutoEvent = require("../proj/web/mylib/am/AutoEvent.js")
 
 class ExternalSite
 	###
@@ -10,7 +10,7 @@ class ExternalSite
 	ready_flag: 0
 	constructor: (@selector, @dom, @src, which = "append", @width = "100%", @height = "640px") ->
 		webview = """
-			<webview id="#{@selector}" preload="./electron/webview.js" src="#{@src}"
+			<webview id="#{@selector}" preload="./electron/WebView.js" src="#{@src}"
 				style="width:#{@width}; height:#{@height}; display: block; overflow: hidden;" nodeintegration>
 			</webview>
 		"""

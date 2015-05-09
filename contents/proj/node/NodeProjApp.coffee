@@ -3,7 +3,7 @@ NodeApp = require("../../nodejs/NodeApp.js")
 class @NodeProjApp extends NodeApp
   constructor: ->
     super()
-    
+
 
 sample_code = ->
   ### nodejs function ###

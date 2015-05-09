@@ -1,7 +1,7 @@
 ###
 2015/02/11: goBackを使うと、wvが使えなくなる模様
 ###
-$ = require("../web/lib/jquery-2.1.3.min.js")
+$ = require("../proj/web/lib/jquery-2.1.3.min.js")
 class WebView
 	ipc: require("ipc")
 	fs: require("fs")
