@@ -1,3 +1,5 @@
+Config = require("./Config.js")
+
 start = =>
   b = new @Browser()
   b.start()
@@ -23,8 +25,9 @@ class Watcher
 class @Browser# extends @NodeJsApp
   #configuration
   url: "file://" + __dirname + "/contents/index.html"
-  ignore_data_dir: "ignore_data"
   cson_path: "./ignore_data/browser.cson"
+  config: new Config
+  data: {}
   #require
   fs: require("fs")
   app: require("app")
@@ -45,8 +48,8 @@ class @Browser# extends @NodeJsApp
         y: 240
         width: 700
         height: 800
-      @fs.mkdir(@ignore_data_dir,=>@fs.writeFile(@cson_path, @cson.createCSONString(result)))
-    @[key] = val for key, val of result
+      @fs.mkdir(@config.ignore_data,=>@fs.writeFile(@cson_path, @cson.createCSONString(result)))
+    @data = result
   start: ->
     require("crash-reporter").start()
     @ipc_event()
@@ -66,10 +69,10 @@ class @Browser# extends @NodeJsApp
     )
   make_window: ->
     @mainWindow = new @BrowserWindow(
-      x: @x
-      y: @y
-      width: @width
-      height: @height
+      x: @data.x
+      y: @data.y
+      width: @data.width
+      height: @data.height
       #show: (false)
     )
     @mainWindow.webContents.on("did-finish-load", => console.log "load finished.")
