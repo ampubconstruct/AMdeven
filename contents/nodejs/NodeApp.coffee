@@ -3,7 +3,7 @@ CommonJs = require("../proj/web/mylib/CommonJs.js")
 
 class Server extends CommonJs
 	#config
-	proj_path: "contents/proj/web/"
+	proj_path: "contents/proj/web"
 	#module
 	http: require("http")
 	mime: require('mime')

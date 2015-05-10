@@ -3,6 +3,7 @@ NodeApp = require("../../nodejs/NodeApp.js")
 class @NodeProjApp extends NodeApp
   constructor: ->
     super()
+    @server.start() #http server, and websocket reload server, default sart
 
 
 sample_code = ->
@@ -27,4 +28,6 @@ sample_code = ->
   @check_dir_tree("./", /coffee$/, (loc, file) => console.log loc)
 
 
+
+#new @NodeProjApp()
 module.exports = @NodeProjApp

@@ -2,4 +2,3 @@
 @compiler.on("message",(msg) => console.log msg)
 @App = require("./proj/node/NodeProjApp.js")
 @a = new @App()
-@a.server.start()

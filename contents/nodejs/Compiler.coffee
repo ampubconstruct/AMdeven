@@ -2,9 +2,9 @@ class Compiler
 	fs: require("fs")
 	gaze: require("gaze")
 	exec: require('child_process').exec
-	#sass: require("node-sass")
 	constructor: ->
     @watch()
+		unless process.send? then process.send = console.log
   watch: =>
     me = @
     @gaze(["*.coffee", "**/*.coffee"], (err, watcher) ->
@@ -12,7 +12,7 @@ class Compiler
         command = "node ./node_modules/coffee-script/bin/coffee -mc #{filepath}"
         me.exec(command, (error, stdout, stderr) =>
           if error then process.send(stderr.replace(/.*:([0-9]+:[0-9]+.*)/, "$1"))
-          else process.send(String(stdout))
+          else 1 #process.send(String(stdout))
         )
       )
     )
