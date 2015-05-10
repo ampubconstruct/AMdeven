@@ -1,9 +1,9 @@
 class @NodeClient extends @CommonJs
 	###modules###
-	ws: 0
+	ws: null
 	###websocket required variables###
-	domain: location.host.replace /:.*/, ""
-	params: 0
+	domain: location.host.replace(/:.*/, "")
+	params: null
 	constructor: ->
 		@params = @get_params location.href
 		if @params.ws then @connect_websocket()
@@ -21,5 +21,7 @@ class @NodeClient extends @CommonJs
 			console.log("websocket connected")
 			if @params.g then @ws.emit("g", (if typeof(@params.g) is "object" then @params.g else [@params.g]))
 			if @params.all then @ws.emit("all")
-			@ws.on "reload", => location.reload()
-			@ws.on "css reload", (css) => $("body").append("<style type=\"text/css\">#{css}</style>")
+			@ws.on("reload", => @reload())
+			@ws.on("css reload", (css) => $("body").append("<style type=\"text/css\">#{css}</style>"))
+			@ws.on("disconnect", => setTimeout(@reload, 2500))
+	reload: -> location.reload()

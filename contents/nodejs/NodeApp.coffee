@@ -53,8 +53,8 @@ class Server extends CommonJs
 	ws_event_reload: ->
 		me = @
 		dir = [
-			"#{@proj_path}**/*.js"
-			"#{@proj_path}**/*.html"
+			"#{@proj_path}/**/*.js"
+			"#{@proj_path}/**/*.html"
 		]
 		@gaze(dir, (err, watcher) ->
 			@on("changed", (filepath) =>
