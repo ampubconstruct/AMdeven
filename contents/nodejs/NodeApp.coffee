@@ -1,5 +1,6 @@
 #required CommonJs
 CommonJs = require("../proj/web/mylib/CommonJs.js")
+Config = require("../../Config.js")
 
 class Server extends CommonJs
   #config
@@ -94,11 +95,22 @@ class @NodeApp
   ### confing ###
   jsdom_jquery_source: "./contents/proj/web/lib/jquery-2.1.3.min.js" #sprintf検討
   ignore_regexp: /(\/node_modules\/)|(\/\.git\/)/
+  config: new Config
+  config_cson: {}
   constructor: ->
+    @init()
+  init: ->
     @server = new @Server()
-    setTimeout( =>
-      console.log("nodejs app stanby ok")
-    , 10)
+    ### config ###
+    try
+      result = @cson.load(@config.node_config_path)
+    catch e
+      result =
+        server: true
+      @fs.mkdir(@config.ignore_data_dir,=>@fs.writeFile(@config.node_config_path, @cson.createCSONString(result)))
+    @config_cson = result
+    if @config_cson.server then @server.start() #http server, and websocket reload server, default sart
+  ### library ###
   csv_to_json: (columns, csv_file, callback) =>
     require("csv-to-array")(
       file: csv_file

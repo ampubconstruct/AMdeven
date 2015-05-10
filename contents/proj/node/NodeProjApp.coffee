@@ -1,20 +1,9 @@
 NodeApp = require("../../nodejs/NodeApp.js")
-Config = require("../../../Config.js")
 
 class @NodeProjApp extends NodeApp
-  config: new Config
-  config_cson: {}
   constructor: ->
     super()
-    try
-      result = @cson.load(@node_config_path)
-    catch e
-      result =
-        server: true
-      @fs.mkdir(@config.ignore_data_dir,=>@fs.writeFile(@config.node_config_path, @cson.createCSONString(result)))
-    @config_cson = result
-    if @config_cson.server then @server.start() #http server, and websocket reload server, default sart
-
+    console.log "node proj start"
 
 sample_code = ->
   ### nodejs function ###
