@@ -48,7 +48,7 @@ class @Browser# extends @NodeJsApp
         y: 240
         width: 700
         height: 800
-      @fs.mkdir(@config.ignore_data,=>@fs.writeFile(@cson_path, @cson.createCSONString(result)))
+      @fs.mkdir(@config.ignore_data_dir,=>@fs.writeFile(@cson_path, @cson.createCSONString(result)))
     @data = result
   start: ->
     require("crash-reporter").start()
