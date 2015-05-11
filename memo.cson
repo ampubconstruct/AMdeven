@@ -1,8 +1,8 @@
 未着手リスト
 	優先度
 		高
-			projectの分離 - sample projectとして、新しく作ること？
-			amDevEn-sample
+			コードを見やすくする(Atomを参考に)
+			portの設定を独自に変えれるようにする
 		中
 
 		低
@@ -16,6 +16,11 @@
 
 
 ### 過去ログ ###
+#12
+一旦保留
+	projectの分離 - sample projectとして、新しく作ること？
+	amDevEn-sample?
+
 #07
 様子見
 	1. AutoEvent generatorからpromiseへ移行考慮
