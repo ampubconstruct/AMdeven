@@ -1,3 +1,13 @@
+製作ビジョン
+	chromebook
+	ios
+	android
+	mac
+	windows
+	linux
+	--
+	全ての "最新版" で動くウェブアプリケーションの開発
+
 未着手リスト
 	優先度
 		高
@@ -19,6 +29,19 @@
 
 
 ### 過去ログ ###
+#17
+task-managerに必要な情報
+上層部
+	task一覧
+中層部
+	name:
+		taskname:
+			progress: 進行中、保留、問題有り、未着手、一旦戻す
+			start_date: Date
+			finish_date: Date
+下層部
+	name:
+
 #12
 一旦保留
 	projectの分離 - sample projectとして、新しく作ること？

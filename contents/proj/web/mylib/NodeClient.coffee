@@ -23,5 +23,6 @@ class @NodeClient extends @CommonJs
       if @params.all then @ws.emit("all")
       @ws.on("reload", => @reload())
       @ws.on("css reload", (css) => $("body").append("<style type=\"text/css\">#{css}</style>"))
-      @ws.on("disconnect", => setTimeout(@reload, 2500))
-  reload: -> location.reload()
+      @ws.on("disconnect", => setTimeout(@reload, 3500))
+  reload: -> 
+    location.reload()

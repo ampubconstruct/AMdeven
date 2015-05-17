@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Server Top</title>
+    <link rel="stylesheet" href="/default.css" type="text/css" />
+    <link rel="stylesheet" href="task-manager.css" type="text/css" />
+    <script src="/lib/jquery-2.0.3.min.js"></script>
+    <script src="/lib/socket.io.js"></script>
+    <script src="/mylib/CommonJs.js"></script>
+    <script src="/mylib/NodeClient.js"></script>
+    <script src="/mylib/am/AutoEvent.js"></script>
+    <script src="/ClientApp.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+  </head>
+  <body>
+    <!-- header -->
+    <div class="header">
+      Me <input type="text" name="name" size="8" />
+      Task <input type="text" name="task" size="12" />
+      <!-- <button type="button" name="add_task" value="add task">+</button> -->
+    </div>
+    
+    <!-- contents -->
+    <div class="contents">
+      
+      <!-- 上段部 -->
+      <span class="template task" id="template-task">
+        <span class="assign"></span>
+      </span>
+      <div class="top">
+      </div>
+      
+      <!-- 中段部 -->
+      <span class="template indivisual">
+        <div class="indivisual-task">
+          <div class="name"></div>
+        </div>        
+      </span>
+      <span class="template indivisual-task-span">
+        <div class="task">
+          <input type="button" class="status" name="change_status" style=""/>
+        </div>
+      </span>
+      <div class="template status">
+        <div class="status-button">
+          <input type="button" class="status free" />
+          <input type="button" class="status hand" />
+          <input type="button" class="status reserve" />
+          <input type="button" class="status fin" />
+        </div>
+      </div>
+      <div class="middle">
+      </div>
+      
+      <!-- 下段部 -->
+      <div class="bottom">
+      </div>
+      
+      
+    </div>
+  <!--</body>-->
+</html>

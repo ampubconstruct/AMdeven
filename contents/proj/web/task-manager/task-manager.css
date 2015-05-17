@@ -1,0 +1,44 @@
+.template {
+  display: none; }
+
+.header {
+  background: #ccffcc;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center; }
+
+.contents {
+  position: absolute;
+  top: 24px;
+  width: 100%; }
+  .contents .top {
+    background: #ffffcc; }
+    .contents .top .assign {
+      font-weight: bold;
+      padding: 0px 2px; }
+  .contents .middle {
+    background: #ffccff; }
+    .contents .middle .indivisual-task {
+      border: solid 1px black;
+      width: 200px;
+      display: inline-block;
+      vertical-align: top;
+      background: #eeffee; }
+    .contents .middle input.status {
+      width: 25px;
+      height: 25px;
+      border-radius: 40px; }
+    .contents .middle .free {
+      background: white; }
+    .contents .middle .hand {
+      background: blue; }
+    .contents .middle .reserve {
+      background: red; }
+    .contents .middle .fin {
+      background: black; }
+  .contents .bottom {
+    background: #ccffff; }
+
+/*# sourceMappingURL=task-manager.css.map */

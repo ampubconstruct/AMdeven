@@ -11,7 +11,8 @@
     "readline": "latest",
     "jsdom": "latest",
     "csv-to-array": "latest",
-    "gaze": "latest"
+    "gaze": "latest",
+    "nodemon": "latest"
   },
   "main"    : "Browser.js",
 	"comment"	: "atom-shell version 0.21.2"

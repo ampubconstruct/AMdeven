@@ -49,8 +49,32 @@ class Server extends CommonJs
     @app.listen(@http_port)
     @websocket.on("connection", (socket) =>
       socket.on("all",=>@reload_list.push(socket))
+      ### task manager ###
+      socket.on("add task",(task)=>@add_task(socket,task))
+      socket.on("check task",(user, task)=>@check_task(socket,task,user))
+      socket.on("change status on task",(user,task,status)=>@change_status(socket,task,user,status))
+      socket.emit("change task", @task)
+      ##
     )
     @ws_event_reload()
+  ### task-manager ここから ###
+  task: {}
+  add_task: (socket, task) =>
+    @task[task] = {}
+    @send_task(socket)
+  check_task: (socket, task, user) =>
+    @task[task].user = user
+    @send_task(socket)
+  change_status: (socket,task,user,status) =>
+    @task[task][user].status = status
+    @send_task(socket)
+  send_task: (socket) =>
+    @fs.writeFileSync("./ignore_data/task.json", JSON.stringify(@task, null, "  "))
+    socket.emit("change task", @task)
+    socket.broadcast.emit("change task", @task)
+  ____: ->
+    1
+  ### task-manager ここまで ###
   ws_event_reload: ->
     me = @
     dir = [
@@ -64,7 +88,7 @@ class Server extends CommonJs
       )
     )
     css_dir = [
-      "#{@proj_path}**/*.css"
+      "#{@proj_path}/**/*.css"
     ]
     @gaze(css_dir, (err, watcher) ->
       @on("changed", (filepath) =>
