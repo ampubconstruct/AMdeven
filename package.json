@@ -1,19 +1,20 @@
 {
-  "name"    : "atom-sample",
+  "name"    : "electron-amdeven",
   "version" : "0.1.0",
   "description": "test",
   "dependencies": {
     "coffee-script": "latest",
 		"mime": "latest",
 		"cson": "latest",
-		"socket.io": "1.x",
+		"socket.io": "latest",
     "ftp": "latest",
     "readline": "latest",
     "jsdom": "latest",
     "csv-to-array": "latest",
     "gaze": "latest",
-    "nodemon": "latest"
+    "nodemon": "latest",
+    "babel": "latest"
   },
   "main"    : "Browser.js",
-	"comment"	: "atom-shell version 0.21.2"
+	"comment"	: "nothing"
 }
