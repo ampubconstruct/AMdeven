@@ -1,2 +1,3 @@
 SET project_path=%~dp0
-node node_modules/coffee-script/bin/coffee -wmc ./
+cd %project_path%
+iojs contents/nodejs/Compiler

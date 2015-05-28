@@ -6,16 +6,17 @@ class Compiler
   constructor: ->
     @watch()
   log: (msg) ->
-    console.log(msg)
     try
       process.send?(msg)
+    try
+      console?.log?(msg)
   watch_babel: =>
     me = @
-    @gaze(["*.babel", "contents/**/*.babel"], (err, watcher) ->
+    @gaze(["*.es6", "contents/**/*.es6"], (err, watcher) ->
       @on("changed", (filepath) =>
         me.babel.transformFile(filepath, (err, result) =>
           if err then me.log(err.message)
-          else me.fs.writeFile(filepath.replace(/\.babel$/, ".js"), result.code)
+          else me.fs.writeFile(filepath.replace(/\.es6$/, ".js"), result.code)
           )
         )
       )

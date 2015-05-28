@@ -1,9 +1,5 @@
 Config = require("./Config.js")
 
-start = =>
-  b = new @Browser()
-  b.start()
-
 class Watcher
   app: require("app")
   fs: require("fs")
@@ -13,7 +9,7 @@ class Watcher
     @reload_browser()
   reload_browser: ->
     me = @
-    @gaze(["Browser.js"], (err, watcher) ->
+    @gaze(["*.js"], (err, watcher) ->
       @on("changed", (filepath) =>
         me.exec("run.bat")
         setTimeout( =>
@@ -22,7 +18,7 @@ class Watcher
       )
     )
 
-class @Browser# extends @NodeJsApp
+class Browser# extends @NodeJsApp
   #configuration
   url: "file://" + __dirname + "/contents/index.html"
   cson_path: "./ignore_data/browser.cson"
@@ -99,4 +95,4 @@ class @Browser# extends @NodeJsApp
   etc: ->
     @global_shortcut()
 
-start()
+module.exports = Browser
