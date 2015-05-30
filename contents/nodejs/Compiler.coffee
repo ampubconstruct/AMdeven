@@ -1,41 +1,27 @@
-class Compiler
+CompilerSrc = require("./CompilerSrc")
+
+class Compiler extends CompilerSrc
   fs: require("fs")
   gaze: require("gaze")
   babel: require("babel")
   exec: require('child_process').exec
   constructor: ->
     @watch()
-  log: (msg) ->
-    try
-      process.send?(msg)
-    try
-      console?.log?(msg)
   watch_babel: =>
     me = @
     @gaze(["*.es6", "contents/**/*.es6"], (err, watcher) ->
-      @on("changed", (filepath) =>
-        me.babel.transformFile(filepath, (err, result) =>
-          if err then me.log(err.message)
-          else me.fs.writeFile(filepath.replace(/\.es6$/, ".js"), result.code)
-          )
-        )
+      @on("changed", me.compile_babel)
       )
     me.log "Compiler, babel#{@babel.version}"
   watch_coffee: =>
     me = @
     yield @exec("coffee -v",(e,stdout,stderr) =>
-      if e then return
+      if e then return @log(e.message)
       @log "Compiler, #{stdout}"
       @watch_coffee_gen.next()
     )
     @gaze(["*.coffee", "contents/**/*.coffee"], (err, watcher) ->
-      @on("changed", (filepath) =>
-        command = "iojs ./node_modules/coffee-script/bin/coffee -mc #{filepath}"
-        me.exec(command, (error, stdout, stderr) =>
-          if error then me.log(stderr.replace(/.*:([0-9]+:[0-9]+.*)/, "$1"))
-          else 1 #@log(String(stdout))
-        )
-      )
+      @on("changed", me.compile_coffee)
     )
   watch_sass: =>
     me = @
@@ -45,17 +31,7 @@ class Compiler
       @watch_sass_gen.next()
     )
     @gaze(["*.sass", "contents/**/*.sass"], (err, watcher) ->
-      @on("changed", (filepath) =>
-        command = "sass #{filepath}"
-        me.exec(command, (error, stdout, stderr) =>
-          if error
-            me.log(stderr)
-            return
-          else
-            command = "sass #{filepath} #{filepath.replace(/sass$/, 'css')}"
-            me.exec(command)
-          )
-        )
+      @on("changed", me.compile_sass)
       )
   watch: =>
     @watch_coffee_gen = @watch_coffee()
