@@ -23,5 +23,4 @@ node_modules
 ignore_data
 .sass-cache
 *.map
-*.min.*
 *.exe
