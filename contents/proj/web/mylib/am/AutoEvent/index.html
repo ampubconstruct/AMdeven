@@ -19,6 +19,8 @@
       0
     </div>
     <input type="text" id="text" name="name" value="">
+    <div class="box" style="width:200px;height:200px;background:lightblue">
+    </div>
   </body>
   <script type="text/javascript">
     var ca = new ClientApp()
@@ -33,6 +35,22 @@
         }
       }
       var interval = setInterval(func,100)
+    })
+    $(".box").on("click", function(e){
+      console.log(e);
+      console.log(e.clientX,e.clientY)
+    })
+  </script>
+  <script type="text/javascript">
+    // AutoEvent
+    document.addEventListener('DOMContentLoaded', function() {
+      window.ae = new AutoEvent()
+      ae.register()
+        .wait(1000).click(".text").click(".text")
+        .wait(1500).click(".text").set_value("#text",300)
+        .wait(100).click_xy(".box",10,10)
+        .wait_selector(".super-test").set_value("#text", 3000)
+        .gen.next()
     })
   </script>
 </html>

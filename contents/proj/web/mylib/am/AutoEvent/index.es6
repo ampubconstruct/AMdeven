@@ -1,8 +1,45 @@
-/*
-var ae = new AutoEvent()
-ae.click(selector).wait(3000).click(selector)
-ae.start()
-*/
+function mouseEvent(type, sx, sy, cx, cy) {
+  var evt;
+  var e = {
+    bubbles: true,
+    cancelable: (type != "mousemove"),
+    view: window,
+    detail: 0,
+    screenX: sx,
+    screenY: sy,
+    clientX: cx,
+    clientY: cy,
+    ctrlKey: false,
+    altKey: false,
+    shiftKey: false,
+    metaKey: false,
+    button: 0,
+    relatedTarget: undefined
+  };
+  if (typeof( document.createEvent ) == "function") {
+    evt = document.createEvent("MouseEvents");
+    evt.initMouseEvent(type,
+      e.bubbles, e.cancelable, e.view, e.detail,
+      e.screenX, e.screenY, e.clientX, e.clientY,
+      e.ctrlKey, e.altKey, e.shiftKey, e.metaKey,
+      e.button, document.body.parentNode);
+  } else if (document.createEventObject) {
+    evt = document.createEventObject();
+    for (prop in e) {
+    evt[prop] = e[prop];
+  }
+    evt.button = { 0:1, 1:4, 2:2 }[evt.button] || evt.button;
+  }
+  return evt;
+}
+function dispatchEvent (el, evt) {
+  if (el.dispatchEvent) {
+    el.dispatchEvent(evt);
+  } else if (el.fireEvent) {
+    el.fireEvent('on' + type, evt);
+  }
+  return evt;
+}
 
 class AutoEvent {
   later() { // 追加
@@ -33,11 +70,19 @@ class AutoEvent {
     inner_func.push(callback)
     return this
   }
-  set_value(selector, value) {
-    return this.add_event(() => document.querySelector(selector).value = value)
+  set_value(selector, value, iframe=null) {
+    let dom = iframe? document.querySelector(iframe).contentDocument.querySelector(selector): document.querySelector(selector)
+    return this.add_event(() => dom.value = value)
   }
-  click(selector){
-    return this.add_event(() => document.querySelector(selector).click())
+  click(selector, iframe=null){
+    let dom = iframe? document.querySelector(iframe).contentDocument.querySelector(selector): document.querySelector(selector)
+    return this.add_event(() => dom.click())
+  }
+  click_xy(selector,x,y,iframe=null){
+    let dom = iframe? document.querySelector(iframe).contentDocument.querySelector(selector): document.querySelector(selector)
+    let evt = mouseEvent("click", 0, 0, x, y);
+    return this.add_event(() => dispatchEvent(document.querySelector(selector), evt))
+
   }
   // async群
   wait_event(callback){
@@ -71,13 +116,3 @@ class AutoEvent {
     })
   }
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-  window.ae = new AutoEvent()
-  ae.register()
-    .wait(1000).click(".text").click(".text")
-    .wait(1500).click(".text").set_value("#text",300)
-    .wait_selector(".super-test").set_value("#text", 3000)
-    .gen.next()
-  // ae.start()
-})

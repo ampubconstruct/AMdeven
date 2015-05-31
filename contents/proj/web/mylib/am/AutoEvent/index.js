@@ -1,14 +1,47 @@
-/*
-var ae = new AutoEvent()
-ae.click(selector).wait(3000).click(selector)
-ae.start()
-*/
-
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function mouseEvent(type, sx, sy, cx, cy) {
+  var evt;
+  var e = {
+    bubbles: true,
+    cancelable: type != "mousemove",
+    view: window,
+    detail: 0,
+    screenX: sx,
+    screenY: sy,
+    clientX: cx,
+    clientY: cy,
+    ctrlKey: false,
+    altKey: false,
+    shiftKey: false,
+    metaKey: false,
+    button: 0,
+    relatedTarget: undefined
+  };
+  if (typeof document.createEvent == "function") {
+    evt = document.createEvent("MouseEvents");
+    evt.initMouseEvent(type, e.bubbles, e.cancelable, e.view, e.detail, e.screenX, e.screenY, e.clientX, e.clientY, e.ctrlKey, e.altKey, e.shiftKey, e.metaKey, e.button, document.body.parentNode);
+  } else if (document.createEventObject) {
+    evt = document.createEventObject();
+    for (prop in e) {
+      evt[prop] = e[prop];
+    }
+    evt.button = ({ 0: 1, 1: 4, 2: 2 })[evt.button] || evt.button;
+  }
+  return evt;
+}
+function dispatchEvent(el, evt) {
+  if (el.dispatchEvent) {
+    el.dispatchEvent(evt);
+  } else if (el.fireEvent) {
+    el.fireEvent("on" + type, evt);
+  }
+  return evt;
+}
 
 var AutoEvent = (function () {
   function AutoEvent() {
@@ -78,15 +111,32 @@ var AutoEvent = (function () {
   }, {
     key: "set_value",
     value: function set_value(selector, value) {
+      var iframe = arguments[2] === undefined ? null : arguments[2];
+
+      var dom = iframe ? document.querySelector(iframe).contentDocument.querySelector(selector) : document.querySelector(selector);
       return this.add_event(function () {
-        return document.querySelector(selector).value = value;
+        return dom.value = value;
       });
     }
   }, {
     key: "click",
     value: function click(selector) {
+      var iframe = arguments[1] === undefined ? null : arguments[1];
+
+      var dom = iframe ? document.querySelector(iframe).contentDocument.querySelector(selector) : document.querySelector(selector);
       return this.add_event(function () {
-        return document.querySelector(selector).click();
+        return dom.click();
+      });
+    }
+  }, {
+    key: "click_xy",
+    value: function click_xy(selector, x, y) {
+      var iframe = arguments[3] === undefined ? null : arguments[3];
+
+      var dom = iframe ? document.querySelector(iframe).contentDocument.querySelector(selector) : document.querySelector(selector);
+      var evt = mouseEvent("click", 0, 0, x, y);
+      return this.add_event(function () {
+        return dispatchEvent(document.querySelector(selector), evt);
       });
     }
   }, {
@@ -179,9 +229,3 @@ var AutoEvent = (function () {
 
   return AutoEvent;
 })();
-
-document.addEventListener("DOMContentLoaded", function () {
-  window.ae = new AutoEvent();
-  ae.register().wait(1000).click(".text").click(".text").wait(1500).click(".text").set_value("#text", 300).wait_selector(".super-test").set_value("#text", 3000).gen.next();
-});
-// ae.start()
