@@ -25,3 +25,4 @@ ignore_data
 *.map
 *.js
 *.min.*
+*.exe

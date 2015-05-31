@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title></title>
+    <script src="index.js" charset="utf-8"></script>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js" charset="utf-8"></script>
+    <script src="/lib/socket.io.js"></script>
+    <script src="/mylib/CommonJs.js"></script>
+    <script src="/mylib/NodeClient.js"></script>
+    <script src="/ClientApp.js"></script>
+  </head>
+  <body>
+    <div class="text">
+      1000
+    </div>
+    <div class="text">
+      1
+    </div>
+    <input type="text" id="text" name="name" value="">
+  </body>
+  <script type="text/javascript">
+    ca = new ClientApp()
+    $(".text").click(function(e){
+      $target = $(this)
+      var num = parseInt($target.text())
+      $target.text(++num)
+      console.log(ae.test_code());
+    })
+    var ae = new AutoEvent()
+  </script>
+</html>

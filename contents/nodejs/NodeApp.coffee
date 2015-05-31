@@ -97,8 +97,8 @@ class @NodeApp
   ignore_regexp: /(\/node_modules\/)|(\/\.git\/)/
   config: new Config
   config_cson: {}
-  constructor: ->
-    @init()
+  constructor: (start=true)->
+    if start then @init()
   init: ->
     @server = new @Server()
     ### config ###

@@ -12,25 +12,25 @@ export default class CompilerSrc {
   }
   compile_babel(filepath) {
     babel.transformFile(filepath, (e, result) => {
-      if(e) return this.log(e.message)
-      else fs.writeFile(filepath.replace(/\.es6$/, ".js"), result.code)
+      if(e) return CompilerSrc.prototype.log(e.message)
+      CompilerSrc.prototype.log(`compile ${filepath}`)
+      fs.writeFile(filepath.replace(/\.es6$/, ".js"), result.code)
     })
   }
   compile_coffee(filepath) {
     let command = `iojs ./node_modules/coffee-script/bin/coffee -mc ${filepath}`
     exec(command, (e, stdout, stderr) => {
-      if(e) this.log(stderr.replace(/.*:([0-9]+:[0-9]+.*)/, "$1"))
-      else 1
+      if(e) return CompilerSrc.prototype.log(stderr.replace(/.*:([0-9]+:[0-9]+.*)/, "$1"))
+      CompilerSrc.prototype.log(`compile ${filepath}`)
     })
   }
   compile_sass(filepath) {
     let command = `sass ${filepath}`
     exec(command, (e, stdout, stderr) => {
-      if(e) return this.log(stderr)
-      else {
-        let command = `sass ${filepath} ${filepath.replace(/sass$/, 'css')}`
-        exec(command)
-      }
+      if(e) return CompilerSrc.prototype.log(stderr)
+      let command = `sass ${filepath} ${filepath.replace(/sass$/, 'css')}`
+      exec(command)
+      CompilerSrc.prototype.log(`compile ${filepath}`)
     })
   }
 }
