@@ -11,7 +11,8 @@ export default class CompilerSrc {
     }
   }
   compile_babel(filepath) {
-    babel.transformFile(filepath, (e, result) => {
+    // babel.transformFile(filepath, { stage: 0 }, (e, result) => {
+    babel.transformFile(filepath, { stage: 0 }, (e, result) => {
       if(e) return CompilerSrc.prototype.log(e.message)
       CompilerSrc.prototype.log(`compile ${filepath}`)
       fs.writeFile(filepath.replace(/\.es6$/, ".js"), result.code)
