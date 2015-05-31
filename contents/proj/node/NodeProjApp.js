@@ -56,5 +56,3 @@
   module.exports = this.NodeProjApp;
 
 }).call(this);
-
-//# sourceMappingURL=NodeProjApp.js.map

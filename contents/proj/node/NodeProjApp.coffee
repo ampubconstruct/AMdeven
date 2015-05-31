@@ -4,7 +4,6 @@ class @NodeProjApp extends NodeApp
   constructor: ->
     super()
     console.log "node proj start"
-
 sample_code = ->
   ### nodejs function ###
   @server.start() #http server, and websocket reload server, default sart
