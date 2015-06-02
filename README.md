@@ -7,13 +7,15 @@ electron - https://github.com/atom/electron
 iojs  
 npm
 
-if use compiler(coffeescript, sass)  
-
-	ruby
+modules
 	rubygems
 		gem source -a http://rubygems.org/
 		gem install sass
 
+	apm install atom-color-highlight highlight-selected save-session
+	#chrome拡張機能
+	CoffeeConsole2
+	uBlock Origin
 
 #### my choco
 	choco install nodejs githubforwindows cmder atom notepadplusplus ruby rubygems
