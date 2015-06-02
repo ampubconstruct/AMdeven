@@ -2,30 +2,25 @@
 windows7
 
 ###(開発環境)
-####require
-electron - https://github.com/atom/electron  
-iojs  
-npm
-
-modules
-	rubygems
-		gem source -a http://rubygems.org/
-		gem install sass
-
+#### my choco
+	choco install -yf io.js nodejs githubforwindows cmder atom notepadplusplus ruby googlechrome clover dexpot autoit.commandline autoit
+	choco install -yf firefox-dev -pre
+#### atom
 	apm install atom-color-highlight highlight-selected save-session
-	#chrome拡張機能
+#### ruby
+	gem source -a http://rubygems.org/
+	gem install sass
+#### chrome拡張機能
 	CoffeeConsole2
 	uBlock Origin
+#### download
+electron - https://github.com/atom/electron  
+clibor - http://www.amunsnet.com/
 
-#### my choco
-	choco install nodejs githubforwindows cmder atom notepadplusplus ruby rubygems
-	choco install googlechrome clover dexpot autoit.commandline
-	choco install firefox-dev -pre
 
 #### cloud9
-	cloud9
-		git clone
-		nvm install v1.* #iojs
+	git clone
+	nvm install v1.* #iojs
 
 ###(配置)
 	/electron-version/
