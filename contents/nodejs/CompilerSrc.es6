@@ -19,7 +19,7 @@ export default class CompilerSrc {
     })
   }
   compile_coffee(filepath) {
-    let command = `iojs ./node_modules/coffee-script/bin/coffee -c ${filepath}`
+    let command = `node ./node_modules/coffee-script/bin/coffee -c ${filepath}`
     exec(command, (e, stdout, stderr) => {
       if(e) return CompilerSrc.prototype.log(stderr.replace(/.*:([0-9]+:[0-9]+.*)/, "$1"))
       CompilerSrc.prototype.log(`compile ${filepath}`)

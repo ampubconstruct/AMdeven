@@ -39,7 +39,7 @@ var CompilerSrc = (function () {
   }, {
     key: "compile_coffee",
     value: function compile_coffee(filepath) {
-      var command = "iojs ./node_modules/coffee-script/bin/coffee -c " + filepath;
+      var command = "node ./node_modules/coffee-script/bin/coffee -c " + filepath;
       exec(command, function (e, stdout, stderr) {
         if (e) return CompilerSrc.prototype.log(stderr.replace(/.*:([0-9]+:[0-9]+.*)/, "$1"));
         CompilerSrc.prototype.log("compile " + filepath);

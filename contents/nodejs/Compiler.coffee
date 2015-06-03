@@ -15,7 +15,7 @@ class Compiler extends CompilerSrc
     me.log "Compiler, babel#{@babel.version}"
   watch_coffee: =>
     me = @
-    yield @exec("coffee -v",(e,stdout,stderr) =>
+    yield @exec("node ./node_modules/coffee-script/bin/coffee -v",(e,stdout,stderr) =>
       if e then return @log(e.message)
       @log "Compiler, #{stdout}"
       @watch_coffee_gen.next()

@@ -23,4 +23,3 @@ node_modules
 ignore_data
 .sass-cache
 *.map
-*.exe
