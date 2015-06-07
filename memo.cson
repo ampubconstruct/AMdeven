@@ -12,7 +12,7 @@
 	優先度
 		高
 			コンパイルが必要なファイルはsrcフォルダに入れる
-				コンパイラjsは残す。&jsをgitignoreに再度登録。&bower導入
+				コンパイラjsは残す。&jsをgitignoreに再度登録。&bower導入&browserify導入してみよう
 			Compilerや制作完了したjs
 			webを上に持ってくる、projectの廃止。
 			制作物を独立化できていない。gitに組み込まれる。
