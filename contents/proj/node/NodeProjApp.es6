@@ -1,7 +1,8 @@
-import NodeProjApp from "./NodeProjApp"
-export default class NodeProjAppEs6 extends NodeProjApp {
+import NodeApp from "../../nodejs/NodeApp.js"
+export default class NodeProjApp extends NodeApp {
   constructor(){
     super()
+    console.log("node proj start");
   }
 }
 

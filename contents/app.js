@@ -8,7 +8,7 @@
     };
   })(this));
 
-  this.App = require("./proj/node/NodeProjAppEs6.js");
+  this.App = require("./proj/node/NodeProjApp.js");
 
   this.a = new this.App();
 
