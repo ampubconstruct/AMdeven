@@ -148,8 +148,8 @@ class @NodeApp
     @ftp_downloader(name, pass, file, host, filepath)
   downloader: (url, filepath) => #http, httpsに対応
     file = @fs.createWriteStream(filepath)
-    protocol = if url.match /^https/ then @https else @http
-    request = protocol.get url, (response) => response.pipe(file)
+    protocol = if url.match(/^https/) then @https else @http
+    request = protocol.get(url, (response) => response.pipe(file))
   check_dir_tree: (dir, pattern, callback) =>
     files = @fs.readdirSync(dir)
     for file in files
