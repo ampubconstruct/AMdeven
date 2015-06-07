@@ -118,11 +118,11 @@ class @NodeApp
     , callback)
   jsdom_check: (file, callback) =>
     if not @jquery then @jquery = @fs.readFileSync(@jsdom_jquery_source, {encoding: "utf-8"})
-    @jsdom.env(
-      file: file
+    obj =
       src: [@jquery]
       done: callback
-    )
+    if file.match(/^http/) then obj.url = file else obj.file = file
+    @jsdom.env(obj)
   ftp_downloader: (user, pass, file, host, filepath) =>
     c = new @Client()
     c.on "ready", =>

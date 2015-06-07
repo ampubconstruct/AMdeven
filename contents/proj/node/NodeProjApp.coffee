@@ -27,6 +27,5 @@ sample_code = ->
   @check_dir_tree("./", /coffee$/, (loc, file) => console.log loc)
 
 
-
 #new @NodeProjApp()
 module.exports = @NodeProjApp

@@ -246,16 +246,22 @@
     };
 
     NodeApp.prototype.jsdom_check = function(file, callback) {
+      var obj;
       if (!this.jquery) {
         this.jquery = this.fs.readFileSync(this.jsdom_jquery_source, {
           encoding: "utf-8"
         });
       }
-      return this.jsdom.env({
-        file: file,
+      obj = {
         src: [this.jquery],
         done: callback
-      });
+      };
+      if (file.match(/^http/)) {
+        obj.url = file;
+      } else {
+        obj.file = file;
+      }
+      return this.jsdom.env(obj);
     };
 
     NodeApp.prototype.ftp_downloader = function(user, pass, file, host, filepath) {
