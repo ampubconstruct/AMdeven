@@ -14,31 +14,26 @@
 未着手リスト
   優先度
     高
-      理想構想図の作成　～　それに向けての実装
+      テストコードの生成
       コンパイルが必要なファイルはsrcフォルダに入れる
-        コンパイラjsは残す。&jsをgitignoreに再度登録。&bower導入&browserify導入してみよう
       Compilerや制作完了したjs
     中
+      
     低
-      1. instant.coffee 更新無し、即時実行js
-      2. 名前を考える - 午前の開発環境
-        AMDevEn
-        AmDeven
-        AmDevEn
-        amDevEn
-    他
-      共通ショートカットキーの調査とweb化検討
+      instant.coffee 更新無し、即時実行js
 ### 過去ログ ###
 6/15
+  コンパイラjsは残す。&jsをgitignoreに再度登録。&bower導入&browserify導入してみよう
   Browserifyなど必要以上の環境構築はせずにchromiumやiojsの対応を待つ。
+  2. 名前を考える - 午前の開発環境
+    AMDevEn
+    AmDeven
+    AmDevEn
+    amDevEn
+  他
+    共通ショートカットキーの調査とweb化検討
+  理想構想図の作成　～　それに向けての実装
 6/7
-  1プロジェクトごとにAMdevenを捨てていく形式
-  webを上に持ってくる、projectの廃止。
-  制作物を独立化できていない。gitに組み込まれる。
-  coffee->es6(+babel)に徐々に変換していく
-  コードを見やすくする(Atomを参考に)
-  portの設定を独自に変えれるようにする  json形式で検討
-    web/ignore_dir検討　なければ作成
 6/6
   開発環境のブラウザ完結vsLocalElectron
 28
