@@ -1,12 +1,17 @@
 製作ビジョン
-	chromebook
-	ios
-	android
-	mac
-	windows
-	linux
-	--
-	上記全てのOSの "最新版(最新ブラウザのみでも可)" で動くウェブアプリケーションの開発
+	初心者には簡単に
+		chromebook
+		ios
+		android
+		mac
+		windows
+		linux
+		--
+		上記全てのOSの "最新版(最新ブラウザのみでも可)" で動くウェブアプリケーションの開発
+		上記いずれにおいても開発が可能になるスタイル
+	上級者には詳細に
+		electronを利用したアプリケーションの開発
+	  Browserifyなど必要以上の環境構築はせずにchromiumやiojsの対応を待つ。
 
 copy後開発フロー
 
