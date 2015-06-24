@@ -4,9 +4,9 @@
   "description": "test",
   "dependencies": {
     "coffee-script": "latest",
-		"mime": "latest",
-		"cson": "latest",
-		"socket.io": "latest",
+    "mime": "latest",
+    "cson": "latest",
+    "socket.io": "latest",
     "ftp": "latest",
     "readline": "latest",
     "jsdom": "latest",
@@ -15,6 +15,6 @@
     "nodemon": "latest",
     "babel": "latest"
   },
-  "main"    : "Browser2.js",
-	"comment"	: "nothing"
+  "main"    : "./Browser2.js",
+  "comment"	: "nothing"
 }

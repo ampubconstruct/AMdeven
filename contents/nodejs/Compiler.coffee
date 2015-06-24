@@ -9,7 +9,7 @@ class Compiler extends CompilerSrc
     @watch()
   watch_babel: =>
     me = @
-    @gaze(["*.es6", "contents/**/*.es6"], (err, watcher) ->
+    @gaze(["./*.es6", "./contents/**/*.es6"], (err, watcher) ->
       @on("changed", me.compile_babel)
       )
     me.log "Compiler, babel#{@babel.version}"
@@ -20,7 +20,7 @@ class Compiler extends CompilerSrc
       @log "Compiler, #{stdout}"
       @watch_coffee_gen.next()
     )
-    @gaze(["*.coffee", "contents/**/*.coffee"], (err, watcher) ->
+    @gaze(["./*.coffee", "./contents/**/*.coffee"], (err, watcher) ->
       @on("changed", me.compile_coffee)
     )
   watch_sass: =>
@@ -30,7 +30,7 @@ class Compiler extends CompilerSrc
       @log "Compiler, #{stdout}"
       @watch_sass_gen.next()
     )
-    @gaze(["*.sass", "contents/**/*.sass"], (err, watcher) ->
+    @gaze(["./*.sass", "./contents/**/*.sass"], (err, watcher) ->
       @on("changed", me.compile_sass)
       )
   watch: =>
