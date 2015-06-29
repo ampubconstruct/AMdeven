@@ -2,21 +2,18 @@
 windows7
 
 ###(開発環境)
-#### my choco
-	choco install -yf io.js nodejs githubforwindows cmder atom notepadplusplus ruby googlechrome clover dexpot autoit.commandline autoit
-	choco install -yf firefox-dev -pre
-#### atom
-	apm install atom-color-highlight highlight-selected save-session
-#### ruby
+#### ruby(if use sass)
 	gem source -a http://rubygems.org/
 	gem install sass
-#### chrome拡張機能
-	CoffeeConsole2
-	uBlock Origin
-#### download
-electron - https://github.com/atom/electron  
-clibor - http://www.amunsnet.com/
 
+###(自分の開発環境)
+#### my package
+	choco install -yf io.js nodejs skype line lhaplus cmder atom notepadplusplus ruby googlechrome clover dexpot autoit crystaldiskinfo githubforwindows libreoffice googlechrome.canary
+	choco install -yf firefox-dev -pre
+#### download
+	clibor - http://www.amunsnet.com/
+#### atom
+	apm install pigments highlight-selected save-session editorconfig
 
 #### cloud9
 	git clone
@@ -29,7 +26,6 @@ clibor - http://www.amunsnet.com/
 		/contents/
 			/nodejs/
 				NodeApp.coffee
-
 			/proj/
 				/atom/ # atom project
 				/node/ # node
