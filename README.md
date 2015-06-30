@@ -13,7 +13,7 @@ windows7
 #### download
 	clibor - http://www.amunsnet.com/
 #### atom
-	apm install pigments highlight-selected save-session editorconfig
+	apm install pigments highlight-selected save-session tabs-to-spaces
 
 #### cloud9
 	git clone
