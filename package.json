@@ -1,6 +1,6 @@
 {
-  "name"    : "electron-amdeven",
-  "version" : "0.1.0",
+  "name": "electron-amdeven",
+  "version": "0.1.0",
   "description": "test",
   "dependencies": {
     "coffee-script": "latest",
@@ -8,13 +8,14 @@
     "cson": "latest",
     "socket.io": "latest",
     "ftp": "latest",
-    "readline": "latest",
     "jsdom": "latest",
     "csv-to-array": "latest",
     "gaze": "latest",
-    "nodemon": "latest",
     "babel": "latest"
   },
-  "main"    : "./Browser2.js",
-  "comment"	: "nothing"
+  "main": "./Browser2.js",
+  "comment": "nothing",
+  "devDependencies": {
+    "electron-prebuilt": "latest"
+  }
 }
