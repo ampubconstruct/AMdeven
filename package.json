@@ -1,20 +1,21 @@
 {
-  "name"    : "electron-amdeven",
-  "version" : "0.1.0",
+  "name": "electron-amdeven",
+  "version": "0.1.0",
   "description": "test",
   "dependencies": {
+    "babel": "latest",
     "coffee-script": "latest",
-    "mime": "latest",
     "cson": "latest",
-    "socket.io": "latest",
-    "ftp": "latest",
-    "readline": "latest",
-    "jsdom": "latest",
     "csv-to-array": "latest",
+    "ftp": "latest",
     "gaze": "latest",
+    "jsdom": "latest",
+    "mime": "latest",
     "nodemon": "latest",
-    "babel": "latest"
+    "readline": "latest",
+    "socket.io": "latest",
+    "uglify-js": "^2.4.23"
   },
-  "main"    : "./Browser2.js",
-  "comment"	: "nothing"
+  "main": "./Browser2.js",
+  "comment": "nothing"
 }
